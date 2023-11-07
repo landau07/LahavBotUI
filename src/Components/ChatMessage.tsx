@@ -1,22 +1,23 @@
 import { format } from "date-fns";
+import { ReactNode } from "react";
 import { LahavAvatar } from "./ChatHeader";
 
 type ChatMessageProps = {
-  message: string;
+  children: ReactNode | string;
   sender: "user" | "bot";
-  timestamp: Date;
+  timestamp?: Date;
 };
 
-export function ChatMessage({ message, sender, timestamp }: ChatMessageProps) {
+export function ChatMessage({ sender, ...rest }: ChatMessageProps) {
   if (sender === "bot") {
-    return <BotMessage message={message} timestamp={timestamp} />;
+    return <BotMessage {...rest} />;
   } else {
-    return <UserMessage message={message} timestamp={timestamp} />;
+    return <UserMessage {...rest} />;
   }
 }
 
 export function BotMessage({
-  message,
+  children: message,
   timestamp,
 }: Omit<ChatMessageProps, "sender">) {
   return (
@@ -28,7 +29,7 @@ export function BotMessage({
           {message}
         </div>
         <div className="text-xs font-normal me-1 mt-1 text-slate-600">
-          {format(timestamp, "HH:mm")}
+          {timestamp && format(timestamp, "HH:mm")}
         </div>
       </div>
     </div>
@@ -36,7 +37,7 @@ export function BotMessage({
 }
 
 export function UserMessage({
-  message,
+  children: message,
   timestamp,
 }: Omit<ChatMessageProps, "sender">) {
   return (
@@ -46,7 +47,7 @@ export function UserMessage({
           {message}
         </div>
         <div className="text-xs font-normal ms-1 mt-1 text-slate-600">
-          {format(timestamp, "HH:mm")}
+          {timestamp && format(timestamp, "HH:mm")}
         </div>
       </div>
     </div>
