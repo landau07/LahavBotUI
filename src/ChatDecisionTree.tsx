@@ -7,6 +7,7 @@ export type ChatDecisionTreeNode = {
   id: number;
   parent: ChatDecisionTreeNode | null;
   children: ChatDecisionTreeNode[];
+  branchKey: number; // used to avoid storing state when going back in the flow
   sender: "user" | "bot";
 } & (
   | {
@@ -30,6 +31,7 @@ export type ChatDecisionTreeNode = {
 
 export const welcomeStep: ChatDecisionTreeNode = {
   id: 0,
+  branchKey: 0,
   parent: null,
   children: [],
   sender: "bot",
@@ -40,6 +42,7 @@ export const welcomeStep: ChatDecisionTreeNode = {
 
 const userTypeStep: ChatDecisionTreeNode = {
   id: 1,
+  branchKey: 0,
   parent: welcomeStep,
   children: [],
   sender: "user",
@@ -49,6 +52,7 @@ const userTypeStep: ChatDecisionTreeNode = {
 
 const isBabyStillInHospitalStep: ChatDecisionTreeNode = {
   id: 2,
+  branchKey: 0,
   parent: userTypeStep,
   children: [],
   sender: "bot",
@@ -58,6 +62,7 @@ const isBabyStillInHospitalStep: ChatDecisionTreeNode = {
 
 const isBabyStillInHospitalAnswerStep: ChatDecisionTreeNode = {
   id: 3,
+  branchKey: 0,
   parent: isBabyStillInHospitalStep,
   children: [],
   sender: "user",
@@ -67,9 +72,10 @@ const isBabyStillInHospitalAnswerStep: ChatDecisionTreeNode = {
 
 const whichHospitalStep: ChatDecisionTreeNode = {
   id: 4,
+  branchKey: 0,
   parent: isBabyStillInHospitalAnswerStep,
   children: [],
-  sender: "user",
+  sender: "bot",
   type: "dropdown",
   text: "באיזו פגיה נמצאים?",
   options: [
@@ -87,6 +93,7 @@ const whichHospitalStep: ChatDecisionTreeNode = {
 
 const birthDateStep: ChatDecisionTreeNode = {
   id: 5,
+  branchKey: 0,
   parent: whichHospitalStep,
   children: [],
   sender: "bot",
@@ -96,6 +103,7 @@ const birthDateStep: ChatDecisionTreeNode = {
 
 const birthDateAnswerStep: ChatDecisionTreeNode = {
   id: 6,
+  branchKey: 0,
   parent: birthDateStep,
   children: [],
   sender: "user",
@@ -104,6 +112,7 @@ const birthDateAnswerStep: ChatDecisionTreeNode = {
 
 const notImplementedYetStepTemplate: ChatDecisionTreeNode = {
   id: -1,
+  branchKey: 0,
   parent: userTypeStep,
   children: [],
   sender: "bot",
@@ -137,7 +146,13 @@ export function setNextStep(
   step: ChatDecisionTreeNode,
   childIndex: number = 0
 ) {
-  chatSteps.value = takeUntil(chatSteps.value, (s) => s.id === step.id).concat(
-    step.children[childIndex] ?? { ...notImplementedYetStepTemplate }
+  const nextStep = step.children[childIndex]
+    ? { ...step.children[childIndex], branchKey: new Date().getTime() } // Updating the branchKey of the child so it will be rerender in case of going back in flow
+    : {
+        ...notImplementedYetStepTemplate,
+      };
+
+  chatSteps.value = takeUntil(chatSteps.value, (s) => s === step).concat(
+    nextStep
   );
 }

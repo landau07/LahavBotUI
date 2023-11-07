@@ -15,7 +15,7 @@ export function renderStep(step: ChatDecisionTreeNode, index: number) {
         <DropdownMessage
           text={step.text}
           options={step.options}
-          key={index}
+          key={`${step.branchKey}_${index}`}
           onConfirmClicked={() => setNextStep(step)}
         />
       );
@@ -23,13 +23,16 @@ export function renderStep(step: ChatDecisionTreeNode, index: number) {
       return (
         <SelectionBoxList
           boxes={step.boxes}
-          key={index}
+          key={`${step.branchKey}_${index}`}
           onBoxClicked={(boxIndex: number) => setNextStep(step, boxIndex)}
         />
       );
     case "date":
       return (
-        <DatePickerMessage key={index} onDatePicked={() => setNextStep(step)} />
+        <DatePickerMessage
+          key={`${step.branchKey}_${index}`}
+          onDatePicked={() => setNextStep(step)}
+        />
       );
     default:
       throw new Error("Unknown step type");

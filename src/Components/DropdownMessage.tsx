@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { BotMessage, UserMessage } from "./ChatMessage";
 import { ConfirmButton } from "./ConfirmButton";
 
@@ -14,7 +14,7 @@ export function DropdownMessage({
   onConfirmClicked,
 }: DropdownMessageProps) {
   const [isAfterConfirmState, setIsAfterConfirmState] = useState(false);
-  const selectionRef = useRef<HTMLSelectElement>(null);
+  const [selection, setSelection] = useState("");
 
   return (
     <>
@@ -23,11 +23,12 @@ export function DropdownMessage({
           <div className="text-slate-800 text-start">{text}</div>
           {!isAfterConfirmState && (
             <select
-              ref={selectionRef}
               className="dropdown border rounded-md p-2 mt-2 whitespace-nowrap overflow-hidden text-ellipsis"
+              value={selection}
+              onChange={(e) => setSelection(e.target.value)}
             >
               <option value="" disabled>
-                Select an option
+                בחר אפשרות
               </option>
               {options.map((option, index) => (
                 <option key={index} value={option}>
@@ -37,9 +38,10 @@ export function DropdownMessage({
             </select>
           )}
         </BotMessage>
-        {!isAfterConfirmState && (
+        {!isAfterConfirmState && selection && (
           <ConfirmButton
             position="end"
+            disabled={!selection}
             onDoneButtonClicked={() => {
               setIsAfterConfirmState(true);
               onConfirmClicked();
@@ -47,9 +49,7 @@ export function DropdownMessage({
           />
         )}
       </div>
-      {isAfterConfirmState && (
-        <UserMessage children={selectionRef.current?.value} />
-      )}
+      {isAfterConfirmState && <UserMessage children={selection} />}
     </>
   );
 }
