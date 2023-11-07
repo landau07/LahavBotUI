@@ -41,7 +41,7 @@ export function UserMessage({
 }: Omit<ChatMessageProps, "sender">) {
   return (
     <div className="flex">
-      <div className="flex flex-col ">
+      <div className="flex flex-col">
         <div className="text-white p-4 rounded-e-xl rounded-b-xl bg-lahav">
           {message}
         </div>
