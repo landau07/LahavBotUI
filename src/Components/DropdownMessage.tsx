@@ -4,13 +4,13 @@ import { BotMessage, UserMessage } from "./ChatMessage";
 type DropdownMessageProps = {
   text: string;
   options: string[];
-  onDoneButtonClicked?: (boxText: string) => void;
+  onConfirmClicked: () => void;
 };
 
 export function DropdownMessage({
-  onDoneButtonClicked,
   options,
   text,
+  onConfirmClicked,
 }: DropdownMessageProps) {
   const [isAfterConfirmState, setIsAfterConfirmState] = useState(false);
   const selectionRef = useRef<HTMLSelectElement>(null);
@@ -40,7 +40,7 @@ export function DropdownMessage({
           <ConfirmButton
             onDoneButtonClicked={() => {
               setIsAfterConfirmState(true);
-              onDoneButtonClicked?.("");
+              onConfirmClicked();
             }}
           />
         )}
