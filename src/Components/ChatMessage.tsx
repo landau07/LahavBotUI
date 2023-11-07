@@ -42,7 +42,7 @@ export function UserMessage({
   return (
     <div className="flex">
       <div className="flex flex-col ">
-        <div className="text-white p-4 rounded-e-xl rounded-b-xl bg-purple-700">
+        <div className="text-white p-4 rounded-e-xl rounded-b-xl bg-lahav">
           {message}
         </div>
         <div className="text-xs font-normal ms-1 mt-1 text-slate-600">

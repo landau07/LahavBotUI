@@ -13,9 +13,9 @@ export function LahavAvatar({ addClassName }: { addClassName?: string }) {
 
 export function ChatHeader() {
   return (
-    <div className="sticky top-0 p-6 bg-purple-700 flex flex-row align-middle w-full gap-3 rounded-t-md">
+    <div className="sticky top-0 p-6 bg-lahav flex flex-row align-middle w-full gap-3 rounded-t-md">
       <LahavAvatar />
-      <div className="text-white text-2xl">לה״ב בוט</div>
+      <div className="text-white text-2xl text-ellipsis overflow-auto">לה״ב בוט</div>
       <div className="w-3 h-3 bg-green-500 rounded-full absolute bottom-5 border-2 border-white start-12" />
     </div>
   );

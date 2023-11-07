@@ -4,7 +4,10 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        helvetica: ["Helvetica", "Arial"," sans-serif"],
+        helvetica: ["Helvetica", "Arial", " sans-serif"],
+      },
+      backgroundColor: {
+        lahav: "#b05097",
       },
     },
   },

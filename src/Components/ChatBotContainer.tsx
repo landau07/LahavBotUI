@@ -1,10 +1,11 @@
 import { ChatBody } from "./ChatBody";
+import "./ChatBotContainer.css";
 import { ChatFooter } from "./ChatFooter";
 import { ChatHeader } from "./ChatHeader";
 
 export function ChatBotContainer() {
   return (
-    <div className="px-[30%] flex flex-col h-screen">
+    <div className="chat-bot-container flex flex-col h-screen">
       <ChatHeader />
       <ChatBody />
       <ChatFooter />
