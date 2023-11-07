@@ -1,4 +1,7 @@
 import { signal } from "@preact/signals-react";
+import { ReactNode } from "react";
+import "react-day-picker/dist/style.css";
+import { takeUntil } from "./utils/arrayUtils";
 
 export type ChatDecisionTreeNode = {
   id: number;
@@ -8,7 +11,7 @@ export type ChatDecisionTreeNode = {
 } & (
   | {
       type: "text";
-      text: string;
+      content: string | ReactNode;
     }
   | {
       type: "selectionBox";
@@ -20,6 +23,9 @@ export type ChatDecisionTreeNode = {
       text: string;
       onOptionSelected?: (boxText: string) => void;
     }
+  | {
+      type: "date";
+    }
 );
 
 export const welcomeStep: ChatDecisionTreeNode = {
@@ -28,7 +34,8 @@ export const welcomeStep: ChatDecisionTreeNode = {
   children: [],
   sender: "bot",
   type: "text",
-  text: "היי! הגעתם לבוט של לה״ב. נשמח לסייע ולהפנות אותך לאן שאתה צריך. האם אתה:",
+  content:
+    "היי! הגעתם לבוט של לה״ב. נשמח לסייע ולהפנות אותך לאן שאתה צריך. האם אתה:",
 };
 
 const userTypeStep: ChatDecisionTreeNode = {
@@ -46,7 +53,7 @@ const isBabyStillInHospitalStep: ChatDecisionTreeNode = {
   children: [],
   sender: "bot",
   type: "text",
-  text: "האם התינוק עדין בפגיה?",
+  content: "האם התינוק עדין בפגיה?",
 };
 
 const isBabyStillInHospitalAnswerStep: ChatDecisionTreeNode = {
@@ -84,7 +91,15 @@ const birthDateStep: ChatDecisionTreeNode = {
   children: [],
   sender: "bot",
   type: "text",
-  text: "מה תאריך הלידה?",
+  content: "מה תאריך הלידה?",
+};
+
+const birthDateAnswerStep: ChatDecisionTreeNode = {
+  id: 6,
+  parent: birthDateStep,
+  children: [],
+  sender: "user",
+  type: "date",
 };
 
 const notImplementedYetStepTemplate: ChatDecisionTreeNode = {
@@ -93,7 +108,7 @@ const notImplementedYetStepTemplate: ChatDecisionTreeNode = {
   children: [],
   sender: "bot",
   type: "text",
-  text: "סורי, עוד לא מימשנו את הנתיב הזה...",
+  content: "סורי, עוד לא מימשנו את הנתיב הזה...",
 };
 
 welcomeStep.children = [userTypeStep];
@@ -111,7 +126,18 @@ isBabyStillInHospitalAnswerStep.children = [
 ];
 whichHospitalStep.children = [birthDateStep];
 
+birthDateStep.children = [birthDateAnswerStep];
+
 export const chatSteps = signal<ChatDecisionTreeNode[]>([
   welcomeStep,
   userTypeStep,
 ]);
+
+export function setNextStep(
+  step: ChatDecisionTreeNode,
+  childIndex: number = 0
+) {
+  chatSteps.value = takeUntil(chatSteps.value, (s) => s.id === step.id).concat(
+    step.children[childIndex] ?? { ...notImplementedYetStepTemplate }
+  );
+}

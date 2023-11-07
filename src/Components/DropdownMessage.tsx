@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { BotMessage, UserMessage } from "./ChatMessage";
+import { ConfirmButton } from "./ConfirmButton";
 
 type DropdownMessageProps = {
   text: string;
@@ -38,6 +39,7 @@ export function DropdownMessage({
         </BotMessage>
         {!isAfterConfirmState && (
           <ConfirmButton
+            position="end"
             onDoneButtonClicked={() => {
               setIsAfterConfirmState(true);
               onConfirmClicked();
@@ -49,22 +51,5 @@ export function DropdownMessage({
         <UserMessage children={selectionRef.current?.value} />
       )}
     </>
-  );
-}
-
-function ConfirmButton({
-  onDoneButtonClicked,
-}: {
-  onDoneButtonClicked: () => void;
-}) {
-  return (
-    <div className="flex flex-row-reverse me-14">
-      <button
-        onClick={onDoneButtonClicked}
-        className="text-white py-2 px-4 rounded-md bg-lahav hover:bg-fuchsia-900 active:bg-fuchsia-950"
-      >
-        {"אשר"}
-      </button>
-    </div>
   );
 }

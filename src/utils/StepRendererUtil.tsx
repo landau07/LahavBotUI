@@ -1,14 +1,14 @@
-import { ChatDecisionTreeNode, chatSteps } from "../ChatDecisionTree";
+import { ChatDecisionTreeNode, setNextStep } from "../ChatDecisionTree";
 import { ChatMessage } from "../Components/ChatMessage";
+import { DatePickerMessage } from "../Components/DatePickerMessage";
 import { DropdownMessage } from "../Components/DropdownMessage";
 import { SelectionBoxList } from "../Components/SelectionBoxList";
-import { takeUntil } from "./arrayUtils";
 
 export function renderStep(step: ChatDecisionTreeNode, index: number) {
   switch (step.type) {
     case "text":
       return (
-        <ChatMessage sender={step.sender} children={step.text} key={index} />
+        <ChatMessage sender={step.sender} children={step.content} key={index} />
       );
     case "dropdown":
       return (
@@ -16,12 +16,7 @@ export function renderStep(step: ChatDecisionTreeNode, index: number) {
           text={step.text}
           options={step.options}
           key={index}
-          onConfirmClicked={() =>
-            (chatSteps.value = takeUntil(
-              chatSteps.value,
-              (s) => s.id === step.id
-            ).concat(step.children[0]))
-          }
+          onConfirmClicked={() => setNextStep(step)}
         />
       );
     case "selectionBox":
@@ -29,13 +24,12 @@ export function renderStep(step: ChatDecisionTreeNode, index: number) {
         <SelectionBoxList
           boxes={step.boxes}
           key={index}
-          onBoxClicked={(boxIndex: number) =>
-            (chatSteps.value = takeUntil(
-              chatSteps.value,
-              (s) => s.id === step.id
-            ).concat(step.children[boxIndex]))
-          }
+          onBoxClicked={(boxIndex: number) => setNextStep(step, boxIndex)}
         />
+      );
+    case "date":
+      return (
+        <DatePickerMessage key={index} onDatePicked={() => setNextStep(step)} />
       );
     default:
       throw new Error("Unknown step type");
