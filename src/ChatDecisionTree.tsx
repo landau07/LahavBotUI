@@ -1,12 +1,12 @@
-import { signal } from "@preact/signals-react";
 import { ReactNode } from "react";
 import "react-day-picker/dist/style.css";
+import { chatSteps } from "./signals";
 import { takeUntil } from "./utils/arrayUtils";
 
 export type ChatDecisionTreeNode = {
   id: number;
   parent: ChatDecisionTreeNode | null;
-  children: ChatDecisionTreeNode[];
+  children: (ChatDecisionTreeNode | null)[];
   branchKey: number; // used to avoid storing state when going back in the flow
   sender: "user" | "bot";
 } & (
@@ -80,7 +80,6 @@ const whichHospitalStep: ChatDecisionTreeNode = {
   text: "באיזו פגיה נמצאים?",
   options: [
     "תל השומר",
-    "שיבא",
     "שניידר",
     "רמב״ם",
     "שערי צדק",
@@ -121,26 +120,12 @@ const notImplementedYetStepTemplate: ChatDecisionTreeNode = {
 };
 
 welcomeStep.children = [userTypeStep];
-userTypeStep.children = [
-  isBabyStillInHospitalStep,
-  { ...notImplementedYetStepTemplate },
-  { ...notImplementedYetStepTemplate },
-  { ...notImplementedYetStepTemplate },
-  { ...notImplementedYetStepTemplate },
-];
+userTypeStep.children = [isBabyStillInHospitalStep, null, null, null, null];
 isBabyStillInHospitalStep.children = [isBabyStillInHospitalAnswerStep];
-isBabyStillInHospitalAnswerStep.children = [
-  whichHospitalStep,
-  { ...notImplementedYetStepTemplate },
-];
+isBabyStillInHospitalAnswerStep.children = [whichHospitalStep, null];
 whichHospitalStep.children = [birthDateStep];
 
 birthDateStep.children = [birthDateAnswerStep];
-
-export const chatSteps = signal<ChatDecisionTreeNode[]>([
-  welcomeStep,
-  userTypeStep,
-]);
 
 export function setNextStep(
   step: ChatDecisionTreeNode,
@@ -153,6 +138,6 @@ export function setNextStep(
       };
 
   chatSteps.value = takeUntil(chatSteps.value, (s) => s === step).concat(
-    nextStep
+    nextStep as ChatDecisionTreeNode
   );
 }

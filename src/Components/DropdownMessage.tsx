@@ -20,7 +20,7 @@ export function DropdownMessage({
     <>
       <div>
         <BotMessage>
-          <div className="text-slate-800 text-start">{text}</div>
+          <div className="text-slate-800 dark:text-white text-start">{text}</div>
           {!isAfterConfirmState && (
             <select
               className="dropdown border rounded-md p-2 mt-2 whitespace-nowrap overflow-hidden text-ellipsis"

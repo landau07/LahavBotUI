@@ -16,7 +16,7 @@ export function ChatFooter() {
   };
 
   return (
-    <footer className="py-4 px-6 sticky bottom-0 border-t-2 bg-slate-100 border-gray-200 rounded-b-md">
+    <footer className="py-4 px-6 sticky bottom-0 border-t-2 bg-slate-100 dark:bg-[#00000036] border-gray-200 dark:border-gray-500 rounded-b-md">
       <div className="flex">
         <div className="relative w-full flex">
           <input

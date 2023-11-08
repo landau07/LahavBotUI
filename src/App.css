@@ -5,3 +5,19 @@
 * {
   box-sizing: border-box;
 }
+
+:root {
+  --background-color: #fff;
+  --text-color: #000;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+/* Dark mode styles */
+.dark {
+  --background-color: #1f2020;
+  --text-color: #fff;
+}

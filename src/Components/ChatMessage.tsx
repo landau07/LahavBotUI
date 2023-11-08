@@ -24,8 +24,10 @@ export function BotMessage({
     <div className="flex flex-row-reverse">
       <LahavAvatar addClassName="mt-4 ms-3" />
       <div className="flex flex-col text-end">
-        <div className="text-lg font-bold text-zinc-700">לה״ב</div>
-        <div className="p-4 rounded-s-xl rounded-b-xl bg-slate-200">
+        <div className="text-lg font-bold text-zinc-700 dark:text-slate-200">
+          לה״ב
+        </div>
+        <div className="p-4 rounded-s-xl rounded-b-xl bg-slate-200 dark:bg-[#272822]">
           {message}
         </div>
         <div className="text-xs font-normal me-1 mt-1 text-slate-600">
