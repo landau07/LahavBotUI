@@ -24,6 +24,7 @@ export function DatePickerMessage({ onDatePicked }: DatePickerMessageProps) {
           lang="he"
           onSelect={setSelectedDay}
           style={{ margin: 6 }}
+          toDate={new Date()}
           footer={
             selectedDay && (
               <p className="flex flex-row-reverse mt-4 me-2">
