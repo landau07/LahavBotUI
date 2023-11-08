@@ -1,12 +1,12 @@
 import { format } from "date-fns";
-import { ReactNode } from "react";
+import { HTMLProps, ReactNode } from "react";
 import { LahavAvatar } from "./ChatHeader";
 
 type ChatMessageProps = {
   children: ReactNode | string;
   sender: "user" | "bot";
   timestamp?: Date;
-};
+} & HTMLProps<HTMLDivElement>;
 
 export function ChatMessage({ sender, ...rest }: ChatMessageProps) {
   if (sender === "bot") {
@@ -19,6 +19,8 @@ export function ChatMessage({ sender, ...rest }: ChatMessageProps) {
 export function BotMessage({
   children: message,
   timestamp,
+  className: classNameFromProps = "",
+  ...restDivProps
 }: Omit<ChatMessageProps, "sender">) {
   return (
     <div className="flex flex-row-reverse">
@@ -27,7 +29,10 @@ export function BotMessage({
         <div className="text-lg font-bold text-zinc-700 dark:text-slate-200">
           לה״ב
         </div>
-        <div className="p-4 rounded-s-xl rounded-b-xl bg-slate-200 dark:bg-[#272822]">
+        <div
+          className={`p-4 rounded-s-xl rounded-b-xl bg-slate-200 dark:bg-[#272822] ${classNameFromProps}`}
+          {...restDivProps}
+        >
           {message}
         </div>
         <div className="text-xs font-normal me-1 mt-1 text-slate-600">

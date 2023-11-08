@@ -6,7 +6,7 @@ import { UserMessage } from "./ChatMessage";
 import { ConfirmButton } from "./ConfirmButton";
 
 type DatePickerMessageProps = {
-  onDatePicked: () => void;
+  onDatePicked: (date: Date) => void;
 };
 
 export function DatePickerMessage({ onDatePicked }: DatePickerMessageProps) {
@@ -39,7 +39,7 @@ export function DatePickerMessage({ onDatePicked }: DatePickerMessageProps) {
         position="start"
         disabled={!selectedDay}
         onDoneButtonClicked={() => {
-          onDatePicked();
+          onDatePicked(selectedDay!);
         }}
       />
     </div>

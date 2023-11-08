@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import "react-day-picker/dist/style.css";
 import { chatSteps } from "./signals";
 import { takeUntil } from "./utils/arrayUtils";
+import { sendRequestTicket } from "./utils/requestTicketUtils";
 
 export type ChatDecisionTreeNode = {
   id: number;
@@ -9,10 +10,12 @@ export type ChatDecisionTreeNode = {
   children: (ChatDecisionTreeNode | null)[];
   branchKey: number; // used to avoid storing state when going back in the flow
   sender: "user" | "bot";
+  stepValueToLog?: string;
 } & (
   | {
       type: "text";
       content: string | ReactNode;
+      divProps?: React.HTMLProps<HTMLDivElement>;
     }
   | {
       type: "selectionBox";
@@ -57,7 +60,7 @@ const isBabyStillInHospitalStep: ChatDecisionTreeNode = {
   children: [],
   sender: "bot",
   type: "text",
-  content: "האם התינוק עדין בפגיה?",
+  content: "האם התינוק עדין בפגייה?",
 };
 
 const isBabyStillInHospitalAnswerStep: ChatDecisionTreeNode = {
@@ -77,7 +80,7 @@ const whichHospitalStep: ChatDecisionTreeNode = {
   children: [],
   sender: "bot",
   type: "dropdown",
-  text: "באיזו פגיה נמצאים?",
+  text: "באיזו פגייה נמצאים?",
   options: [
     "תל השומר",
     "שניידר",
@@ -117,6 +120,11 @@ const notImplementedYetStepTemplate: ChatDecisionTreeNode = {
   sender: "bot",
   type: "text",
   content: "סורי, עוד לא מימשנו את הנתיב הזה...",
+  divProps: {
+    onClick: sendRequestTicket,
+    className:
+      "transform hover:scale-105 transition-transform duration-50 cursor-pointer",
+  },
 };
 
 welcomeStep.children = [userTypeStep];
