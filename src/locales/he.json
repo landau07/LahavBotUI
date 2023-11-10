@@ -23,5 +23,8 @@
   "whatWasTheBirthDate": "מה היה תאריך הלידה?",
   "pathNotReadyYet": "סורי, עוד לא מימשנו את הנתיב הזה...",
   "confirm": "אשר",
-  "typeMessage": "הקלד הודעה..."
+  "typeMessage": "הקלד הודעה...",
+  "whatWasTheBirthWeekAndDay": "באיזה שבוע ויום התינוק נולד?",
+  "week": "שבוע",
+  "day": "יום"
 }

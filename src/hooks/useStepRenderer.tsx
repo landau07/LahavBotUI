@@ -28,6 +28,7 @@ export function useStepRenderer() {
             }
             key={index}
             timestamp={step.timestamp}
+            showNameAndAvatar={step.sender !== step.parent?.sender}
             {...step.divProps}
           />
         );

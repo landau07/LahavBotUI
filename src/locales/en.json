@@ -23,5 +23,8 @@
   "whatWasTheBirthDate": "What was the birth date?",
   "pathNotReadyYet": "Oops, this path has not implemented yet...",
   "confirm": "Confirm",
-  "typeMessage": "Type a message..."
+  "typeMessage": "Type a message...",
+  "whatWasTheBirthWeekAndDay": "What was the birth week and day or the baby?",
+  "week": "Week",
+  "day": "Day"
 }

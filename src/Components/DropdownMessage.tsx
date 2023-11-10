@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { BotMessage, UserMessage } from "./ChatMessage";
 import { ConfirmButton } from "./ConfirmButton";
 
@@ -15,7 +15,10 @@ export function DropdownMessage({
   onConfirmClicked,
 }: DropdownMessageProps) {
   const [isAfterConfirmState, setIsAfterConfirmState] = useState(false);
-  const [selection, setSelection] = useState("");
+  const intl = useIntl();
+  const [selection, setSelection] = useState(
+    intl.formatMessage({ id: options[0] })
+  );
 
   return (
     <>

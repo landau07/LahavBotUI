@@ -8,12 +8,12 @@ type ConfirmButtonProps = {
 
 export function ConfirmButton({
   onDoneButtonClicked,
-  position,
+  position = "end",
   ...rest
 }: ConfirmButtonProps) {
   return (
     <div
-      className={`flex ms-14 ${
+      className={`flex mt-1 ms-14 ${
         position === "start" ? "flex-row-reverse" : "flex-row"
       }`}
     >

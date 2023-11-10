@@ -1,5 +1,6 @@
 import { ReactNode, createContext, useState } from "react";
 import "react-day-picker/dist/style.css";
+import { BirthWeekAndDaySelector } from "../Components/BirthWeekAndDaySelector";
 import { useConversationLogger } from "../hooks/useConversationLogger";
 import { takeUntil } from "../utils/arrayUtils";
 import { ChatDecisionTreeNode, DecisionTreeContextType } from "./types";
@@ -92,6 +93,27 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     type: "date",
   };
 
+  const bornWeekAndDayStep: ChatDecisionTreeNode = {
+    id: 7,
+    branchKey: 0,
+    parent: birthDateAnswerStep,
+    children: [],
+    sender: "bot",
+    type: "text",
+    content: "whatWasTheBirthWeekAndDay",
+  };
+
+  const bornWeekAndDayAnswerStep: ChatDecisionTreeNode = {
+    id: 8,
+    branchKey: 0,
+    parent: bornWeekAndDayStep,
+    children: [],
+    sender: "user",
+    type: "text",
+    content: <BirthWeekAndDaySelector />,
+
+  };
+
   const notImplementedYetStepTemplate: ChatDecisionTreeNode = {
     id: -1,
     branchKey: 0,
@@ -107,13 +129,15 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     },
   };
 
+  // Wire children:
   welcomeStep.children = [userTypeStep];
   userTypeStep.children = [isBabyStillInHospitalStep, null, null, null, null];
   isBabyStillInHospitalStep.children = [isBabyStillInHospitalAnswerStep];
   isBabyStillInHospitalAnswerStep.children = [whichHospitalStep, null];
   whichHospitalStep.children = [birthDateStep];
-
   birthDateStep.children = [birthDateAnswerStep];
+  birthDateAnswerStep.children = [bornWeekAndDayStep];
+  bornWeekAndDayStep.children = [bornWeekAndDayAnswerStep];
 
   const setNextStep = (step: ChatDecisionTreeNode, childIndex: number = 0) => {
     const nextStep = step.children[childIndex]
