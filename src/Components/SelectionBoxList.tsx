@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { FormattedMessage } from "react-intl";
 import { cn } from "../utils/classnames";
+import { FormattedMessage } from "react-intl";
 
 type SelectionBoxProps = {
   boxes: string[];
@@ -11,7 +11,7 @@ export function SelectionBoxList({ boxes, onBoxClicked }: SelectionBoxProps) {
   const [selectedBox, setSelectedBox] = useState(-1);
 
   return (
-    <div className="flex justify-start me-14 flex-wrap mb-3 gap-2 items-center">
+    <div className="flex flex-row justify-end ms-14 flex-wrap mb-3 gap-2">
       {boxes.map((boxTextId, i) => (
         <button
           className={cn(

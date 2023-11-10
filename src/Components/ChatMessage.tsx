@@ -24,9 +24,9 @@ export function BotMessage({
   ...restDivProps
 }: Omit<ChatMessageProps, "sender">) {
   return (
-    <div className="flex flex-row-reverse">
-      <LahavAvatar addClassName="mt-4 ms-3" />
-      <div className="flex flex-col text-end">
+    <div className="flex">
+      <LahavAvatar addClassName="mt-4 me-3" />
+      <div className="flex flex-col text-start">
         <div className="text-lg font-bold text-zinc-700 dark:text-slate-200">
           <FormattedMessage id="lahav" />
         </div>
@@ -49,7 +49,7 @@ export function UserMessage({
   timestamp,
 }: Omit<ChatMessageProps, "sender">) {
   return (
-    <div className="flex">
+    <div className="flex flex-row-reverse">
       <div className="flex flex-col">
         <div className="text-white p-4 rounded-e-xl rounded-b-xl bg-lahav">
           {children}

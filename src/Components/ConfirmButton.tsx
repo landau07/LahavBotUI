@@ -13,8 +13,8 @@ export function ConfirmButton({
 }: ConfirmButtonProps) {
   return (
     <div
-      className={`flex me-14 ${
-        position === "start" ? "flex-row" : "flex-row-reverse"
+      className={`flex ms-14 ${
+        position === "start" ? "flex-row-reverse" : "flex-row"
       }`}
     >
       <button

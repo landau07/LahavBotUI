@@ -28,11 +28,7 @@ export function DropdownMessage({
             <select
               className="dropdown border rounded-md p-2 mt-2 whitespace-nowrap overflow-hidden text-ellipsis"
               value={selection}
-              onChange={(e) =>
-                setSelection(
-                  e.target.selectedOptions[0].innerText || e.target.value
-                )
-              }
+              onChange={(e) => setSelection(e.target.value)}
             >
               <option value="" disabled>
                 <FormattedMessage id="selectOption" />
@@ -56,7 +52,9 @@ export function DropdownMessage({
           />
         )}
       </div>
-      {isAfterConfirmState && <UserMessage children={selection} />}
+      {isAfterConfirmState && (
+        <UserMessage children={<FormattedMessage id={selection} />} />
+      )}
     </>
   );
 }
