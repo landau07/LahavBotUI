@@ -14,10 +14,9 @@ export function useStepRenderer() {
     switch (step.type) {
       case "text":
         if (typeof step.content === "string") {
-          step.stepValueToLog =
-            step.sender === "user"
-              ? step.content
-              : intl.formatMessage({ id: step.content });
+          step.stepValueToLog = step.shouldLocalizeData
+            ? intl.formatMessage({ id: step.content })
+            : step.content;
         }
         return (
           <ChatMessage
@@ -54,10 +53,13 @@ export function useStepRenderer() {
             key={`${step.branchKey}_${index}`}
             onBoxClicked={(boxIndex: number) => {
               setNextStep(step, boxIndex);
-              step.stepValueToLog = intl.formatMessage({
-                id: step.boxes[boxIndex],
-              });
+              step.stepValueToLog = step.shouldLocalizeData
+                ? intl.formatMessage({
+                    id: step.boxes[boxIndex],
+                  })
+                : step.boxes[boxIndex];
             }}
+            shouldLocalizeData={step.shouldLocalizeData}
           />
         );
       case "confirmComponent": {

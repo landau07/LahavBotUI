@@ -20,11 +20,28 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     type: "text",
     content: "welcomeMessage",
     timestamp: new Date(),
+    shouldLocalizeData: true,
   };
   const [chatSteps, setChatSteps] = useState<ChatDecisionTreeNode[]>([
     welcomeStep,
   ]);
   const { logConversation } = useConversationLogger(chatSteps);
+
+  const notImplementedYetStepTemplate: ChatDecisionTreeNode = {
+    id: -1,
+    branchKey: 0,
+    parent: null,
+    children: [],
+    sender: "bot",
+    type: "text",
+    content: "pathNotReadyYet",
+    shouldLocalizeData: true,
+    divProps: {
+      onClick: logConversation,
+      className:
+        "transform hover:scale-105 transition-transform duration-50 cursor-pointer",
+    },
+  };
 
   const userTypeStep: ChatDecisionTreeNode = {
     id: 1,
@@ -34,6 +51,7 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     sender: "user",
     type: "selectionBox",
     boxes: ["parent", "highRiskPregnancy", "teamMember", "donator", "other"],
+    shouldLocalizeData: true,
   };
 
   const isBabyStillInHospitalStep: ChatDecisionTreeNode = {
@@ -44,6 +62,7 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     sender: "bot",
     type: "text",
     content: "isStillInNICU",
+    shouldLocalizeData: true,
   };
 
   const isBabyStillInHospitalAnswerStep: ChatDecisionTreeNode = {
@@ -54,6 +73,7 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     sender: "user",
     type: "selectionBox",
     boxes: ["yes", "no"],
+    shouldLocalizeData: true,
   };
 
   const whichHospitalStep: ChatDecisionTreeNode = {
@@ -74,10 +94,11 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
       "hadassah",
       "maayaneiHayeshua",
     ],
+    shouldLocalizeData: true,
   };
 
   const birthDateStep: ChatDecisionTreeNode = {
-    id: 6,
+    id: 5,
     branchKey: 0,
     parent: whichHospitalStep,
     children: [],
@@ -89,7 +110,7 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
   };
 
   const bornWeekAndDayStep: ChatDecisionTreeNode = {
-    id: 7,
+    id: 6,
     branchKey: 0,
     parent: birthDateStep,
     children: [],
@@ -100,19 +121,26 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     shouldLocalizeData: false,
   };
 
-  const notImplementedYetStepTemplate: ChatDecisionTreeNode = {
-    id: -1,
+  const howManyNewbornsStep: ChatDecisionTreeNode = {
+    id: 7,
     branchKey: 0,
-    parent: userTypeStep,
+    parent: bornWeekAndDayStep,
     children: [],
     sender: "bot",
     type: "text",
-    content: "pathNotReadyYet",
-    divProps: {
-      onClick: logConversation,
-      className:
-        "transform hover:scale-105 transition-transform duration-50 cursor-pointer",
-    },
+    content: "numberOfNewborns",
+    shouldLocalizeData: true,
+  };
+
+  const numOfNewbornsAnswerStep: ChatDecisionTreeNode = {
+    id: 8,
+    branchKey: 0,
+    parent: howManyNewbornsStep,
+    children: [],
+    sender: "user",
+    type: "selectionBox",
+    boxes: ["1", "2", "3", "4"],
+    shouldLocalizeData: false,
   };
 
   // Wire children:
@@ -122,6 +150,8 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
   isBabyStillInHospitalAnswerStep.children = [whichHospitalStep, null];
   whichHospitalStep.children = [birthDateStep];
   birthDateStep.children = [bornWeekAndDayStep];
+  bornWeekAndDayStep.children = [howManyNewbornsStep];
+  howManyNewbornsStep.children = [numOfNewbornsAnswerStep];
 
   const setNextStep = (step: ChatDecisionTreeNode, childIndex: number = 0) => {
     const nextStep = step.children[childIndex]

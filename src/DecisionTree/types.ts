@@ -9,6 +9,7 @@ export type ChatDecisionTreeNode = {
   branchKey: number; // used to avoid storing state when going back in the flow
   sender: "user" | "bot";
   stepValueToLog?: string;
+  shouldLocalizeData: boolean;
 } & (
   | {
       type: "text";
@@ -32,7 +33,6 @@ export type ChatDecisionTreeNode = {
       type: "confirmComponent";
       component: ({ setData }: ConfirmComponentProps) => JSX.Element;
       defaultValue: string;
-      shouldLocalizeData: boolean;
     }
 );
 

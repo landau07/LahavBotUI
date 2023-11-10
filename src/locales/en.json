@@ -26,5 +26,6 @@
   "typeMessage": "Type a message...",
   "whatWasTheBirthWeekAndDay": "What was the birth week and day or the baby?",
   "week": "Week",
-  "day": "Day"
+  "day": "Day",
+  "numberOfNewborns": "How many newborns?"
 }

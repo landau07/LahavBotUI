@@ -26,5 +26,6 @@
   "typeMessage": "הקלד הודעה...",
   "whatWasTheBirthWeekAndDay": "באיזה שבוע ויום התינוק נולד?",
   "week": "שבוע",
-  "day": "יום"
+  "day": "יום",
+  "numberOfNewborns":"מספר הילודים?"
 }

@@ -1,18 +1,23 @@
 import { useState } from "react";
-import { cn } from "../utils/classnames";
 import { FormattedMessage } from "react-intl";
+import { cn } from "../utils/classnames";
 
 type SelectionBoxProps = {
   boxes: string[];
   onBoxClicked: (boxIndex: number) => void;
+  shouldLocalizeData: boolean;
 };
 
-export function SelectionBoxList({ boxes, onBoxClicked }: SelectionBoxProps) {
+export function SelectionBoxList({
+  boxes,
+  onBoxClicked,
+  shouldLocalizeData,
+}: SelectionBoxProps) {
   const [selectedBox, setSelectedBox] = useState(-1);
 
   return (
     <div className="flex flex-row justify-end ms-14 flex-wrap mb-3 gap-2">
-      {boxes.map((boxTextId, i) => (
+      {boxes.map((box, i) => (
         <button
           className={cn(
             "break-words text-sm rounded-md border text-lahav border-lahav dark:text-lahav-dark dark:border-lahav-dark active:bg-fuchsia-900 active:bg-opacity-50 py-2 px-4 hover:bg-opacity-10 hover:bg-lahav",
@@ -25,7 +30,7 @@ export function SelectionBoxList({ boxes, onBoxClicked }: SelectionBoxProps) {
             setSelectedBox(i);
           }}
         >
-          <FormattedMessage id={boxTextId} />
+          {shouldLocalizeData ? <FormattedMessage id={box} /> : box}
         </button>
       ))}
     </div>
