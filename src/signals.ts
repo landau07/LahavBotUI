@@ -1,7 +1,5 @@
 import { effect, signal } from "@preact/signals-react";
-import { ChatDecisionTreeNode, welcomeStep } from "./ChatDecisionTree";
 
-export const chatSteps = signal<ChatDecisionTreeNode[]>([welcomeStep]);
 // Fetch isDarkMode from localStorage:
 const isDarkModeFromLocalStorage =
   Boolean(localStorage.getItem("isDarkMode")) ?? false;
@@ -16,3 +14,7 @@ effect(() => {
   );
   localStorage.setItem("isDarkMode", isDarkMode.value ? "1" : "");
 });
+
+export const locale = signal<"he" | "en">("he");
+export const toggleLocale = () =>
+  (locale.value = locale.value === "he" ? "en" : "he");

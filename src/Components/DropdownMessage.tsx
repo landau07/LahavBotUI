@@ -1,10 +1,11 @@
 import { useState } from "react";
+import { FormattedMessage } from "react-intl";
 import { BotMessage, UserMessage } from "./ChatMessage";
 import { ConfirmButton } from "./ConfirmButton";
 
 type DropdownMessageProps = {
   text: string;
-  options: string[];
+  options: string[]; // Text ids for localization
   onConfirmClicked: (selection: string) => void;
 };
 
@@ -21,20 +22,24 @@ export function DropdownMessage({
       <div>
         <BotMessage>
           <div className="text-slate-800 dark:text-white text-start">
-            {text}
+            <FormattedMessage id={text} />
           </div>
           {!isAfterConfirmState && (
             <select
               className="dropdown border rounded-md p-2 mt-2 whitespace-nowrap overflow-hidden text-ellipsis"
               value={selection}
-              onChange={(e) => setSelection(e.target.value)}
+              onChange={(e) =>
+                setSelection(
+                  e.target.selectedOptions[0].innerText || e.target.value
+                )
+              }
             >
               <option value="" disabled>
-                בחר אפשרות
+                <FormattedMessage id="selectOption" />
               </option>
               {options.map((option, index) => (
                 <option key={index} value={option}>
-                  {option}
+                  <FormattedMessage id={option} />
                 </option>
               ))}
             </select>

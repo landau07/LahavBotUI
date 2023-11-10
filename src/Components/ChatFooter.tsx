@@ -1,8 +1,10 @@
 import { ChangeEvent, useState } from "react";
 import { Send } from "react-feather";
+import { useIntl } from "react-intl";
 
 export function ChatFooter() {
   const [message, setMessage] = useState<string>("");
+  const intl = useIntl();
 
   const handleMessageChange = (e: ChangeEvent<HTMLInputElement>) => {
     setMessage(e.target.value);
@@ -22,12 +24,12 @@ export function ChatFooter() {
           <input
             type="text"
             className="w-full bg-rgb-176-193-212 p-2 rounded-lg pr-4 h-10 resize-none outline-none focus:outline-none focus:ring-2 focus:ring-blue-600"
-            placeholder="הקלד הודעה..."
+            placeholder={intl.formatMessage({ id: "typeMessage" })}
             value={message}
             onChange={handleMessageChange}
           />
           <button className="p-2" onClick={handleSendMessage}>
-            <Send className="text-gray-400 scale-x-[-1]" size={20} />
+            <Send className="text-gray-400 rtl:scale-x-[-1]" size={20} />
           </button>
         </div>
       </div>
