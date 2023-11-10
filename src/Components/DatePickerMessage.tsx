@@ -1,50 +1,50 @@
-import { format } from "date-fns";
 import { enUS, he } from "date-fns/locale";
 import { useState } from "react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
+import { FormattedMessage } from "react-intl";
 import { locale } from "../signals";
-import { ChatMessage } from "./ChatMessage";
-import { ConfirmButton } from "./ConfirmButton";
+import { dateToString } from "../utils/dateUtils";
+import { messageTextClassNames } from "../utils/sharedClassNames";
+import { ConfirmComponentProps } from "./ConfirmComponentWrapper";
 
-type DatePickerMessageProps = {
-  onDatePicked: (date: Date) => void;
-};
+type DatePickerMessageProps = ConfirmComponentProps;
 
-export function DatePickerMessage({ onDatePicked }: DatePickerMessageProps) {
+export function DatePickerMessage({
+  setData,
+  isAfterConfirmState,
+}: DatePickerMessageProps) {
   const today = new Date();
   const [selectedDay, setSelectedDay] = useState<Date | undefined>(today);
   const fnsLocale = locale.value === "he" ? he : enUS;
+  const selectedDayString = dateToString(selectedDay!);
 
   return (
-    <div>
-      <ChatMessage sender="user">
+    <>
+      <div className={messageTextClassNames}>
+        <FormattedMessage id={"whatWasTheBirthDate"} />
+      </div>
+      {!isAfterConfirmState && (
         <DayPicker
           mode="single"
           required
-          selected={selectedDay}
+          selected={selectedDay!}
           dir={document.dir}
           locale={fnsLocale}
-          onSelect={setSelectedDay}
+          onSelect={(day) => {
+            setSelectedDay(day);
+            setData(dateToString(day!));
+          }}
           style={{ margin: 6 }}
           toDate={new Date()}
           footer={
-            selectedDay && (
-              <p className="flex flex-row-reverse mt-4 me-2">
-                {format(selectedDay, "PPP", { locale: fnsLocale })}
-              </p>
-            )
+            <p className="flex flex-row-reverse mt-4 me-2">
+              {selectedDayString}
+            </p>
           }
           className="bg-slate-950 rounded-lg p-2 bg-opacity-50"
         />
-      </ChatMessage>
-      <ConfirmButton
-        position="start"
-        disabled={!selectedDay}
-        onClick={() => {
-          onDatePicked(selectedDay!);
-        }}
-      />
-    </div>
+      )}
+    </>
   );
 }

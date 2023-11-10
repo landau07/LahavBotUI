@@ -1,8 +1,10 @@
 import { ReactNode, createContext, useState } from "react";
 import "react-day-picker/dist/style.css";
 import { BirthWeekAndDaySelector } from "../Components/BirthWeekAndDaySelector";
+import { DatePickerMessage } from "../Components/DatePickerMessage";
 import { useConversationLogger } from "../hooks/useConversationLogger";
 import { takeUntil } from "../utils/arrayUtils";
+import { dateToString } from "../utils/dateUtils";
 import { ChatDecisionTreeNode, DecisionTreeContextType } from "./types";
 
 export const DecisionTreeContext =
@@ -75,28 +77,21 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
   };
 
   const birthDateStep: ChatDecisionTreeNode = {
-    id: 5,
+    id: 6,
     branchKey: 0,
     parent: whichHospitalStep,
     children: [],
-    sender: "bot",
-    type: "text",
-    content: "whatWasTheBirthDate",
-  };
-
-  const birthDateAnswerStep: ChatDecisionTreeNode = {
-    id: 6,
-    branchKey: 0,
-    parent: birthDateStep,
-    children: [],
     sender: "user",
-    type: "date",
+    type: "confirmComponent",
+    component: DatePickerMessage,
+    defaultValue: dateToString(new Date()),
+    shouldLocalizeData: false,
   };
 
   const bornWeekAndDayStep: ChatDecisionTreeNode = {
     id: 7,
     branchKey: 0,
-    parent: birthDateAnswerStep,
+    parent: birthDateStep,
     children: [],
     sender: "user",
     type: "confirmComponent",
@@ -126,8 +121,7 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
   isBabyStillInHospitalStep.children = [isBabyStillInHospitalAnswerStep];
   isBabyStillInHospitalAnswerStep.children = [whichHospitalStep, null];
   whichHospitalStep.children = [birthDateStep];
-  birthDateStep.children = [birthDateAnswerStep];
-  birthDateAnswerStep.children = [bornWeekAndDayStep];
+  birthDateStep.children = [bornWeekAndDayStep];
 
   const setNextStep = (step: ChatDecisionTreeNode, childIndex: number = 0) => {
     const nextStep = step.children[childIndex]

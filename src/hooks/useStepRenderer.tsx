@@ -1,8 +1,6 @@
-import { format } from "date-fns";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { ChatMessage } from "../Components/ChatMessage";
 import { ConfirmComponentWrapper } from "../Components/ConfirmComponentWrapper";
-import { DatePickerMessage } from "../Components/DatePickerMessage";
 import { DropdownMessage } from "../Components/DropdownMessage";
 import { SelectionBoxList } from "../Components/SelectionBoxList";
 import { ChatDecisionTreeNode } from "../DecisionTree/types";
@@ -10,12 +8,16 @@ import { useDecisionTree } from "../DecisionTree/useDecisionTree";
 
 export function useStepRenderer() {
   const { setNextStep } = useDecisionTree();
+  const intl = useIntl();
 
   function renderStep(step: ChatDecisionTreeNode, index: number) {
     switch (step.type) {
       case "text":
         if (typeof step.content === "string") {
-          step.stepValueToLog = step.content;
+          step.stepValueToLog =
+            step.sender === "user"
+              ? step.content
+              : intl.formatMessage({ id: step.content });
         }
         return (
           <ChatMessage
@@ -41,7 +43,7 @@ export function useStepRenderer() {
             key={`${step.branchKey}_${index}`}
             onConfirmClicked={(selection) => {
               setNextStep(step);
-              step.stepValueToLog = selection;
+              step.stepValueToLog = intl.formatMessage({ id: selection });
             }}
           />
         );
@@ -52,17 +54,9 @@ export function useStepRenderer() {
             key={`${step.branchKey}_${index}`}
             onBoxClicked={(boxIndex: number) => {
               setNextStep(step, boxIndex);
-              step.stepValueToLog = step.boxes[boxIndex];
-            }}
-          />
-        );
-      case "date":
-        return (
-          <DatePickerMessage
-            key={`${step.branchKey}_${index}`}
-            onDatePicked={(date) => {
-              setNextStep(step);
-              step.stepValueToLog = format(date, "dd/MM/yyyy");
+              step.stepValueToLog = intl.formatMessage({
+                id: step.boxes[boxIndex],
+              });
             }}
           />
         );
