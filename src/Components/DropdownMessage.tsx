@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-import { BotMessage, UserMessage } from "./ChatMessage";
+import { FormattedMessage } from "react-intl";
+import { ChatMessage } from "./ChatMessage";
 import { ConfirmButton } from "./ConfirmButton";
+import { messageTextClassNames } from "../utils/sharedClassNames";
 
 type DropdownMessageProps = {
   text: string;
@@ -15,16 +16,13 @@ export function DropdownMessage({
   onConfirmClicked,
 }: DropdownMessageProps) {
   const [isAfterConfirmState, setIsAfterConfirmState] = useState(false);
-  const intl = useIntl();
-  const [selection, setSelection] = useState(
-    intl.formatMessage({ id: options[0] })
-  );
+  const [selection, setSelection] = useState(options[0]);
 
   return (
     <>
       <div>
-        <BotMessage>
-          <div className="text-slate-800 dark:text-white text-start">
+        <ChatMessage sender="bot">
+          <div className={messageTextClassNames}>
             <FormattedMessage id={text} />
           </div>
           {!isAfterConfirmState && (
@@ -43,12 +41,12 @@ export function DropdownMessage({
               ))}
             </select>
           )}
-        </BotMessage>
+        </ChatMessage>
         {!isAfterConfirmState && selection && (
           <ConfirmButton
             position="end"
             disabled={!selection}
-            onDoneButtonClicked={() => {
+            onClick={() => {
               setIsAfterConfirmState(true);
               onConfirmClicked(selection);
             }}
@@ -56,7 +54,10 @@ export function DropdownMessage({
         )}
       </div>
       {isAfterConfirmState && (
-        <UserMessage children={<FormattedMessage id={selection} />} />
+        <ChatMessage
+          sender="user"
+          children={<FormattedMessage id={selection} />}
+        />
       )}
     </>
   );

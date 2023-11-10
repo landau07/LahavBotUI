@@ -4,7 +4,7 @@ import { useState } from "react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { locale } from "../signals";
-import { UserMessage } from "./ChatMessage";
+import { ChatMessage } from "./ChatMessage";
 import { ConfirmButton } from "./ConfirmButton";
 
 type DatePickerMessageProps = {
@@ -18,7 +18,7 @@ export function DatePickerMessage({ onDatePicked }: DatePickerMessageProps) {
 
   return (
     <div>
-      <UserMessage>
+      <ChatMessage sender="user">
         <DayPicker
           mode="single"
           required
@@ -37,11 +37,11 @@ export function DatePickerMessage({ onDatePicked }: DatePickerMessageProps) {
           }
           className="bg-slate-950 rounded-lg p-2 bg-opacity-50"
         />
-      </UserMessage>
+      </ChatMessage>
       <ConfirmButton
         position="start"
         disabled={!selectedDay}
-        onDoneButtonClicked={() => {
+        onClick={() => {
           onDatePicked(selectedDay!);
         }}
       />

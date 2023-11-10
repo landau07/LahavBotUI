@@ -98,20 +98,11 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     branchKey: 0,
     parent: birthDateAnswerStep,
     children: [],
-    sender: "bot",
-    type: "text",
-    content: "whatWasTheBirthWeekAndDay",
-  };
-
-  const bornWeekAndDayAnswerStep: ChatDecisionTreeNode = {
-    id: 8,
-    branchKey: 0,
-    parent: bornWeekAndDayStep,
-    children: [],
     sender: "user",
-    type: "text",
-    content: <BirthWeekAndDaySelector />,
-
+    type: "confirmComponent",
+    component: BirthWeekAndDaySelector,
+    defaultValue: "33 + 0",
+    shouldLocalizeData: false,
   };
 
   const notImplementedYetStepTemplate: ChatDecisionTreeNode = {
@@ -137,7 +128,6 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
   whichHospitalStep.children = [birthDateStep];
   birthDateStep.children = [birthDateAnswerStep];
   birthDateAnswerStep.children = [bornWeekAndDayStep];
-  bornWeekAndDayStep.children = [bornWeekAndDayAnswerStep];
 
   const setNextStep = (step: ChatDecisionTreeNode, childIndex: number = 0) => {
     const nextStep = step.children[childIndex]

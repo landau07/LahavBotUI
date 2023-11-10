@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { ConfirmComponentProps } from "../Components/ConfirmComponentWrapper";
 
 export type ChatDecisionTreeNode = {
   id: number;
@@ -26,6 +27,12 @@ export type ChatDecisionTreeNode = {
     }
   | {
       type: "date";
+    }
+  | {
+      type: "confirmComponent";
+      component: ({ setData }: ConfirmComponentProps) => JSX.Element;
+      defaultValue: string;
+      shouldLocalizeData: boolean;
     }
 );
 

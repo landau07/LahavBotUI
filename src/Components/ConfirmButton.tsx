@@ -2,12 +2,12 @@ import { ButtonHTMLAttributes } from "react";
 import { FormattedMessage } from "react-intl";
 
 type ConfirmButtonProps = {
-  onDoneButtonClicked: () => void;
+  onClick: () => void;
   position?: "start" | "end";
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 export function ConfirmButton({
-  onDoneButtonClicked,
+  onClick,
   position = "end",
   ...rest
 }: ConfirmButtonProps) {
@@ -18,7 +18,7 @@ export function ConfirmButton({
       }`}
     >
       <button
-        onClick={onDoneButtonClicked}
+        onClick={onClick}
         className="text-white py-2 px-4 rounded-md bg-lahav hover:bg-fuchsia-900 active:bg-fuchsia-950"
         {...rest}
       >

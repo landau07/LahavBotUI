@@ -19,7 +19,7 @@ export function ChatMessage({ sender, ...rest }: ChatMessageProps) {
   }
 }
 
-export function BotMessage({
+function BotMessage({
   children,
   timestamp,
   showNameAndAvatar = true,
@@ -54,7 +54,7 @@ export function BotMessage({
   );
 }
 
-export function UserMessage({
+function UserMessage({
   children,
   timestamp,
 }: Omit<ChatMessageProps, "sender">) {

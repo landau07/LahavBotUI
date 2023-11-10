@@ -1,6 +1,7 @@
 import { format } from "date-fns";
 import { FormattedMessage } from "react-intl";
 import { ChatMessage } from "../Components/ChatMessage";
+import { ConfirmComponentWrapper } from "../Components/ConfirmComponentWrapper";
 import { DatePickerMessage } from "../Components/DatePickerMessage";
 import { DropdownMessage } from "../Components/DropdownMessage";
 import { SelectionBoxList } from "../Components/SelectionBoxList";
@@ -65,6 +66,20 @@ export function useStepRenderer() {
             }}
           />
         );
+      case "confirmComponent": {
+        return (
+          <ConfirmComponentWrapper
+            key={`${step.branchKey}_${index}`}
+            onConfirmButtonClicked={(data) => {
+              setNextStep(step);
+              step.stepValueToLog = data;
+            }}
+            ContentComponent={step.component}
+            defaultValue={step.defaultValue}
+            shouldLocalizeData={step.shouldLocalizeData}
+          />
+        );
+      }
       default:
         throw new Error("Unknown step type");
     }

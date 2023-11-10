@@ -5,7 +5,7 @@ import { useStepRenderer } from "../hooks/useStepRenderer";
 export function ChatBody() {
   const { chatSteps } = useDecisionTree();
   const { renderStep } = useStepRenderer();
-  
+
   let curStep = chatSteps[chatSteps.length - 1];
 
   while (

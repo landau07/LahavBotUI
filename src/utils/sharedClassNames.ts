@@ -1,0 +1,1 @@
+export const messageTextClassNames = "text-slate-800 dark:text-white text-start";
