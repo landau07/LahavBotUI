@@ -27,6 +27,7 @@ export function useStepRenderer() {
               )
             }
             key={index}
+            timestamp={step.timestamp}
             {...step.divProps}
           />
         );

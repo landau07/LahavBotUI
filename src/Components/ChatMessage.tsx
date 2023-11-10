@@ -36,7 +36,7 @@ export function BotMessage({
         >
           {children}
         </div>
-        <div className="text-xs font-normal me-1 mt-1 text-slate-600">
+        <div className="text-xs font-normal me-1 mt-1 text-slate-600 dark:text-white">
           {timestamp && format(timestamp, "HH:mm")}
         </div>
       </div>

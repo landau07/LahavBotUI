@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 export type ChatDecisionTreeNode = {
   id: number;
   parent: ChatDecisionTreeNode | null;
+  timestamp?: Date;
   children: (ChatDecisionTreeNode | null)[];
   branchKey: number; // used to avoid storing state when going back in the flow
   sender: "user" | "bot";

@@ -16,6 +16,7 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     sender: "bot",
     type: "text",
     content: "welcomeMessage",
+    timestamp: new Date(),
   };
   const [chatSteps, setChatSteps] = useState<ChatDecisionTreeNode[]>([
     welcomeStep,
