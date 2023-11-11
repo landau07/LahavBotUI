@@ -1,8 +1,9 @@
 import { enUS, he } from "date-fns/locale";
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { FormattedMessage } from "react-intl";
+import { usePrevious } from "../hooks/usePrevious";
 import { locale } from "../signals";
 import { dateToString } from "../utils/dateUtils";
 import { messageTextClassNames } from "../utils/sharedClassNames";
@@ -19,6 +20,14 @@ export function DatePickerMessage({
   const fnsLocale = locale.value === "he" ? he : enUS;
   const selectedDayString = dateToString(selectedDay!);
 
+  const previousDateString = usePrevious(selectedDayString);
+
+  useLayoutEffect(() => {
+    if (previousDateString !== selectedDayString) {
+      setData(selectedDayString);
+    }
+  }, [previousDateString, selectedDayString, setData]);
+
   return (
     <>
       <div className={messageTextClassNames}>
@@ -31,10 +40,7 @@ export function DatePickerMessage({
           selected={selectedDay!}
           dir={document.dir}
           locale={fnsLocale}
-          onSelect={(day) => {
-            setSelectedDay(day);
-            setData(dateToString(day!));
-          }}
+          onSelect={(day) => setSelectedDay(day)}
           style={{ margin: 6 }}
           toDate={new Date()}
           footer={
