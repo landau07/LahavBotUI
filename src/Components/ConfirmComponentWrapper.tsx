@@ -43,7 +43,7 @@ export function ConfirmComponentWrapper<TProps>({
       </ChatMessage>
       {!isAfterConfirmState && data && (
         <ConfirmButton
-          position="end"
+          position="start"
           disabled={!data}
           onClick={() => {
             setIsAfterConfirmState(true);

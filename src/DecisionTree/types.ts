@@ -24,15 +24,6 @@ export type ChatDecisionTreeNode<TInnerComponentProps = unknown> = {
       boxes: string[];
     }
   | {
-      type: "dropdown";
-      options: string[];
-      text: string;
-      onOptionSelected?: (boxText: string) => void;
-    }
-  | {
-      type: "date";
-    }
-  | {
       type: "confirmComponent";
       component: ComponentType<ConfirmComponentProps<TInnerComponentProps>>;
       defaultValue: string;

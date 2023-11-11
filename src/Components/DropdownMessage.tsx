@@ -1,63 +1,49 @@
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { ChatMessage } from "./ChatMessage";
-import { ConfirmButton } from "./ConfirmButton";
+import { usePrevious } from "../hooks/usePrevious";
 import { messageTextClassNames } from "../utils/sharedClassNames";
+import { ConfirmComponentProps } from "./ConfirmComponentWrapper";
 
-type DropdownMessageProps = {
+export type DropdownMessageProps = {
   text: string;
   options: string[]; // Text ids for localization
-  onConfirmClicked: (selection: string) => void;
-};
+} & ConfirmComponentProps;
 
 export function DropdownMessage({
   options,
   text,
-  onConfirmClicked,
+  isAfterConfirmState,
+  setData,
 }: DropdownMessageProps) {
-  const [isAfterConfirmState, setIsAfterConfirmState] = useState(false);
   const [selection, setSelection] = useState(options[0]);
+  const previousSelection = usePrevious(selection);
+
+  useLayoutEffect(() => {
+    if (previousSelection !== selection) {
+      setData(selection);
+    }
+  }, [previousSelection, selection, setData]);
 
   return (
     <>
-      <div>
-        <ChatMessage sender="bot">
-          <div className={messageTextClassNames}>
-            <FormattedMessage id={text} />
-          </div>
-          {!isAfterConfirmState && (
-            <select
-              className="dropdown border rounded-md p-2 mt-2 whitespace-nowrap overflow-hidden text-ellipsis"
-              value={selection}
-              onChange={(e) => setSelection(e.target.value)}
-            >
-              <option value="" disabled>
-                <FormattedMessage id="selectOption" />
-              </option>
-              {options.map((option, index) => (
-                <option key={index} value={option}>
-                  <FormattedMessage id={option} />
-                </option>
-              ))}
-            </select>
-          )}
-        </ChatMessage>
-        {!isAfterConfirmState && selection && (
-          <ConfirmButton
-            position="end"
-            disabled={!selection}
-            onClick={() => {
-              setIsAfterConfirmState(true);
-              onConfirmClicked(selection);
-            }}
-          />
-        )}
+      <div className={messageTextClassNames}>
+        <FormattedMessage id={text} />
       </div>
-      {isAfterConfirmState && (
-        <ChatMessage
-          sender="user"
-          children={<FormattedMessage id={selection} />}
-        />
+      {!isAfterConfirmState && (
+        <select
+          className="dropdown border rounded-md p-2 mt-2 whitespace-nowrap overflow-hidden text-ellipsis"
+          value={selection}
+          onChange={(e) => setSelection(e.target.value)}
+        >
+          <option value="" disabled>
+            <FormattedMessage id="selectOption" />
+          </option>
+          {options.map((option, index) => (
+            <option key={index} value={option}>
+              <FormattedMessage id={option} />
+            </option>
+          ))}
+        </select>
       )}
     </>
   );

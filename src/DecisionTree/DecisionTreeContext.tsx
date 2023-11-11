@@ -6,6 +6,10 @@ import {
 } from "../Components/BabiesWeightInput";
 import { BirthWeekAndDaySelector } from "../Components/BirthWeekAndDaySelector";
 import { DatePickerMessage } from "../Components/DatePickerMessage";
+import {
+  DropdownMessage,
+  DropdownMessageProps,
+} from "../Components/DropdownMessage";
 import { useConversationLogger } from "../hooks/useConversationLogger";
 import { takeUntil } from "../utils/arrayUtils";
 import { dateToString } from "../utils/dateUtils";
@@ -80,24 +84,28 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     shouldLocalizeData: true,
   };
 
-  const whichHospitalStep: ChatDecisionTreeNode = {
+  const whichHospitalStep: ChatDecisionTreeNode<DropdownMessageProps> = {
     id: 4,
     branchKey: 0,
     parent: isBabyStillInHospitalAnswerStep,
     children: [],
     sender: "bot",
-    type: "dropdown",
-    text: "whichHospital",
-    options: [
-      "telHashomer",
-      "schneider",
-      "rambam",
-      "sheareiTzedek",
-      "soroka",
-      "wolfson",
-      "hadassah",
-      "maayaneiHayeshua",
-    ],
+    type: "confirmComponent",
+    component: DropdownMessage,
+    componentProps: {
+      text: "whichHospital",
+      options: [
+        "telHashomer",
+        "schneider",
+        "rambam",
+        "sheareiTzedek",
+        "soroka",
+        "wolfson",
+        "hadassah",
+        "maayaneiHayeshua",
+      ],
+    },
+    defaultValue: "telHashomer",
     shouldLocalizeData: true,
   };
 

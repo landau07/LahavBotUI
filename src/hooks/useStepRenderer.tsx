@@ -1,7 +1,6 @@
 import { FormattedMessage, useIntl } from "react-intl";
 import { ChatMessage } from "../Components/ChatMessage";
 import { ConfirmComponentWrapper } from "../Components/ConfirmComponentWrapper";
-import { DropdownMessage } from "../Components/DropdownMessage";
 import { SelectionBoxList } from "../Components/SelectionBoxList";
 import { ChatDecisionTreeNode } from "../DecisionTree/types";
 import { useDecisionTree } from "../DecisionTree/useDecisionTree";
@@ -32,18 +31,6 @@ export function useStepRenderer() {
             timestamp={step.timestamp}
             showNameAndAvatar={step.sender !== step.parent?.sender}
             {...step.divProps}
-          />
-        );
-      case "dropdown":
-        return (
-          <DropdownMessage
-            text={step.text}
-            options={step.options}
-            key={`${step.branchKey}_${index}`}
-            onConfirmClicked={(selection) => {
-              step.stepValueToLog = intl.formatMessage({ id: selection });
-              setNextStep(step);
-            }}
           />
         );
       case "selectionBox":
