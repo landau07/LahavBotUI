@@ -8,12 +8,15 @@ import {
 } from "../utils/sharedClassNames";
 import { ConfirmComponentProps } from "./ConfirmComponentWrapper";
 
-export type BirthWeekAndDaySelectorProps = ConfirmComponentProps;
+export type BabiesWeightInputProps = {
+  numOfBabies: 1 | 2 | 3 | 4 | 5;
+} & ConfirmComponentProps;
 
-export function BirthWeekAndDaySelector({
+export function BabiesWeightInput({
   setData,
   isAfterConfirmState,
-}: BirthWeekAndDaySelectorProps) {
+  numOfBabies,
+}: BabiesWeightInputProps) {
   const MIN_WEEK = 20;
   const MAX_WEEK = 42;
   const MIN_DAY = 0;
@@ -37,6 +40,7 @@ export function BirthWeekAndDaySelector({
 
   return (
     <>
+      <h1>{"Num of babies: " + numOfBabies}</h1>
       <div className={messageTextClassNames}>
         <FormattedMessage id={"whatWasTheBirthWeekAndDay"} />
       </div>

@@ -1,5 +1,9 @@
 import { ReactNode, createContext, useState } from "react";
 import "react-day-picker/dist/style.css";
+import {
+  BabiesWeightInput,
+  BabiesWeightInputProps,
+} from "../Components/BabiesWeightInput";
 import { BirthWeekAndDaySelector } from "../Components/BirthWeekAndDaySelector";
 import { DatePickerMessage } from "../Components/DatePickerMessage";
 import { useConversationLogger } from "../hooks/useConversationLogger";
@@ -143,6 +147,23 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     shouldLocalizeData: false,
   };
 
+  const babiesWeightStep: ChatDecisionTreeNode<BabiesWeightInputProps> = {
+    id: 9,
+    branchKey: 0,
+    parent: numOfNewbornsAnswerStep,
+    children: [],
+    sender: "user",
+    type: "confirmComponent",
+    component: BabiesWeightInput,
+    defaultValue: "",
+    shouldLocalizeData: false,
+    componentProps: {
+      numOfBabies: parseInt(
+        chatSteps.find((step) => step.id === 8)?.stepValueToLog ?? "-1"
+      ) as 1 | 2 | 3 | 4 | 5,
+    },
+  };
+
   // Wire children:
   welcomeStep.children = [userTypeStep];
   userTypeStep.children = [isBabyStillInHospitalStep, null, null, null, null];
@@ -152,18 +173,30 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
   birthDateStep.children = [bornWeekAndDayStep];
   bornWeekAndDayStep.children = [howManyNewbornsStep];
   howManyNewbornsStep.children = [numOfNewbornsAnswerStep];
+  numOfNewbornsAnswerStep.children = [
+    babiesWeightStep,
+    babiesWeightStep,
+    babiesWeightStep,
+    babiesWeightStep,
+  ];
 
   const setNextStep = (step: ChatDecisionTreeNode, childIndex: number = 0) => {
-    const nextStep = step.children[childIndex]
-      ? { ...step.children[childIndex], branchKey: new Date().getTime() } // Updating the branchKey of the child so it will be rerender in case of going back in flow
-      : {
-          ...notImplementedYetStepTemplate,
-        };
+    let nextStep: ChatDecisionTreeNode | null = step.children[childIndex];
+    if (nextStep) {
+      Object.assign<ChatDecisionTreeNode, Partial<ChatDecisionTreeNode>>(
+        nextStep,
+        {
+          // Updating the branchKey of the child so it will be rerender in case of going back in flow
+          branchKey: new Date().getTime(),
+          parentStepData: step.stepValueToLog,
+        }
+      );
+    } else {
+      nextStep = notImplementedYetStepTemplate;
+    }
 
     setChatSteps((prev) =>
-      takeUntil(prev, (s) => s === step).concat(
-        nextStep as ChatDecisionTreeNode
-      )
+      takeUntil(prev, (s) => s === step).concat(nextStep!)
     );
   };
 

@@ -1,27 +1,29 @@
 // WrapperComponent.tsx
-import React, { useState } from "react";
+import React, { ComponentType, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { ChatMessage } from "./ChatMessage";
 import { ConfirmButton } from "./ConfirmButton";
 
-export type ConfirmComponentProps = {
+export type ConfirmComponentProps<TProps = unknown> = {
   setData: React.Dispatch<React.SetStateAction<string>>;
   isAfterConfirmState: boolean;
-};
+} & TProps;
 
-type ConfirmComponentWrapperProps = {
-  ContentComponent: ({ setData }: ConfirmComponentProps) => JSX.Element;
+type ConfirmComponentWrapperProps<TProps = unknown> = {
+  ContentComponent: ComponentType<ConfirmComponentProps<TProps>>;
+  componentProps: TProps;
   defaultValue: string;
   onConfirmButtonClicked: (data: string) => void;
   shouldLocalizeData: boolean;
 } & React.HTMLProps<HTMLDivElement>;
 
-export function ConfirmComponentWrapper({
+export function ConfirmComponentWrapper<TProps>({
   ContentComponent,
   defaultValue,
   onConfirmButtonClicked,
   shouldLocalizeData,
-}: ConfirmComponentWrapperProps) {
+  componentProps,
+}: ConfirmComponentWrapperProps<TProps>) {
   const [isAfterConfirmState, setIsAfterConfirmState] = useState(false);
   const [data, setData] = useState<string>(defaultValue);
 
@@ -36,6 +38,7 @@ export function ConfirmComponentWrapper({
         <ContentComponent
           setData={setData}
           isAfterConfirmState={isAfterConfirmState}
+          {...componentProps}
         />
       </ChatMessage>
       {!isAfterConfirmState && data && (

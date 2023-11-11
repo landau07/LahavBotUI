@@ -1,15 +1,18 @@
-import { ReactNode } from "react";
+import { ComponentType, ReactNode } from "react";
 import { ConfirmComponentProps } from "../Components/ConfirmComponentWrapper";
 
-export type ChatDecisionTreeNode = {
+export type ChatDecisionTreeNode<TInnerComponentProps = unknown> = {
   id: number;
-  parent: ChatDecisionTreeNode | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  parent: ChatDecisionTreeNode<any> | null;
   timestamp?: Date;
-  children: (ChatDecisionTreeNode | null)[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  children: (ChatDecisionTreeNode<any> | null)[];
   branchKey: number; // used to avoid storing state when going back in the flow
   sender: "user" | "bot";
   stepValueToLog?: string;
   shouldLocalizeData: boolean;
+  parentStepData?: string;
 } & (
   | {
       type: "text";
@@ -31,8 +34,12 @@ export type ChatDecisionTreeNode = {
     }
   | {
       type: "confirmComponent";
-      component: ({ setData }: ConfirmComponentProps) => JSX.Element;
+      component: ComponentType<ConfirmComponentProps<TInnerComponentProps>>;
       defaultValue: string;
+      componentProps?: Omit<
+        TInnerComponentProps,
+        "isAfterConfirmState" | "setData"
+      >;
     }
 );
 

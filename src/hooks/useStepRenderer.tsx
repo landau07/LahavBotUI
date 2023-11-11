@@ -41,8 +41,8 @@ export function useStepRenderer() {
             options={step.options}
             key={`${step.branchKey}_${index}`}
             onConfirmClicked={(selection) => {
-              setNextStep(step);
               step.stepValueToLog = intl.formatMessage({ id: selection });
+              setNextStep(step);
             }}
           />
         );
@@ -52,12 +52,12 @@ export function useStepRenderer() {
             boxes={step.boxes}
             key={`${step.branchKey}_${index}`}
             onBoxClicked={(boxIndex: number) => {
-              setNextStep(step, boxIndex);
               step.stepValueToLog = step.shouldLocalizeData
                 ? intl.formatMessage({
                     id: step.boxes[boxIndex],
                   })
                 : step.boxes[boxIndex];
+              setNextStep(step, boxIndex);
             }}
             shouldLocalizeData={step.shouldLocalizeData}
           />
@@ -67,10 +67,11 @@ export function useStepRenderer() {
           <ConfirmComponentWrapper
             key={`${step.branchKey}_${index}`}
             onConfirmButtonClicked={(data) => {
-              setNextStep(step);
               step.stepValueToLog = data;
+              setNextStep(step);
             }}
             ContentComponent={step.component}
+            componentProps={step.componentProps ?? {}}
             defaultValue={step.defaultValue}
             shouldLocalizeData={step.shouldLocalizeData}
           />
