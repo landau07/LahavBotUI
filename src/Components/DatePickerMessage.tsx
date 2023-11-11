@@ -4,7 +4,8 @@ import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { FormattedMessage } from "react-intl";
 import { usePrevious } from "../hooks/usePrevious";
-import { locale } from "../signals";
+import { isDarkMode, locale } from "../signals";
+import { cn } from "../utils/classnames";
 import { dateToString } from "../utils/dateUtils";
 import { messageTextClassNames } from "../utils/sharedClassNames";
 import { ConfirmComponentProps } from "./ConfirmComponentWrapper";
@@ -34,22 +35,27 @@ export function DatePickerMessage({
         <FormattedMessage id={"whatWasTheBirthDate"} />
       </div>
       {!isAfterConfirmState && (
-        <DayPicker
-          mode="single"
-          required
-          selected={selectedDay!}
-          dir={document.dir}
-          locale={fnsLocale}
-          onSelect={(day) => setSelectedDay(day)}
-          style={{ margin: 6 }}
-          toDate={new Date()}
-          footer={
-            <p className="flex flex-row-reverse mt-4 me-2">
-              {selectedDayString}
-            </p>
-          }
-          className="bg-slate-950 rounded-lg p-2 bg-opacity-50"
-        />
+        <div className="mt-4">
+          <DayPicker
+            mode="single"
+            required
+            selected={selectedDay!}
+            dir={document.dir}
+            locale={fnsLocale}
+            onSelect={(day) => setSelectedDay(day)}
+            style={{ margin: 6 }}
+            toDate={new Date()}
+            footer={
+              <p className="flex flex-row-reverse mt-4 me-2">
+                {selectedDayString}
+              </p>
+            }
+            className={cn(
+              `bg-slate-950 rounded-lg p-2`,
+              isDarkMode.value ? "bg-opacity-50" : "bg-opacity-10"
+            )}
+          />
+        </div>
       )}
     </>
   );
