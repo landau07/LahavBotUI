@@ -2,7 +2,7 @@ import { useLayoutEffect, useState } from "react";
 import { Plus } from "react-feather";
 import { FormattedMessage } from "react-intl";
 import { usePrevious } from "../hooks/usePrevious";
-import { messageTextClassNames } from "../utils/sharedClassNames";
+import { inputNumberClassNames, messageTextClassNames } from "../utils/sharedClassNames";
 import { ConfirmComponentProps } from "./ConfirmComponentWrapper";
 
 type BirthWeekAndDaySelectorProps = ConfirmComponentProps;
@@ -11,6 +11,11 @@ export function BirthWeekAndDaySelector({
   setData,
   isAfterConfirmState,
 }: BirthWeekAndDaySelectorProps) {
+  const MIN_WEEK = 20;
+  const MAX_WEEK = 42;
+  const MIN_DAY = 0;
+  const MAX_DAY = 6;
+
   const [selectedWeek, setSelectedWeek] = useState(30);
   const [selectedDay, setSelectedDay] = useState(0);
 
@@ -19,12 +24,13 @@ export function BirthWeekAndDaySelector({
 
   useLayoutEffect(() => {
     if (previousWeekAndDateString !== weekAndDayString) {
-      setData(weekAndDayString);
+      if (selectedWeek < MIN_WEEK || selectedWeek > MAX_WEEK) {
+        setData("");
+      } else {
+        setData(weekAndDayString);
+      }
     }
-  }, [previousWeekAndDateString, setData, weekAndDayString]);
-
-  const inputNumberClassNames =
-    "w-16 border border-slate-900 bg-[#28323770] rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500";
+  }, [previousWeekAndDateString, selectedWeek, setData, weekAndDayString]);
 
   return (
     <>
@@ -32,7 +38,7 @@ export function BirthWeekAndDaySelector({
         <FormattedMessage id={"whatWasTheBirthWeekAndDay"} />
       </div>
       {!isAfterConfirmState && (
-        <div className="flex justify-center items-center gap-4">
+        <div className="mt-4 flex justify-center gap-4">
           <div className="text-center">
             <label htmlFor="week">
               <FormattedMessage id={"week"} />
@@ -43,13 +49,18 @@ export function BirthWeekAndDaySelector({
               type="number"
               id="week"
               name="week"
-              min="20"
-              max="42"
+              min={MIN_WEEK}
+              max={MAX_WEEK}
               value={selectedWeek}
-              onChange={(e) => setSelectedWeek(parseInt(e.target.value))}
+              onChange={(e) => {
+                const week = e.target.valueAsNumber;
+                if (!isNaN(week)) {
+                  setSelectedWeek(week);
+                }
+              }}
             />
           </div>
-          <Plus />
+          <Plus className="mt-8"/>
           <div className="text-center">
             <label htmlFor="day">
               <FormattedMessage id={"day"} />
@@ -60,10 +71,15 @@ export function BirthWeekAndDaySelector({
               type="number"
               id="day"
               name="day"
-              min="0"
-              max="6"
+              min={`${MIN_DAY}`}
+              max={`${MAX_DAY}`}
               value={selectedDay}
-              onChange={(e) => setSelectedDay(parseInt(e.target.value))}
+              onChange={(e) => {
+                const day = e.target.valueAsNumber;
+                if (!isNaN(day) && day >= MIN_DAY && day <= MAX_DAY) {
+                  setSelectedDay(day);
+                }
+              }}
             />
           </div>
         </div>
