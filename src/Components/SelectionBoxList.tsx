@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { cn } from "../utils/classnames";
+import { mouseDownTransitionDownClassNames } from "../utils/sharedClassNames";
 
 type SelectionBoxProps = {
   boxes: string[];
@@ -22,7 +23,8 @@ export function SelectionBoxList({
           className={cn(
             "break-words text-sm rounded-md border text-lahav border-lahav dark:text-lahav-dark dark:border-lahav-dark active:bg-fuchsia-900 active:bg-opacity-50 py-2 px-4 hover:bg-opacity-10 hover:bg-lahav",
             selectedBox === i &&
-              "bg-opacity-50 hover:bg-opacity-50 bg-fuchsia-600 hover:bg-fuchsia-500 dark:bg-fuchsia-950 dark:hover:bg-fuchsia-900"
+              "bg-opacity-50 hover:bg-opacity-50 bg-fuchsia-600 hover:bg-fuchsia-500 dark:bg-fuchsia-950 dark:hover:bg-fuchsia-900",
+            mouseDownTransitionDownClassNames
           )}
           key={i}
           onClick={() => {
