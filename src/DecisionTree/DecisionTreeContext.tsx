@@ -92,7 +92,7 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     sender: "bot",
     type: "confirmComponent",
     component: DropdownMessage,
-    componentProps: {
+    componentProps: () => ({
       text: "whichHospital",
       options: [
         "telHashomer",
@@ -104,7 +104,7 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
         "hadassah",
         "maayaneiHayeshua",
       ],
-    },
+    }),
     defaultValue: "telHashomer",
     shouldLocalizeData: true,
   };
@@ -165,11 +165,9 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     component: BabiesWeightInput,
     defaultValue: "",
     shouldLocalizeData: false,
-    componentProps: {
-      numOfBabies: parseInt(
-        chatSteps.find((step) => step.id === 8)?.stepValueToLog ?? "-1"
-      ) as 1 | 2 | 3 | 4 | 5,
-    },
+    componentProps: (step) => ({
+      numOfBabies: parseInt(step.parentStepData!) as 1 | 2 | 3 | 4 | 5,
+    }),
   };
 
   // Wire children:

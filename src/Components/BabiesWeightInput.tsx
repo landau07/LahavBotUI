@@ -1,5 +1,4 @@
 import { useLayoutEffect, useState } from "react";
-import { Plus } from "react-feather";
 import { FormattedMessage } from "react-intl";
 import { usePrevious } from "../hooks/usePrevious";
 import {
@@ -17,78 +16,74 @@ export function BabiesWeightInput({
   isAfterConfirmState,
   numOfBabies,
 }: BabiesWeightInputProps) {
-  const MIN_WEEK = 20;
-  const MAX_WEEK = 42;
-  const MIN_DAY = 0;
-  const MAX_DAY = 6;
+  const [babiesWeight, setBabiesWeight] = useState<number[]>(
+    Array(numOfBabies).fill(2)
+  );
 
-  const [selectedWeek, setSelectedWeek] = useState(30);
-  const [selectedDay, setSelectedDay] = useState(0);
-
-  const weekAndDayString = `${selectedWeek} + ${selectedDay}`;
-  const previousWeekAndDateString = usePrevious(weekAndDayString);
+  const weightSummaryString = babiesWeight.join(" , ");
+  const previousWeightSummaryString = usePrevious(weightSummaryString);
 
   useLayoutEffect(() => {
-    if (previousWeekAndDateString !== weekAndDayString) {
-      if (selectedWeek < MIN_WEEK || selectedWeek > MAX_WEEK) {
+    if (previousWeightSummaryString !== weightSummaryString) {
+      if (babiesWeight.some((weight) => weight < 0 || weight > 6)) {
         setData("");
       } else {
-        setData(weekAndDayString);
+        setData(weightSummaryString);
       }
     }
-  }, [previousWeekAndDateString, selectedWeek, setData, weekAndDayString]);
+  }, [babiesWeight, previousWeightSummaryString, setData, weightSummaryString]);
 
   return (
     <>
-      <h1>{"Num of babies: " + numOfBabies}</h1>
       <div className={messageTextClassNames}>
-        <FormattedMessage id={"whatWasTheBirthWeekAndDay"} />
+        <FormattedMessage
+          id={
+            numOfBabies === 1
+              ? "whatIsTheWeightOfTheBaby"
+              : "whatIsTheWeightOfTheBabies"
+          }
+        />
       </div>
       {!isAfterConfirmState && (
-        <div className="mt-4 flex justify-center gap-4">
-          <div className="text-center">
-            <label htmlFor="week">
-              <FormattedMessage id={"week"} />
-            </label>
-            <br />
-            <input
-              className={inputNumberClassNames}
-              type="number"
-              id="week"
-              name="week"
-              min={MIN_WEEK}
-              max={MAX_WEEK}
-              value={selectedWeek}
-              onChange={(e) => {
-                const week = e.target.valueAsNumber;
-                if (!isNaN(week)) {
-                  setSelectedWeek(week);
-                }
-              }}
-            />
-          </div>
-          <Plus className="mt-8" />
-          <div className="text-center">
-            <label htmlFor="day">
-              <FormattedMessage id={"day"} />
-            </label>
-            <br />
-            <input
-              className={inputNumberClassNames}
-              type="number"
-              id="day"
-              name="day"
-              min={`${MIN_DAY}`}
-              max={`${MAX_DAY}`}
-              value={selectedDay}
-              onChange={(e) => {
-                const day = e.target.valueAsNumber;
-                if (!isNaN(day) && day >= MIN_DAY && day <= MAX_DAY) {
-                  setSelectedDay(day);
-                }
-              }}
-            />
-          </div>
+        <div className="mt-4 flex flex-col justify-center gap-4">
+          {Array.from({ length: numOfBabies }).map((_, i) => (
+            <div className="text-center items-center flex" key={i}>
+              <label htmlFor={`baby-${i + 1}`}>
+                <FormattedMessage id="baby" values={{ number: i + 1 }}>
+                  {(text) => (
+                    <>
+                      {numOfBabies !== 1 && (
+                        <span className="me-2">
+                          {text}&nbsp;{i + 1}
+                        </span>
+                      )}
+                    </>
+                  )}
+                </FormattedMessage>
+              </label>
+              <input
+                className={inputNumberClassNames + " w-24"}
+                type="number"
+                id={`baby-${i + 1}`}
+                name={`baby-${i + 1}`}
+                step={"0.1"}
+                min={0}
+                max={6}
+                value={babiesWeight[i]}
+                onChange={(e) => {
+                  const weightString = e.target.value;
+                  const weight = parseFloat(weightString);
+                  if (!isNaN(weight) && weight >= 0 && weight <= 6) {
+                    setBabiesWeight((prev) =>
+                      prev.map((w, index) =>
+                        index === i ? parseFloat(weight.toFixed(3)) : w
+                      )
+                    );
+                  }
+                }}
+              />
+            </div>
+          ))}
         </div>
       )}
     </>

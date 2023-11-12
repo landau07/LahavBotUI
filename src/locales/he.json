@@ -1,7 +1,7 @@
 {
   "lahav": "לה״ב",
   "lahavBot": "לה״ב בוט",
-  "welcomeMessage": "היי! הגעתם לבוט של לה״ב. נשמח לסייע ולהפנות אותך לאן שאתה צריך. האם אתה:",
+  "welcomeMessage": "היי! הגעת לבוט של לה״ב. נשמח לסייע ולהפנות אותך לאן שאתה צריך. האם אתה:",
   "isStillInNICU": "האם התינוק עדין בפגייה?",
   "parent": "הורה לפג",
   "highRiskPregnancy": "בהריון בסיכון",
@@ -27,5 +27,8 @@
   "whatWasTheBirthWeekAndDay": "באיזה שבוע ויום התינוק נולד?",
   "week": "שבוע",
   "day": "יום",
-  "numberOfNewborns":"מספר הילודים?"
+  "numberOfNewborns": "מספר הילודים?",
+  "whatIsTheWeightOfTheBaby": "מה משקל התינוק בעת הלידה?",
+  "whatIsTheWeightOfTheBabies": "מה משקל הילודים בעת הלידה?",
+  "baby": "תינוק"
 }

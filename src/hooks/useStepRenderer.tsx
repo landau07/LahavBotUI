@@ -54,11 +54,13 @@ export function useStepRenderer() {
           <ConfirmComponentWrapper
             key={`${step.branchKey}_${index}`}
             onConfirmButtonClicked={(data) => {
-              step.stepValueToLog = data;
+              step.stepValueToLog = step.shouldLocalizeData
+                ? intl.formatMessage({ id: data })
+                : data;
               setNextStep(step);
             }}
             ContentComponent={step.component}
-            componentProps={step.componentProps ?? {}}
+            componentProps={step.componentProps?.(step)}
             defaultValue={step.defaultValue}
             shouldLocalizeData={step.shouldLocalizeData}
           />

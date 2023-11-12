@@ -27,5 +27,8 @@
   "whatWasTheBirthWeekAndDay": "What was the birth week and day or the baby?",
   "week": "Week",
   "day": "Day",
-  "numberOfNewborns": "How many newborns?"
+  "numberOfNewborns": "How many newborns?",
+  "whatIsTheWeightOfTheBaby": "What is the weight of the baby at birth?",
+  "whatIsTheWeightOfTheBabies": "What is the weight of the babies at birth?",
+  "baby": "Baby"
 }

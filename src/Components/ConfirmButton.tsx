@@ -1,5 +1,6 @@
 import { ButtonHTMLAttributes } from "react";
 import { FormattedMessage } from "react-intl";
+import { cn } from "../utils/classnames";
 import { mouseDownTransitionDownClassNames } from "../utils/sharedClassNames";
 
 type ConfirmButtonProps = {
@@ -20,7 +21,10 @@ export function ConfirmButton({
     >
       <button
         onClick={onClick}
-        className={`text-white py-2 px-4 rounded-md bg-lahav hover:bg-fuchsia-900 active:bg-fuchsia-950 ${mouseDownTransitionDownClassNames}`}
+        className={cn(
+          `text-white py-2 px-4 rounded-md bg-lahav hover:bg-fuchsia-900 active:bg-fuchsia-950 focus:bg-fuchsia-900`,
+          mouseDownTransitionDownClassNames
+        )}
         {...rest}
       >
         <FormattedMessage id={"confirm"} />
