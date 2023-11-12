@@ -10,10 +10,11 @@ import { dateToString } from "../utils/dateUtils";
 import { messageTextClassNames } from "../utils/sharedClassNames";
 import { ConfirmComponentProps } from "./ConfirmComponentWrapper";
 
-type DatePickerMessageProps = ConfirmComponentProps;
+export type DatePickerMessageProps = { textId: string } & ConfirmComponentProps;
 
 export function DatePickerMessage({
   setData,
+  textId,
   isAfterConfirmState,
 }: DatePickerMessageProps) {
   const today = new Date();
@@ -32,7 +33,7 @@ export function DatePickerMessage({
   return (
     <>
       <div className={messageTextClassNames}>
-        <FormattedMessage id={"whatWasTheBirthDate"} />
+        <FormattedMessage id={textId} />
       </div>
       {!isAfterConfirmState && (
         <div className="mt-4">

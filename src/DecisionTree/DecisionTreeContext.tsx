@@ -5,7 +5,10 @@ import {
   BabiesWeightInputProps,
 } from "../Components/BabiesWeightInput";
 import { BirthWeekAndDaySelector } from "../Components/BirthWeekAndDaySelector";
-import { DatePickerMessage } from "../Components/DatePickerMessage";
+import {
+  DatePickerMessage,
+  DatePickerMessageProps,
+} from "../Components/DatePickerMessage";
 import {
   DropdownMessage,
   DropdownMessageProps,
@@ -91,6 +94,7 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     children: [],
     sender: "bot",
     type: "confirmComponent",
+    stepLogQuestion: "whichHospital",
     component: DropdownMessage,
     componentProps: () => ({
       text: "whichHospital",
@@ -109,14 +113,18 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     shouldLocalizeData: true,
   };
 
-  const birthDateStep: ChatDecisionTreeNode = {
+  const birthDateStep: ChatDecisionTreeNode<DatePickerMessageProps> = {
     id: 5,
     branchKey: 0,
     parent: whichHospitalStep,
     children: [],
-    sender: "user",
+    sender: "bot",
     type: "confirmComponent",
     component: DatePickerMessage,
+    componentProps: () => ({
+      textId: "whatWasTheBirthDate",
+    }),
+    stepLogQuestion: "whatWasTheBirthDate",
     defaultValue: dateToString(new Date()),
     shouldLocalizeData: false,
   };
@@ -126,8 +134,9 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     branchKey: 0,
     parent: birthDateStep,
     children: [],
-    sender: "user",
+    sender: "bot",
     type: "confirmComponent",
+    stepLogQuestion: "whatWasTheBirthWeekAndDay",
     component: BirthWeekAndDaySelector,
     defaultValue: "33 + 0",
     shouldLocalizeData: false,
@@ -160,8 +169,9 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     branchKey: 0,
     parent: numOfNewbornsAnswerStep,
     children: [],
-    sender: "user",
+    sender: "bot",
     type: "confirmComponent",
+    stepLogQuestion: "whatIsTheWeightOfTheBabies",
     component: BabiesWeightInput,
     defaultValue: "",
     shouldLocalizeData: false,
@@ -219,12 +229,49 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     shouldLocalizeData: true,
   };
 
+  const whichNICUWereYouStep: ChatDecisionTreeNode<DropdownMessageProps> = {
+    ...whichHospitalStep,
+    id: 14,
+    componentProps: (s) => ({
+      ...whichHospitalStep.componentProps!(s),
+      text: "whichHospitalWereYou",
+    }),
+  };
+
+  const inviteToHospitalVeteranWhatsApp: ChatDecisionTreeNode = {
+    id: 15,
+    branchKey: 0,
+    parent: assistanceTopicsAnswerStep,
+    children: [],
+    sender: "bot",
+    type: "text",
+    content: <div>WhatsApp Link here</div>,
+    shouldLocalizeData: true,
+  };
+
+  const releaseFromNICUDateStep: ChatDecisionTreeNode<DatePickerMessageProps> =
+    {
+      ...birthDateStep,
+      id: 16,
+      parent: inviteToHospitalVeteranWhatsApp,
+      stepLogQuestion: "releaseDateFromHospital",
+      componentProps: () => ({
+        textId: "releaseDateFromHospital",
+      }),
+    };
+
   // Wire children:
   welcomeStep.children = [userTypeStep];
   userTypeStep.children = [isBabyStillInHospitalStep, null, null, null, null];
   isBabyStillInHospitalStep.children = [isBabyStillInHospitalAnswerStep];
-  isBabyStillInHospitalAnswerStep.children = [whichHospitalStep, null];
+  isBabyStillInHospitalAnswerStep.children = [
+    whichHospitalStep,
+    whichNICUWereYouStep,
+  ];
   whichHospitalStep.children = [birthDateStep];
+  whichNICUWereYouStep.children = [inviteToHospitalVeteranWhatsApp];
+  inviteToHospitalVeteranWhatsApp.children = [releaseFromNICUDateStep];
+  releaseFromNICUDateStep.children = [birthDateStep];
   birthDateStep.children = [bornWeekAndDayStep];
   bornWeekAndDayStep.children = [howManyNewbornsStep];
   howManyNewbornsStep.children = [numOfNewbornsAnswerStep];
@@ -247,7 +294,7 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
         {
           // Updating the branchKey of the child so it will be rerender in case of going back in flow
           branchKey: new Date().getTime(),
-          parentStepData: step.stepValueToLog,
+          parentStepData: step.stepResult,
         }
       );
     } else {

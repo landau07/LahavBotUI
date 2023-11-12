@@ -10,7 +10,7 @@ export type ChatDecisionTreeNode<TInnerComponentProps = unknown> = {
   children: (ChatDecisionTreeNode<any> | null)[];
   branchKey: number; // used to avoid storing state when going back in the flow
   sender: "user" | "bot";
-  stepValueToLog?: string;
+  stepResult?: string;
   shouldLocalizeData: boolean;
   parentStepData?: string;
 } & (
@@ -25,6 +25,8 @@ export type ChatDecisionTreeNode<TInnerComponentProps = unknown> = {
     }
   | {
       type: "confirmComponent";
+      stepLogQuestion: string;
+      sender: "bot";
       component: ComponentType<ConfirmComponentProps<TInnerComponentProps>>;
       defaultValue: string;
       componentProps?: (

@@ -11,6 +11,7 @@
   "yes": "כן",
   "no": "לא",
   "whichHospital": "באיזו פגייה נמצאים?",
+  "whichHospitalWereYou": "באיזו פגייה הייתם?",
   "selectOption": "בחר אפשרות",
   "telHashomer": "תל השומר",
   "schneider": "שניידר",
@@ -38,5 +39,6 @@
   "rsvVaccination": "חיסון RSV",
   "breastMilkBank": "בנק חלב אם",
   "extensionOfMaternityLeave": "הארכת חופשת לידה",
-  "prematurityAllowance": "קצבת פגים"
+  "prematurityAllowance": "קצבת פגים",
+  "releaseDateFromHospital": "באיזה תאריך שוחררתם מהפגייה?"
 }

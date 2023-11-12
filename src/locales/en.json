@@ -10,7 +10,8 @@
   "other": "Other",
   "yes": "Yes",
   "no": "No",
-  "whichHospital": "Which hospital?",
+  "whichHospital": "On which hospital?",
+  "whichHospitalWereYou": "What hospital were you at?",
   "selectOption": "Select option",
   "telHashomer": "Tel HaShomer",
   "schneider": "Schneider",
@@ -38,5 +39,6 @@
   "rsvVaccination": "RSV vaccination",
   "breastMilkBank": "Breast milk bank",
   "extensionOfMaternityLeave": "Extension of maternity leave",
-  "prematurityAllowance": "Prematurity allowance"
+  "prematurityAllowance": "Prematurity allowance",
+  "releaseDateFromHospital": "On what date was I released from the hospital?"
 }

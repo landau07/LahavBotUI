@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { CurrentStepContext } from "../DecisionTree/CurrentStepContext";
 import { useDecisionTree } from "../DecisionTree/useDecisionTree";
 import { useStepRenderer } from "../hooks/useStepRenderer";
 
@@ -33,7 +34,11 @@ export function ChatBody() {
       className="flex flex-col flex-1 min-h-[200px] overflow-y-auto p-4 bg-slate-100 dark:bg-[#00000036] gap-3"
       ref={containerRef}
     >
-      {chatSteps.map((step, i) => renderStep(step, i))}
+      {chatSteps.map((step, i) => (
+        <CurrentStepContext.Provider key={i} value={step}>
+          {renderStep(step, i)}
+        </CurrentStepContext.Provider>
+      ))}
     </div>
   );
 }
