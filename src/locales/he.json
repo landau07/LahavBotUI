@@ -30,5 +30,13 @@
   "numberOfNewborns": "מספר הילודים?",
   "whatIsTheWeightOfTheBaby": "מה משקל התינוק בעת הלידה?",
   "whatIsTheWeightOfTheBabies": "מה משקל הילודים בעת הלידה?",
-  "baby": "תינוק"
+  "baby": "תינוק",
+  "onWhichTopicYouNeedAssistance": "באיזה נושא תרצו לקבל עזרה?",
+  "rights": "זכויות",
+  "generalInfo": "מידע כללי",
+  "contactUs": "פניה לנציג",
+  "rsvVaccination": "חיסון RSV",
+  "breastMilkBank": "בנק חלב אם",
+  "extensionOfMaternityLeave": "הארכת חופשת לידה",
+  "prematurityAllowance": "קצבת פגים"
 }

@@ -5,6 +5,17 @@ import { useStepRenderer } from "../hooks/useStepRenderer";
 export function ChatBody() {
   const { chatSteps } = useDecisionTree();
   const { renderStep } = useStepRenderer();
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [chatSteps]);
+
+  const scrollToBottom = () => {
+    if (containerRef.current) {
+      containerRef.current.scrollTop = containerRef.current.scrollHeight;
+    }
+  };
 
   let curStep = chatSteps[chatSteps.length - 1];
 
@@ -16,15 +27,6 @@ export function ChatBody() {
     curStep = curStep.children[0];
     chatSteps.push(curStep);
   }
-
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (containerRef.current) {
-      // Scroll to the bottom of the container
-      containerRef.current.scrollTop = containerRef.current.scrollHeight;
-    }
-  }, [chatSteps]); // Scroll when steps change
 
   return (
     <div

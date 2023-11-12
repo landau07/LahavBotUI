@@ -170,6 +170,55 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     }),
   };
 
+  const onWhichTopicYouNeedAssistanceStep: ChatDecisionTreeNode = {
+    id: 10,
+    branchKey: 0,
+    parent: babiesWeightStep,
+    children: [],
+    sender: "bot",
+    type: "text",
+    content: "onWhichTopicYouNeedAssistance",
+    shouldLocalizeData: true,
+  };
+
+  const assistanceTopicsAnswerStep: ChatDecisionTreeNode = {
+    id: 11,
+    branchKey: 0,
+    parent: onWhichTopicYouNeedAssistanceStep,
+    children: [],
+    sender: "user",
+    type: "selectionBox",
+    boxes: ["rights", "generalInfo", "contactUs"],
+    shouldLocalizeData: true,
+  };
+
+  const rightsQuestionsStep: ChatDecisionTreeNode = {
+    id: 12,
+    branchKey: 0,
+    parent: assistanceTopicsAnswerStep,
+    children: [],
+    sender: "bot",
+    type: "text",
+    content: "onWhichTopicYouNeedAssistance",
+    shouldLocalizeData: true,
+  };
+
+  const rightsTopicsStep: ChatDecisionTreeNode = {
+    id: 13,
+    branchKey: 0,
+    parent: rightsQuestionsStep,
+    children: [],
+    sender: "user",
+    type: "selectionBox",
+    boxes: [
+      "rsvVaccination",
+      "breastMilkBank",
+      "extensionOfMaternityLeave",
+      "prematurityAllowance",
+    ],
+    shouldLocalizeData: true,
+  };
+
   // Wire children:
   welcomeStep.children = [userTypeStep];
   userTypeStep.children = [isBabyStillInHospitalStep, null, null, null, null];
@@ -185,6 +234,10 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     babiesWeightStep,
     babiesWeightStep,
   ];
+  babiesWeightStep.children = [onWhichTopicYouNeedAssistanceStep];
+  onWhichTopicYouNeedAssistanceStep.children = [assistanceTopicsAnswerStep];
+  assistanceTopicsAnswerStep.children = [rightsQuestionsStep, null, null, null];
+  rightsQuestionsStep.children = [rightsTopicsStep];
 
   const setNextStep = (step: ChatDecisionTreeNode, childIndex: number = 0) => {
     let nextStep: ChatDecisionTreeNode | null = step.children[childIndex];

@@ -30,5 +30,13 @@
   "numberOfNewborns": "How many newborns?",
   "whatIsTheWeightOfTheBaby": "What is the weight of the baby at birth?",
   "whatIsTheWeightOfTheBabies": "What is the weight of the babies at birth?",
-  "baby": "Baby"
+  "baby": "Baby",
+  "onWhichTopicYouNeedAssistance": "On which topic you need assistance?",
+  "rights": "Rights",
+  "generalInfo": "General information",
+  "contactUs": "Contact us",
+  "rsvVaccination": "RSV vaccination",
+  "breastMilkBank": "Breast milk bank",
+  "extensionOfMaternityLeave": "Extension of maternity leave",
+  "prematurityAllowance": "Prematurity allowance"
 }
