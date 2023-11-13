@@ -1,8 +1,8 @@
 import { ReactNode } from "react";
 import { ExternalLink } from "react-feather";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import whatsAppIcon from "../assets/whatsAppIcon.png";
-import { useHospitalLinks } from "../hooks/useHospitalLinks";
+import { hospitalLinks } from "../data/hospitalLinks";
 
 export type ExternalLinkMessageProps = {
   url: string;
@@ -33,11 +33,16 @@ export function ExternalLinkMessage({
   );
 }
 
-export function HospitalAlumniWhatsapp({ hospital }: { hospital: string }) {
-  const hospitals = useHospitalLinks();
+export function HospitalAlumniWhatsapp({
+  hospitalNameFormatted,
+}: {
+  hospitalNameFormatted: string;
+}) {
+  const hospitals = hospitalLinks();
+  const intl = useIntl();
 
   const hospitalAlumniLink = hospitals.filter(
-    (h) => h.nameLocalized === hospital
+    (h) => intl.formatMessage({ id: h.id }) === hospitalNameFormatted
   )[0].alumniWhatsAppLink;
 
   return (
@@ -46,7 +51,10 @@ export function HospitalAlumniWhatsapp({ hospital }: { hospital: string }) {
       urlText={<FormattedMessage id="clickHere" />}
       icon={whatsAppIcon}
     >
-      <FormattedMessage id="joinNICUAlumniWhatsapp" values={{ hospital }} />
+      <FormattedMessage
+        id="joinNICUAlumniWhatsapp"
+        values={{ hospital: hospitalNameFormatted }}
+      />
     </ExternalLinkMessage>
   );
 }

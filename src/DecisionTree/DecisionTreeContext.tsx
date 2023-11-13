@@ -14,6 +14,7 @@ import {
   DropdownMessageProps,
 } from "../Components/DropdownMessage";
 import { HospitalAlumniWhatsapp } from "../Components/ExternalLinkMessage";
+import { hospitalLinks } from "../data/hospitalLinks";
 import { useConversationLogger } from "../hooks/useConversationLogger";
 import { takeUntil } from "../utils/arrayUtils";
 import { dateToString } from "../utils/dateUtils";
@@ -99,16 +100,7 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     component: DropdownMessage,
     componentProps: () => ({
       text: "whichHospital",
-      options: [
-        "telHashomer",
-        "schneider",
-        "rambam",
-        "sheareiTzedek",
-        "soroka",
-        "wolfson",
-        "hadassah",
-        "maayaneiHayeshua",
-      ],
+      options: hospitalLinks().map((h) => h.id),
     }),
     defaultValue: "telHashomer",
     shouldLocalizeData: true,
@@ -247,7 +239,7 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     sender: "bot",
     type: "text",
     content: (step) => (
-      <HospitalAlumniWhatsapp hospital={step.parentStepData!} />
+      <HospitalAlumniWhatsapp hospitalNameFormatted={step.parentStepData!} />
     ),
     shouldLocalizeData: true,
   };
