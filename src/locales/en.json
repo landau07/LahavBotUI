@@ -40,5 +40,7 @@
   "breastMilkBank": "Breast milk bank",
   "extensionOfMaternityLeave": "Extension of maternity leave",
   "prematurityAllowance": "Prematurity allowance",
-  "releaseDateFromHospital": "On what date was I released from the hospital?"
+  "releaseDateFromHospital": "On what date was I released from the hospital?",
+  "joinNICUAlumniWhatsapp": "You are invited to join the NICU Alumni Whatsapp group of {hospital}",
+  "clickHere": "Click here"
 }

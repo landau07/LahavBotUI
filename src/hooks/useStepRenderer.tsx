@@ -23,13 +23,14 @@ export function useStepRenderer() {
             children={
               typeof step.content === "string" ? (
                 <FormattedMessage id={step.content} />
+              ) : typeof step.content === "function" ? (
+                step.content(step)
               ) : (
                 step.content
               )
             }
             key={index}
             timestamp={step.timestamp}
-            showNameAndAvatar={step.sender !== step.parent?.sender}
             {...step.divProps}
           />
         );

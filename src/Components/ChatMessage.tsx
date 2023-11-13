@@ -1,6 +1,7 @@
 import { format } from "date-fns";
 import { HTMLProps, ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
+import { useCurrentStep } from "../DecisionTree/useCurrentStep";
 import { cn } from "../utils/classnames";
 import { LahavAvatar } from "./ChatHeader";
 
@@ -8,7 +9,6 @@ type ChatMessageProps = {
   children: ReactNode;
   sender: "user" | "bot";
   timestamp?: Date;
-  showNameAndAvatar?: boolean;
 } & HTMLProps<HTMLDivElement>;
 
 export function ChatMessage({ sender, ...rest }: ChatMessageProps) {
@@ -22,17 +22,20 @@ export function ChatMessage({ sender, ...rest }: ChatMessageProps) {
 function BotMessage({
   children,
   timestamp,
-  showNameAndAvatar = true,
   className: classNameFromProps = "",
   ...restDivProps
 }: Omit<ChatMessageProps, "sender">) {
+  const step = useCurrentStep();
+  const showNameAndAvatar =
+    step.sender !== step.parent?.sender ||
+    step.parent.type === "confirmComponent";
   return (
     <div className="flex">
       {showNameAndAvatar && <LahavAvatar addClassName="mt-4 me-3" />}
       <div
         className={cn(
           "flex flex-col text-start",
-          showNameAndAvatar === false && "ms-12"
+          showNameAndAvatar === false && "ms-14"
         )}
       >
         {showNameAndAvatar && (

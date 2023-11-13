@@ -13,6 +13,7 @@ import {
   DropdownMessage,
   DropdownMessageProps,
 } from "../Components/DropdownMessage";
+import { HospitalAlumniWhatsapp } from "../Components/ExternalLinkMessage";
 import { useConversationLogger } from "../hooks/useConversationLogger";
 import { takeUntil } from "../utils/arrayUtils";
 import { dateToString } from "../utils/dateUtils";
@@ -238,14 +239,16 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     }),
   };
 
-  const inviteToHospitalVeteranWhatsApp: ChatDecisionTreeNode = {
+  const inviteToHospitalAlumniWhatsApp: ChatDecisionTreeNode = {
     id: 15,
     branchKey: 0,
     parent: assistanceTopicsAnswerStep,
     children: [],
     sender: "bot",
     type: "text",
-    content: <div>WhatsApp Link here</div>,
+    content: (step) => (
+      <HospitalAlumniWhatsapp hospital={step.parentStepData!} />
+    ),
     shouldLocalizeData: true,
   };
 
@@ -253,7 +256,7 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     {
       ...birthDateStep,
       id: 16,
-      parent: inviteToHospitalVeteranWhatsApp,
+      parent: inviteToHospitalAlumniWhatsApp,
       stepLogQuestion: "releaseDateFromHospital",
       componentProps: () => ({
         textId: "releaseDateFromHospital",
@@ -269,8 +272,8 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     whichNICUWereYouStep,
   ];
   whichHospitalStep.children = [birthDateStep];
-  whichNICUWereYouStep.children = [inviteToHospitalVeteranWhatsApp];
-  inviteToHospitalVeteranWhatsApp.children = [releaseFromNICUDateStep];
+  whichNICUWereYouStep.children = [inviteToHospitalAlumniWhatsApp];
+  inviteToHospitalAlumniWhatsApp.children = [releaseFromNICUDateStep];
   releaseFromNICUDateStep.children = [birthDateStep];
   birthDateStep.children = [bornWeekAndDayStep];
   bornWeekAndDayStep.children = [howManyNewbornsStep];

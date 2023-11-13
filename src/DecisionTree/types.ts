@@ -16,7 +16,7 @@ export type ChatDecisionTreeNode<TInnerComponentProps = unknown> = {
 } & (
   | {
       type: "text";
-      content: string | ReactNode; // string is Message id for localization.
+      content: string | ReactNode | React.FC<ChatDecisionTreeNode>; // string is Message id for localization.
       divProps?: React.HTMLProps<HTMLDivElement>;
     }
   | {
