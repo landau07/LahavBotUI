@@ -1,7 +1,8 @@
 {
   "lahav": "לה״ב",
   "lahavBot": "לה״ב בוט",
-  "welcomeMessage": "היי! הגעת לבוט של לה״ב. נשמח לסייע ולהפנות אותך לאן שאתה צריך. האם אתה:",
+  "welcomeMessage": "היי! הגעת לבוט של לה״ב. נשמח לסייע ולהפנות אותך לאן שאתה צריך, אבל ראשית, אני צריך לדעת מספר פרטים בסיסיים.",
+  "areYou": "האם אתה:",
   "isStillInNICU": "האם התינוק עדין בפגייה?",
   "parent": "הורה לפג",
   "highRiskPregnancy": "בהריון בסיכון",
@@ -42,5 +43,10 @@
   "prematurityAllowance": "קצבת פגים",
   "releaseDateFromHospital": "באיזה תאריך שוחררתם מהפגייה?",
   "joinNICUAlumniWhatsapp": "מוזמנים להצטרף לקבוצת הוואטסאפ של בוגרי פגיית {hospital}",
-  "clickHere": "לחץ כאן"
+  "clickHere": "לחץ כאן",
+  "iNeedBreastMilk": "אני רוצה לקבל תרומה",
+  "iDonateBreastMilk": "אני רוצה לתרום",
+  "isInHospitalOver14Days": "האם שהיתם בפגייה מעל 14 יום?",
+  "whatWouldYouLike": "מה תרצה?",
+  "motherHospitalizedBeforeBirth": "האם האמא הייתה מאושפזת לפני הלידה?"
 }

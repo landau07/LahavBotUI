@@ -32,13 +32,24 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     sender: "bot",
     type: "text",
     content: "welcomeMessage",
-    timestamp: new Date(),
     shouldLocalizeData: true,
   };
   const [chatSteps, setChatSteps] = useState<ChatDecisionTreeNode[]>([
     welcomeStep,
   ]);
   const { logConversation } = useConversationLogger(chatSteps);
+
+  const areYouStep: ChatDecisionTreeNode = {
+    id: 0.5,
+    branchKey: 0,
+    parent: welcomeStep,
+    children: [],
+    sender: "bot",
+    type: "text",
+    content: "areYou",
+    timestamp: new Date(),
+    shouldLocalizeData: true,
+  };
 
   const notImplementedYetStepTemplate: ChatDecisionTreeNode = {
     id: -1,
@@ -59,7 +70,7 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
   const userTypeStep: ChatDecisionTreeNode = {
     id: 1,
     branchKey: 0,
-    parent: welcomeStep,
+    parent: areYouStep,
     children: [],
     sender: "user",
     type: "selectionBox",
@@ -182,6 +193,7 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     type: "text",
     content: "onWhichTopicYouNeedAssistance",
     shouldLocalizeData: true,
+    timestamp: new Date(),
   };
 
   const assistanceTopicsAnswerStep: ChatDecisionTreeNode = {
@@ -255,8 +267,75 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
       }),
     };
 
+  const whatWouldYouLikeQuestion: ChatDecisionTreeNode = {
+    id: 17,
+    type: "text",
+    sender: "bot",
+    branchKey: 0,
+    parent: rightsTopicsStep,
+    children: [],
+    content: "whatWouldYouLike",
+    shouldLocalizeData: true,
+  };
+
+  const breastMilkBankAnswer: ChatDecisionTreeNode = {
+    id: 18,
+    branchKey: 0,
+    parent: whatWouldYouLikeQuestion,
+    children: [],
+    sender: "user",
+    type: "selectionBox",
+    boxes: ["iNeedBreastMilk", "iDonateBreastMilk"],
+    shouldLocalizeData: true,
+  };
+
+  const isInHospitalOver14DaysQuestion: ChatDecisionTreeNode = {
+    id: 19,
+    type: "text",
+    sender: "bot",
+    branchKey: 0,
+    parent: rightsTopicsStep,
+    children: [],
+    content: "isInHospitalOver14Days",
+    shouldLocalizeData: true,
+  };
+
+  const isInHospitalOver14DaysAnswer: ChatDecisionTreeNode = {
+    id: 20,
+    branchKey: 0,
+    parent: rightsTopicsStep,
+    children: [],
+    sender: "user",
+    type: "selectionBox",
+    boxes: ["yes", "no"],
+    shouldLocalizeData: true,
+  };
+
+  const motherHospitalizedBeforeBirthQuestion: ChatDecisionTreeNode = {
+    id: 21,
+    type: "text",
+    sender: "bot",
+    branchKey: 0,
+    parent: isInHospitalOver14DaysAnswer,
+    children: [],
+    content: "motherHospitalizedBeforeBirth",
+    shouldLocalizeData: true,
+  };
+
+  const motherHospitalizedBeforeBirthAnswer: ChatDecisionTreeNode = {
+    id: 22,
+    branchKey: 0,
+    parent: motherHospitalizedBeforeBirthQuestion,
+    children: [],
+    sender: "user",
+    type: "selectionBox",
+    boxes: ["yes", "no"],
+    shouldLocalizeData: true,
+  };
+
   // Wire children:
-  welcomeStep.children = [userTypeStep];
+  welcomeStep.children = [areYouStep];
+  areYouStep.children = [userTypeStep];
   userTypeStep.children = [isBabyStillInHospitalStep, null, null, null, null];
   isBabyStillInHospitalStep.children = [isBabyStillInHospitalAnswerStep];
   isBabyStillInHospitalAnswerStep.children = [
@@ -280,6 +359,21 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
   onWhichTopicYouNeedAssistanceStep.children = [assistanceTopicsAnswerStep];
   assistanceTopicsAnswerStep.children = [rightsQuestionsStep, null, null, null];
   rightsQuestionsStep.children = [rightsTopicsStep];
+  rightsTopicsStep.children = [
+    null,
+    whatWouldYouLikeQuestion,
+    isInHospitalOver14DaysQuestion,
+    null,
+  ];
+  whatWouldYouLikeQuestion.children = [breastMilkBankAnswer];
+  isInHospitalOver14DaysQuestion.children = [isInHospitalOver14DaysAnswer];
+  isInHospitalOver14DaysAnswer.children = [
+    null,
+    motherHospitalizedBeforeBirthQuestion,
+  ];
+  motherHospitalizedBeforeBirthQuestion.children = [
+    motherHospitalizedBeforeBirthAnswer,
+  ];
 
   const setNextStep = (step: ChatDecisionTreeNode, childIndex: number = 0) => {
     let nextStep: ChatDecisionTreeNode | null = step.children[childIndex];

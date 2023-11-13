@@ -1,7 +1,8 @@
 {
   "lahav": "Lahav",
   "lahavBot": "Lahav bot",
-  "welcomeMessage": "Hello! You reached Lahav's bots. I will be happy to assist and direct you to the right place. Are you:",
+  "welcomeMessage": "Hello! You reached Lahav's bots. I will be happy to assist and direct you to the right place, but first I need to know some basic information.",
+  "areYou": "Are you:",
   "isStillInNICU": "Is the baby still in the NICU (Neonatal intensive care unit) in the hospital?",
   "parent": "Parent",
   "highRiskPregnancy": "High risk pregnancy",
@@ -42,5 +43,10 @@
   "prematurityAllowance": "Prematurity allowance",
   "releaseDateFromHospital": "On what date was I released from the hospital?",
   "joinNICUAlumniWhatsapp": "You are invited to join the NICU Alumni Whatsapp group of {hospital}",
-  "clickHere": "Click here"
+  "clickHere": "Click here",
+  "iNeedBreastMilk": "I would like to receive a donation",
+  "iDonateBreastMilk": "I want to donate",
+  "isInHospitalOver14Days": "Were you in the hospital for more than 14 days?",
+  "whatWouldYouLike": "What would you like to do?",
+  "motherHospitalizedBeforeBirth": "Was the mother hospitalized before birth?"
 }

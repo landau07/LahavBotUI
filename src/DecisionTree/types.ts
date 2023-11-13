@@ -21,6 +21,7 @@ export type ChatDecisionTreeNode<TInnerComponentProps = unknown> = {
     }
   | {
       type: "selectionBox";
+      sender: "user";
       boxes: string[];
     }
   | {
