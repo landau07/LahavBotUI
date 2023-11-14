@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { isMobile } from "react-device-detect";
 import { FormattedMessage } from "react-intl";
 import { cn } from "../utils/classnames";
 import { mouseDownTransitionDownClassNames } from "../utils/sharedClassNames";
@@ -15,6 +16,13 @@ export function SelectionBoxList({
   shouldLocalizeData,
 }: SelectionBoxProps) {
   const [selectedBox, setSelectedBox] = useState(-1);
+  const firstBoxRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!isMobile) {
+      firstBoxRef.current?.focus();
+    }
+  }, []);
 
   return (
     <div className="flex flex-row justify-end ms-14 flex-wrap mb-3 gap-2">
@@ -27,6 +35,7 @@ export function SelectionBoxList({
             mouseDownTransitionDownClassNames
           )}
           key={i}
+          ref={i === 0 ? firstBoxRef : null}
           onClick={() => {
             onBoxClicked(i);
             setSelectedBox(i);

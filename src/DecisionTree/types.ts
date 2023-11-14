@@ -32,7 +32,7 @@ export type ChatDecisionTreeNode<TInnerComponentProps = unknown> = {
       defaultValue: string;
       componentProps?: (
         step: ChatDecisionTreeNode
-      ) => Omit<TInnerComponentProps, "isAfterConfirmState" | "setData">;
+      ) => Omit<TInnerComponentProps, keyof ConfirmComponentProps>;
     }
 );
 

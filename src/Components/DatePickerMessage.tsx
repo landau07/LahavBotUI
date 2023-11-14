@@ -38,6 +38,7 @@ export function DatePickerMessage({
       {!isAfterConfirmState && (
         <div className="mt-4">
           <DayPicker
+            initialFocus
             mode="single"
             required
             selected={selectedDay!}

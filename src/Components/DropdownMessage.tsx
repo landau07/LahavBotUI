@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { usePrevious } from "../hooks/usePrevious";
 import { messageTextClassNames } from "../utils/sharedClassNames";
@@ -17,12 +17,19 @@ export function DropdownMessage({
 }: DropdownMessageProps) {
   const [selection, setSelection] = useState(options[0]);
   const previousSelection = usePrevious(selection);
+  const ref = useRef<HTMLSelectElement>(null);
 
   useLayoutEffect(() => {
     if (previousSelection !== selection) {
       setData(selection);
     }
   }, [previousSelection, selection, setData]);
+
+  useEffect(() => {
+    if (!isAfterConfirmState) {
+      ref.current?.focus();
+    }
+  }, [isAfterConfirmState]);
 
   return (
     <>
@@ -34,6 +41,7 @@ export function DropdownMessage({
           className="dropdown border rounded-md p-2 mt-2 whitespace-nowrap overflow-hidden text-ellipsis"
           value={selection}
           onChange={(e) => setSelection(e.target.value)}
+          ref={ref}
         >
           <option value="" disabled>
             <FormattedMessage id="selectOption" />

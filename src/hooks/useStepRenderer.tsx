@@ -58,11 +58,13 @@ export function useStepRenderer() {
               step.stepResult = step.shouldLocalizeData
                 ? intl.formatMessage({ id: data })
                 : data;
-              step.stepLogQuestion = step.shouldLocalizeData
-                ? intl.formatMessage({
-                    id: step.stepLogQuestion,
-                  })
-                : step.stepLogQuestion;
+              step.stepLogQuestion =
+                step.stepLogQuestion ||
+                (step.shouldLocalizeData
+                  ? intl.formatMessage({
+                      id: step.stepLogQuestion,
+                    })
+                  : step.stepLogQuestion);
               setNextStep(step);
             }}
             ContentComponent={step.component}

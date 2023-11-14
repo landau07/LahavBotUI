@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Plus } from "react-feather";
 import { FormattedMessage } from "react-intl";
 import { usePrevious } from "../hooks/usePrevious";
@@ -13,6 +13,7 @@ export type BirthWeekAndDaySelectorProps = ConfirmComponentProps;
 export function BirthWeekAndDaySelector({
   setData,
   isAfterConfirmState,
+  onEnterPressed,
 }: BirthWeekAndDaySelectorProps) {
   const MIN_WEEK = 20;
   const MAX_WEEK = 42;
@@ -21,6 +22,7 @@ export function BirthWeekAndDaySelector({
 
   const [selectedWeek, setSelectedWeek] = useState(30);
   const [selectedDay, setSelectedDay] = useState(0);
+  const weekInputRef = useRef<HTMLInputElement>(null);
 
   const weekAndDayString = `${selectedWeek} + ${selectedDay}`;
   const previousWeekAndDateString = usePrevious(weekAndDayString);
@@ -34,6 +36,10 @@ export function BirthWeekAndDaySelector({
       }
     }
   }, [previousWeekAndDateString, selectedWeek, setData, weekAndDayString]);
+
+  useEffect(() => {
+    weekInputRef.current?.focus();
+  }, []);
 
   return (
     <>
@@ -49,12 +55,18 @@ export function BirthWeekAndDaySelector({
             <br />
             <input
               className={inputNumberClassNames}
+              ref={weekInputRef}
               type="number"
               id="week"
               name="week"
               min={MIN_WEEK}
               max={MAX_WEEK}
               value={selectedWeek}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  onEnterPressed?.();
+                }
+              }}
               onChange={(e) => {
                 const week = e.target.valueAsNumber;
                 if (!isNaN(week)) {
@@ -77,6 +89,11 @@ export function BirthWeekAndDaySelector({
               min={`${MIN_DAY}`}
               max={`${MAX_DAY}`}
               value={selectedDay}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  onEnterPressed?.();
+                }
+              }}
               onChange={(e) => {
                 const day = e.target.valueAsNumber;
                 if (!isNaN(day) && day >= MIN_DAY && day <= MAX_DAY) {

@@ -7,6 +7,7 @@ import { ConfirmButton } from "./ConfirmButton";
 export type ConfirmComponentProps<TProps = unknown> = {
   setData: React.Dispatch<React.SetStateAction<string>>;
   isAfterConfirmState: boolean;
+  onEnterPressed?: () => void;
 } & TProps;
 
 type ConfirmComponentWrapperProps<TProps = unknown> = {
@@ -38,17 +39,18 @@ export function ConfirmComponentWrapper<TProps>({
         <ContentComponent
           setData={setData}
           isAfterConfirmState={isAfterConfirmState}
+          onEnterPressed={handleConfirmClick}
           {...componentProps}
         />
       </ChatMessage>
-      {!isAfterConfirmState && data && (
+      {!isAfterConfirmState && (
         <ConfirmButton
           position="start"
           disabled={!data}
-          onClick={() => {
-            setIsAfterConfirmState(true);
-            handleConfirmClick();
-          }}
+          onClick={handleConfirmClick}
+          // We need to always render the button, so on new step added
+          // it will be scrolled to the bottom (in ChatBody.tsx -> scrollToBottom)
+          addClassNames={!data ? "opacity-0" : ""}
         />
       )}
       {isAfterConfirmState && (

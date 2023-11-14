@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { usePrevious } from "../hooks/usePrevious";
 import {
@@ -15,23 +15,29 @@ export function BabiesWeightInput({
   setData,
   isAfterConfirmState,
   numOfBabies,
+  onEnterPressed,
 }: BabiesWeightInputProps) {
   const [babiesWeight, setBabiesWeight] = useState<number[]>(
-    Array(numOfBabies).fill(2)
+    Array(numOfBabies).fill(1)
   );
 
   const weightSummaryString = babiesWeight.join(" , ");
   const previousWeightSummaryString = usePrevious(weightSummaryString);
+  const firstInputRef = useRef<HTMLInputElement>(null);
 
   useLayoutEffect(() => {
     if (previousWeightSummaryString !== weightSummaryString) {
-      if (babiesWeight.some((weight) => weight < 0 || weight > 6)) {
+      if (babiesWeight.some((weight) => weight <= 0 || weight > 6)) {
         setData("");
       } else {
         setData(weightSummaryString);
       }
     }
   }, [babiesWeight, previousWeightSummaryString, setData, weightSummaryString]);
+
+  useEffect(() => {
+    firstInputRef.current?.focus();
+  }, []);
 
   return (
     <>
@@ -63,17 +69,27 @@ export function BabiesWeightInput({
               </label>
               <input
                 className={inputNumberClassNames + " w-24"}
+                ref={i === 0 ? firstInputRef : undefined}
                 type="number"
                 id={`baby-${i + 1}`}
                 name={`baby-${i + 1}`}
                 step={"0.1"}
                 min={0}
                 max={6}
-                value={babiesWeight[i]}
+                value={babiesWeight[i] > -1 ? babiesWeight[i] : ""}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    onEnterPressed?.();
+                  }
+                }}
                 onChange={(e) => {
                   const weightString = e.target.value;
                   const weight = parseFloat(weightString);
-                  if (!isNaN(weight) && weight >= 0 && weight <= 6) {
+                  if (weightString === "") {
+                    setBabiesWeight((prev) =>
+                      prev.map((w, index) => (index === i ? -1 : w))
+                    );
+                  } else if (!isNaN(weight) && weight >= 0 && weight <= 6) {
                     setBabiesWeight((prev) =>
                       prev.map((w, index) =>
                         index === i ? parseFloat(weight.toFixed(3)) : w

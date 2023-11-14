@@ -6,11 +6,13 @@ import { mouseDownTransitionDownClassNames } from "../utils/sharedClassNames";
 type ConfirmButtonProps = {
   onClick: () => void;
   position?: "start" | "end";
+  addClassNames?: string;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 export function ConfirmButton({
   onClick,
   position = "end",
+  addClassNames = "",
   ...rest
 }: ConfirmButtonProps) {
   return (
@@ -23,7 +25,8 @@ export function ConfirmButton({
         onClick={onClick}
         className={cn(
           `text-white py-2 px-4 rounded-md bg-lahav hover:bg-fuchsia-900 active:bg-fuchsia-950 focus:bg-fuchsia-900`,
-          mouseDownTransitionDownClassNames
+          mouseDownTransitionDownClassNames,
+          addClassNames
         )}
         {...rest}
       >
