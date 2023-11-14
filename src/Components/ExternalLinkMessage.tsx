@@ -1,8 +1,8 @@
 import { ReactNode } from "react";
 import { ExternalLink } from "react-feather";
 import { FormattedMessage, useIntl } from "react-intl";
-import whatsAppIcon from "../assets/whatsAppIcon.png";
 import { hospitalLinks } from "../data/hospitalLinks";
+import whatsAppIcon from "../icons/whatsappIcon.png";
 
 export type ExternalLinkMessageProps = {
   url: string;

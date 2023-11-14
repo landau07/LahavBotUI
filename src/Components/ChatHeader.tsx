@@ -1,6 +1,6 @@
 import { Globe, Moon, Sun } from "react-feather";
 import { useIntl } from "react-intl";
-import lahavLogo from "../assets/lahavIcon.jpeg";
+import lahavLogo from "../icons/lahavIcon.jpeg";
 import { isDarkMode, toggleLocale } from "../signals";
 import { cn } from "../utils/classnames";
 import { mouseDownTransitionDownClassNames } from "../utils/sharedClassNames";
