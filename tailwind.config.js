@@ -6,6 +6,9 @@ export default {
   darkMode: "class",
   theme: {
     extend: {
+      height: {
+        "dvh-100": "100dvh",
+      },
       colors: {
         lahav: { DEFAULT: lahavColor, dark: "#d879bf" },
       },
