@@ -21,6 +21,7 @@ import {
 } from "../Components/ExternalLinkMessage";
 import { hospitalLinks } from "../data/hospitalLinks";
 import { useConversationLogger } from "../hooks/useConversationLogger";
+import facebookIcon from "../icons/facebookIcon.jpeg";
 import milkBottleIcon from "../icons/milkBottleIcon.png";
 import { takeUntil } from "../utils/arrayUtils";
 import { dateToString } from "../utils/dateUtils";
@@ -252,12 +253,15 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
   const inviteToHospitalAlumniWhatsApp: ChatDecisionTreeNode = {
     id: 15,
     branchKey: 0,
-    parent: assistanceTopicsAnswerStep,
+    parent: whichNICUWereYouStep,
     children: [],
     sender: "bot",
     type: "text",
     content: (step) => (
-      <HospitalAlumniWhatsapp hospitalNameFormatted={step.parentStepData!} />
+      <HospitalAlumniWhatsapp
+        hospitalNameFormatted={step.parentStepData!}
+        whatsAppGroupType="alumni"
+      />
     ),
     shouldLocalizeData: true,
   };
@@ -349,7 +353,7 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     shouldLocalizeData: true,
     content: (
       <ExternalLinkMessage
-        url={"https://pagim.net/הארכת-חופשת-לידה-של-אם-לפג/"}
+        url={"https://pagim.net/הארכת-חופשת-לידה-של-אם-לפג"}
         children={<FormattedMessage id="isOver14DaysInNicuYesResult" />}
         urlText={<FormattedMessage id="clickHere" />}
         icon={<Info className="text-blue-500" />}
@@ -371,6 +375,42 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
         children={<FormattedMessage id="thankYouAllInfoIsHere" />}
         urlText={<FormattedMessage id="clickHere" />}
         icon={milkBottleIcon}
+      />
+    ),
+  };
+
+  const generalInfoLink: ChatDecisionTreeNode = {
+    id: 25,
+    branchKey: 0,
+    parent: assistanceTopicsAnswerStep,
+    children: [],
+    sender: "bot",
+    type: "text",
+    shouldLocalizeData: true,
+    content: (
+      <ExternalLinkMessage
+        url={"https://pagim.net/בנק-חלב-אם"}
+        children={<FormattedMessage id="hereAllTheDetailsYouNeed" />}
+        urlText={<FormattedMessage id="clickHere" />}
+        icon={<Info className="text-blue-500" />}
+      />
+    ),
+  };
+
+  const joinOurFacebookStep: ChatDecisionTreeNode = {
+    id: 26,
+    branchKey: 0,
+    parent: generalInfoLink,
+    children: [],
+    sender: "bot",
+    type: "text",
+    shouldLocalizeData: true,
+    content: (
+      <ExternalLinkMessage
+        url={"https://www.facebook.com/groups/pagim"}
+        children={<FormattedMessage id="facebookGroupInvite" />}
+        urlText={<FormattedMessage id="clickHere" />}
+        icon={facebookIcon}
       />
     ),
   };
@@ -399,7 +439,11 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
   ];
   babiesWeightStep.children = [onWhichTopicYouNeedAssistanceStep];
   onWhichTopicYouNeedAssistanceStep.children = [assistanceTopicsAnswerStep];
-  assistanceTopicsAnswerStep.children = [rightsQuestionsStep, null, null, null];
+  assistanceTopicsAnswerStep.children = [
+    rightsQuestionsStep,
+    generalInfoLink,
+    null,
+  ];
   rightsQuestionsStep.children = [rightsTopicsStep];
   rightsTopicsStep.children = [
     null,
@@ -417,6 +461,7 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     motherHospitalizedBeforeBirthAnswer,
   ];
   breastMilkBankAnswer.children = [null, wantToDonateMilkLinkInfo];
+  generalInfoLink.children = [joinOurFacebookStep];
 
   const setNextStep = (step: ChatDecisionTreeNode, childIndex: number = 0) => {
     let nextStep: ChatDecisionTreeNode | null = step.children[childIndex];

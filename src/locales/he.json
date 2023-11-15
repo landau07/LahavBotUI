@@ -42,6 +42,7 @@
   "extensionOfMaternityLeave": "הארכת חופשת לידה",
   "prematurityAllowance": "קצבת פגים",
   "releaseDateFromHospital": "באיזה תאריך שוחררתם מהפגייה?",
+  "joinNICUWhatsapp": "מוזמנים להצטרף לקבוצת הוואטסאפ של פגיית {hospital}",
   "joinNICUAlumniWhatsapp": "מוזמנים להצטרף לקבוצת הוואטסאפ של בוגרי פגיית {hospital}",
   "clickHere": "לחץ כאן",
   "iNeedBreastMilk": "אני רוצה לקבל תרומה",
@@ -50,5 +51,7 @@
   "whatWouldYouLike": "מה תרצה?",
   "motherHospitalizedBeforeBirth": "האם האמא הייתה מאושפזת לפני הלידה?",
   "isOver14DaysInNicuYesResult": "במידה ואתם זכאים לדמי לידה, תהיו זכאים להארכת חופשת הלידה עבור כל יום שהייתם בפגייה. יש להגיש לביטוח לאומי את הטופס (אין מקוון. יש להדפיס, למלא, לסרוק ואפשר להגיש באתר שלהם), ומכתב השחרור מהפגייה. כל המידע פה:",
-  "thankYouAllInfoIsHere": "תודה רבה! כל המידע פה:"
+  "thankYouAllInfoIsHere": "תודה רבה! כל המידע פה:",
+  "hereAllTheDetailsYouNeed": "הנה כל מה שצריך לדעת:",
+  "facebookGroupInvite": "בנתיים, אתם מוזמנים להצטרף לקבוצת הפייסבוק שלנו:"
 }

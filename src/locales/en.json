@@ -42,6 +42,7 @@
   "extensionOfMaternityLeave": "Extension of maternity leave",
   "prematurityAllowance": "Prematurity allowance",
   "releaseDateFromHospital": "On what date was I released from the hospital?",
+  "joinNICUWhatsapp": "You are invited to join the NICU Whatsapp group of {hospital}",
   "joinNICUAlumniWhatsapp": "You are invited to join the NICU Alumni Whatsapp group of {hospital}",
   "clickHere": "Click here",
   "iNeedBreastMilk": "I would like to receive a donation",
@@ -50,5 +51,7 @@
   "whatWouldYouLike": "What would you like to do?",
   "motherHospitalizedBeforeBirth": "Was the mother hospitalized before birth?",
   "isOver14DaysInNicuYesResult": "If you are entitled to maternity benefits, you will be entitled to an extension of maternity leave for each day you were in the NICU. The form must be submitted to the National Insurance (not online. Need to print, fill out, scan and you can submit it on their website), and the letter of release from the NICU. All the details are here:",
-  "thankYouAllInfoIsHere": "Thank you! All details are here:"
+  "thankYouAllInfoIsHere": "Thank you! All details are here:",
+  "hereAllTheDetailsYouNeed": "here are all the details you need to know:",
+  "facebookGroupInvite": "In the meanwhile, you can join our Facebook group:"
 }

@@ -40,19 +40,26 @@ export function ExternalLinkMessage({
 
 export function HospitalAlumniWhatsapp({
   hospitalNameFormatted,
+  whatsAppGroupType,
 }: {
   hospitalNameFormatted: string;
+  whatsAppGroupType: "currentlyInHospital" | "alumni";
 }) {
   const hospitals = hospitalLinks();
   const intl = useIntl();
 
-  const hospitalAlumniLink = hospitals.filter(
+  const hospitalDetails = hospitals.filter(
     (h) => intl.formatMessage({ id: h.id }) === hospitalNameFormatted
-  )[0].alumniWhatsAppLink;
+  )[0];
+
+  const url =
+    whatsAppGroupType === "currentlyInHospital"
+      ? hospitalDetails.whatsAppLink
+      : hospitalDetails.alumniWhatsAppLink;
 
   return (
     <ExternalLinkMessage
-      url={hospitalAlumniLink}
+      url={url}
       urlText={<FormattedMessage id="clickHere" />}
       icon={whatsAppIcon}
     >
