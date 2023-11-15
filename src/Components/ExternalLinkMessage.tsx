@@ -25,7 +25,7 @@ export function ExternalLinkMessage({
       <a
         href={url}
         target="_blank"
-        className="flex gap-1 text-blue-500 items-center mt-1"
+        className="flex gap-1 text-blue-500 items-center mt-1 hover:underline"
       >
         {icon && typeof icon == "string" && (
           <img className="h-7 me-1" src={icon} />

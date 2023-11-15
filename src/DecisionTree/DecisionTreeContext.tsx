@@ -21,6 +21,7 @@ import {
 } from "../Components/ExternalLinkMessage";
 import { hospitalLinks } from "../data/hospitalLinks";
 import { useConversationLogger } from "../hooks/useConversationLogger";
+import milkBottleIcon from "../icons/milkBottleIcon.png";
 import { takeUntil } from "../utils/arrayUtils";
 import { dateToString } from "../utils/dateUtils";
 import { ChatDecisionTreeNode, DecisionTreeContextType } from "./types";
@@ -356,6 +357,24 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     ),
   };
 
+  const wantToDonateMilkLinkInfo: ChatDecisionTreeNode = {
+    id: 24,
+    branchKey: 0,
+    parent: isInHospitalOver14DaysAnswer,
+    children: [],
+    sender: "bot",
+    type: "text",
+    shouldLocalizeData: true,
+    content: (
+      <ExternalLinkMessage
+        url={"https://pagim.net/בנק-חלב-אם/"}
+        children={<FormattedMessage id="thankYouAllInfoIsHere" />}
+        urlText={<FormattedMessage id="clickHere" />}
+        icon={milkBottleIcon}
+      />
+    ),
+  };
+
   // Wire children:
   welcomeStep.children = [areYouStep];
   areYouStep.children = [userTypeStep];
@@ -397,6 +416,7 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
   motherHospitalizedBeforeBirthQuestion.children = [
     motherHospitalizedBeforeBirthAnswer,
   ];
+  breastMilkBankAnswer.children = [null, wantToDonateMilkLinkInfo];
 
   const setNextStep = (step: ChatDecisionTreeNode, childIndex: number = 0) => {
     let nextStep: ChatDecisionTreeNode | null = step.children[childIndex];

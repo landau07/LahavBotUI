@@ -49,5 +49,6 @@
   "isInHospitalOver14Days": "Were you in the hospital for more than 14 days?",
   "whatWouldYouLike": "What would you like to do?",
   "motherHospitalizedBeforeBirth": "Was the mother hospitalized before birth?",
-  "isOver14DaysInNicuYesResult": "If you are entitled to maternity benefits, you will be entitled to an extension of maternity leave for each day you were in the NICU. The form must be submitted to the National Insurance (not online. Need to print, fill out, scan and you can submit it on their website), and the letter of release from the NICU. All the details are here:"
+  "isOver14DaysInNicuYesResult": "If you are entitled to maternity benefits, you will be entitled to an extension of maternity leave for each day you were in the NICU. The form must be submitted to the National Insurance (not online. Need to print, fill out, scan and you can submit it on their website), and the letter of release from the NICU. All the details are here:",
+  "thankYouAllInfoIsHere": "Thank you! All details are here:"
 }
