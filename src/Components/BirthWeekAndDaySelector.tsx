@@ -65,6 +65,7 @@ export function BirthWeekAndDaySelector({
               min={MIN_WEEK}
               max={MAX_WEEK}
               value={selectedWeek}
+              onFocus={(e) => e.target.select()}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   onEnterPressed?.();
@@ -92,6 +93,7 @@ export function BirthWeekAndDaySelector({
               min={`${MIN_DAY}`}
               max={`${MAX_DAY}`}
               value={selectedDay}
+              onFocus={(e) => e.target.select()}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   onEnterPressed?.();
