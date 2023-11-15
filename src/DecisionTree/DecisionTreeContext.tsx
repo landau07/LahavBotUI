@@ -15,10 +15,7 @@ import {
   DropdownMessage,
   DropdownMessageProps,
 } from "../Components/DropdownMessage";
-import {
-  ExternalLinkMessage,
-  HospitalAlumniWhatsapp,
-} from "../Components/ExternalLinkMessage";
+import { ExternalLinkMessage } from "../Components/ExternalLinkMessage";
 import { hospitalLinks } from "../data/hospitalLinks";
 import { useConversationLogger } from "../hooks/useConversationLogger";
 import facebookIcon from "../icons/facebookIcon.jpeg";
@@ -26,6 +23,7 @@ import milkBottleIcon from "../icons/milkBottleIcon.png";
 import { takeUntil } from "../utils/arrayUtils";
 import { dateToString } from "../utils/dateUtils";
 import { ChatDecisionTreeNode, DecisionTreeContextType } from "./types";
+import { HospitalWhatsApp } from "../Components/HospitalWhatsApp";
 
 export const DecisionTreeContext =
   createContext<DecisionTreeContextType | null>(null);
@@ -187,7 +185,12 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     defaultValue: "",
     shouldLocalizeData: false,
     componentProps: (step) => ({
-      numOfBabies: parseInt(step.parentStepData!) as 1 | 2 | 3 | 4 | 5,
+      numOfBabies: parseInt(step.parent!.stepResult!.value!) as
+        | 1
+        | 2
+        | 3
+        | 4
+        | 5,
     }),
   };
 
@@ -257,12 +260,7 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     children: [],
     sender: "bot",
     type: "text",
-    content: (step) => (
-      <HospitalAlumniWhatsapp
-        hospitalNameFormatted={step.parentStepData!}
-        whatsAppGroupType="alumni"
-      />
-    ),
+    content: () => <HospitalWhatsApp whatsAppGroupType="alumni" />,
     shouldLocalizeData: true,
   };
 
@@ -415,6 +413,17 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     ),
   };
 
+  const inviteToHospitalWhatsApp: ChatDecisionTreeNode = {
+    id: 27,
+    branchKey: 0,
+    parent: joinOurFacebookStep,
+    children: [],
+    sender: "bot",
+    type: "text",
+    content: () => <HospitalWhatsApp whatsAppGroupType="currentlyInHospital" />,
+    shouldLocalizeData: true,
+  };
+
   // Wire children:
   welcomeStep.children = [areYouStep];
   areYouStep.children = [userTypeStep];
@@ -462,6 +471,7 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
   ];
   breastMilkBankAnswer.children = [null, wantToDonateMilkLinkInfo];
   generalInfoLink.children = [joinOurFacebookStep];
+  joinOurFacebookStep.children = [inviteToHospitalWhatsApp];
 
   const setNextStep = (step: ChatDecisionTreeNode, childIndex: number = 0) => {
     let nextStep: ChatDecisionTreeNode | null = step.children[childIndex];
@@ -471,7 +481,6 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
         {
           // Updating the branchKey of the child so it will be rerender in case of going back in flow
           branchKey: new Date().getTime(),
-          parentStepData: step.stepResult,
         }
       );
     } else {
@@ -483,9 +492,15 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     );
   };
 
+  const getStepResult = (stepId: number) => {
+    const step = chatSteps.find((s) => s.id === stepId);
+    return step?.stepResult;
+  };
+
   const contextValue: DecisionTreeContextType = {
     chatSteps,
     setNextStep,
+    getStepResult,
   };
 
   return (

@@ -48,9 +48,6 @@ export function ConfirmComponentWrapper<TProps>({
           position="start"
           disabled={!data}
           onClick={handleConfirmClick}
-          // We need to always render the button, so on new step added
-          // it will be scrolled to the bottom (in ChatBody.tsx -> scrollToBottom)
-          addClassNames={!data ? "opacity-0" : ""}
         />
       )}
       {isAfterConfirmState && (

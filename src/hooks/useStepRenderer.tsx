@@ -13,9 +13,12 @@ export function useStepRenderer() {
     switch (step.type) {
       case "text":
         if (typeof step.content === "string") {
-          step.stepResult = step.shouldLocalizeData
-            ? intl.formatMessage({ id: step.content })
-            : step.content;
+          step.stepResult = {
+            value: step.content,
+            localized: step.shouldLocalizeData
+              ? intl.formatMessage({ id: step.content })
+              : step.content,
+          };
         }
         return (
           <ChatMessage
@@ -40,11 +43,12 @@ export function useStepRenderer() {
             boxes={step.boxes}
             key={`${step.branchKey}_${index}`}
             onBoxClicked={(boxIndex: number) => {
-              step.stepResult = step.shouldLocalizeData
-                ? intl.formatMessage({
-                    id: step.boxes[boxIndex],
-                  })
-                : step.boxes[boxIndex];
+              step.stepResult = {
+                value: step.boxes[boxIndex],
+                localized: step.shouldLocalizeData
+                  ? intl.formatMessage({ id: step.boxes[boxIndex] })
+                  : step.boxes[boxIndex],
+              };
               setNextStep(step, boxIndex);
             }}
             shouldLocalizeData={step.shouldLocalizeData}
@@ -55,9 +59,12 @@ export function useStepRenderer() {
           <ConfirmComponentWrapper
             key={`${step.branchKey}_${index}`}
             onConfirmButtonClicked={(data) => {
-              step.stepResult = step.shouldLocalizeData
-                ? intl.formatMessage({ id: data })
-                : data;
+              step.stepResult = {
+                value: data,
+                localized: step.shouldLocalizeData
+                  ? intl.formatMessage({ id: data })
+                  : data,
+              };
               step.stepLogQuestion =
                 step.stepLogQuestion ||
                 (step.shouldLocalizeData

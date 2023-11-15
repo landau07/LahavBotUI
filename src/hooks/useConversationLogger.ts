@@ -9,7 +9,9 @@ export function useConversationLogger(chatSteps: ChatDecisionTreeNode[]) {
           log += step.stepLogQuestion + " -> ";
         }
         if (step.stepResult) {
-          log += step.stepResult ?? "";
+          log += step.shouldLocalizeData
+            ? step.stepResult.localized
+            : step.stepResult.value ?? "";
         }
 
         return log;
