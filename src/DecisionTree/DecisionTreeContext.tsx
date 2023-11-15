@@ -1,5 +1,7 @@
 import { ReactNode, createContext, useState } from "react";
 import "react-day-picker/dist/style.css";
+import { Info } from "react-feather";
+import { FormattedMessage } from "react-intl";
 import {
   BabiesWeightInput,
   BabiesWeightInputProps,
@@ -13,7 +15,10 @@ import {
   DropdownMessage,
   DropdownMessageProps,
 } from "../Components/DropdownMessage";
-import { HospitalAlumniWhatsapp } from "../Components/ExternalLinkMessage";
+import {
+  ExternalLinkMessage,
+  HospitalAlumniWhatsapp,
+} from "../Components/ExternalLinkMessage";
 import { hospitalLinks } from "../data/hospitalLinks";
 import { useConversationLogger } from "../hooks/useConversationLogger";
 import { takeUntil } from "../utils/arrayUtils";
@@ -333,6 +338,24 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     shouldLocalizeData: true,
   };
 
+  const isOver14DaysInNicuYesResult: ChatDecisionTreeNode = {
+    id: 23,
+    branchKey: 0,
+    parent: isInHospitalOver14DaysAnswer,
+    children: [],
+    sender: "bot",
+    type: "text",
+    shouldLocalizeData: true,
+    content: (
+      <ExternalLinkMessage
+        url={"https://pagim.net/הארכת-חופשת-לידה-של-אם-לפג/"}
+        children={<FormattedMessage id="isOver14DaysInNicuYesResult" />}
+        urlText={<FormattedMessage id="clickHere" />}
+        icon={<Info className="text-blue-500" />}
+      />
+    ),
+  };
+
   // Wire children:
   welcomeStep.children = [areYouStep];
   areYouStep.children = [userTypeStep];
@@ -368,7 +391,7 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
   whatWouldYouLikeQuestion.children = [breastMilkBankAnswer];
   isInHospitalOver14DaysQuestion.children = [isInHospitalOver14DaysAnswer];
   isInHospitalOver14DaysAnswer.children = [
-    null,
+    isOver14DaysInNicuYesResult,
     motherHospitalizedBeforeBirthQuestion,
   ];
   motherHospitalizedBeforeBirthQuestion.children = [

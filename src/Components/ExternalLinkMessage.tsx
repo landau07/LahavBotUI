@@ -8,7 +8,7 @@ export type ExternalLinkMessageProps = {
   url: string;
   children: string | ReactNode;
   urlText: string | ReactNode;
-  icon?: string;
+  icon?: string | ReactNode;
 };
 
 export function ExternalLinkMessage({
@@ -17,6 +17,8 @@ export function ExternalLinkMessage({
   urlText,
   icon,
 }: ExternalLinkMessageProps) {
+  const IconComponent: ReactNode =
+    (icon && typeof icon == "object" && icon) ?? undefined;
   return (
     <div>
       <div>{children}</div>
@@ -25,7 +27,10 @@ export function ExternalLinkMessage({
         target="_blank"
         className="flex gap-1 text-blue-500 items-center mt-1"
       >
-        {icon && <img className="h-7 me-1" src={icon} />}
+        {icon && typeof icon == "string" && (
+          <img className="h-7 me-1" src={icon} />
+        )}
+        {IconComponent}
         <span>{urlText}</span>
         <ExternalLink className="h-4 rtl:scale-x-[-1]" />
       </a>
