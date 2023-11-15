@@ -1,11 +1,10 @@
 import { ChatBody } from "./ChatBody";
-import "./ChatBotContainer.css";
 import { ChatFooter } from "./ChatFooter";
 import { ChatHeader } from "./ChatHeader";
 
 export function ChatBotContainer() {
   return (
-    <div className="chat-bot-container">
+    <div className="tablet:px-[10%] laptop:px-[20%] desktop:px-[30%]">
       <ChatHeader />
       <ChatBody />
       <ChatFooter />

@@ -31,7 +31,7 @@ export function ChatBody() {
 
   return (
     <div
-      className="h-[calc(100svh-163px)] flex flex-col overflow-y-auto p-4 bg-slate-100 dark:bg-[#00000036] gap-3"
+      className="h-[calc(100svh-163px)] flex flex-col overflow-y-auto p-4 pe-6 bg-slate-100 dark:bg-[#00000036] gap-3"
       ref={containerRef}
     >
       {chatSteps.map((step, i) => (

@@ -36,7 +36,7 @@ export function DatePickerMessage({
         <FormattedMessage id={textId} />
       </div>
       {!isAfterConfirmState && (
-        <div className="mt-4">
+        <div className="mt-4 -mx-4 phone:-mx-0">
           <DayPicker
             initialFocus
             mode="single"

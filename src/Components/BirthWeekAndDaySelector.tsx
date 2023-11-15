@@ -1,4 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { isMobile } from "react-device-detect";
 import { Plus } from "react-feather";
 import { FormattedMessage } from "react-intl";
 import { usePrevious } from "../hooks/usePrevious";
@@ -38,7 +39,9 @@ export function BirthWeekAndDaySelector({
   }, [previousWeekAndDateString, selectedWeek, setData, weekAndDayString]);
 
   useEffect(() => {
-    weekInputRef.current?.focus();
+    if (!isMobile) {
+      weekInputRef.current?.focus();
+    }
   }, []);
 
   return (
