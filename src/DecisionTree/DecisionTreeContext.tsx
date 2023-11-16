@@ -388,7 +388,7 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     shouldLocalizeData: true,
     content: (
       <ExternalLinkMessage
-        url={"https://pagim.net/בנק-חלב-אם"}
+        url={"https://pagim.net/הורים-לפגים"}
         children={<FormattedMessage id="hereAllTheDetailsYouNeed" />}
         urlText={<FormattedMessage id="clickHere" />}
         icon={<Info className="text-blue-500" />}

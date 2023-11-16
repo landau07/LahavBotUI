@@ -30,8 +30,8 @@
   "week": "שבוע",
   "day": "יום",
   "numberOfNewborns": "מספר הילודים?",
-  "whatIsTheWeightOfTheBaby": "מה משקל התינוק בעת הלידה?",
-  "whatIsTheWeightOfTheBabies": "מה משקל הילודים בעת הלידה?",
+  "whatIsTheWeightOfTheBaby": "מה משקל התינוק בעת הלידה? (ק״ג)",
+  "whatIsTheWeightOfTheBabies": "מה משקל הילודים בעת הלידה? (ק״ג)",
   "baby": "תינוק",
   "onWhichTopicYouNeedAssistance": "באיזה נושא תרצו לקבל עזרה?",
   "rights": "זכויות",
@@ -69,6 +69,5 @@
   "wonderful": "נפלא!",
   "amazing": "מדהים!",
   "perfect": "מושלם!",
-  "veryAppreciated": "מוערך מאוד!",
-  "great": "נהדר!"
+  "veryAppreciated": "מוערך מאוד!"
 }

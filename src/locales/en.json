@@ -30,8 +30,8 @@
   "week": "Week",
   "day": "Day",
   "numberOfNewborns": "How many newborns?",
-  "whatIsTheWeightOfTheBaby": "What is the weight of the baby at birth?",
-  "whatIsTheWeightOfTheBabies": "What is the weight of the babies at birth?",
+  "whatIsTheWeightOfTheBaby": "What is the weight of the baby at birth? (kg)",
+  "whatIsTheWeightOfTheBabies": "What is the weight of the babies at birth? (kg)",
   "baby": "Baby",
   "onWhichTopicYouNeedAssistance": "On which topic you need assistance?",
   "rights": "Rights",
@@ -69,5 +69,5 @@
   "wonderful": "Wonderful!",
   "amazing": "Amazing!",
   "perfect": "Perfect!",
-  "veryAppreciated": "Very appreciated!",
+  "veryAppreciated": "Very appreciated!"
 }
