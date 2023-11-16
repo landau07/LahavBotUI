@@ -80,9 +80,10 @@ export function BabiesWeightInput({
                 min={0}
                 max={6}
                 value={babiesWeight[i] > -1 ? babiesWeight[i] : ""}
-                onFocus={(e) => e.target.select()}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
+                    e.stopPropagation();
+                    e.preventDefault();
                     onEnterPressed?.();
                   }
                 }}

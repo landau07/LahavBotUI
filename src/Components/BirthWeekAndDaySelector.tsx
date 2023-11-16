@@ -44,6 +44,14 @@ export function BirthWeekAndDaySelector({
     }
   }, []);
 
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.stopPropagation();
+      e.preventDefault();
+      onEnterPressed?.();
+    }
+  };
+
   return (
     <>
       <div className={messageTextClassNames}>
@@ -64,17 +72,16 @@ export function BirthWeekAndDaySelector({
               name="week"
               min={MIN_WEEK}
               max={MAX_WEEK}
-              value={selectedWeek}
-              onFocus={(e) => e.target.select()}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  onEnterPressed?.();
-                }
-              }}
+              value={selectedWeek === -1 ? "" : selectedWeek}
+              onKeyDown={onKeyDown}
               onChange={(e) => {
-                const week = e.target.valueAsNumber;
-                if (!isNaN(week)) {
-                  setSelectedWeek(week);
+                if (e.target.value === "") {
+                  setSelectedWeek(-1);
+                } else {
+                  const week = e.target.valueAsNumber;
+                  if (!isNaN(week)) {
+                    setSelectedWeek(week);
+                  }
                 }
               }}
             />
@@ -92,17 +99,16 @@ export function BirthWeekAndDaySelector({
               name="day"
               min={`${MIN_DAY}`}
               max={`${MAX_DAY}`}
-              value={selectedDay}
-              onFocus={(e) => e.target.select()}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  onEnterPressed?.();
-                }
-              }}
+              value={selectedDay === -1 ? "" : selectedDay}
+              onKeyDown={onKeyDown}
               onChange={(e) => {
-                const day = e.target.valueAsNumber;
-                if (!isNaN(day) && day >= MIN_DAY && day <= MAX_DAY) {
-                  setSelectedDay(day);
+                if (e.target.value === "") {
+                  setSelectedDay(-1);
+                } else {
+                  const day = e.target.valueAsNumber;
+                  if (!isNaN(day) && day >= MIN_DAY && day <= MAX_DAY) {
+                    setSelectedDay(day);
+                  }
                 }
               }}
             />
