@@ -6,7 +6,7 @@
   "isStillInNICU": "האם התינוק עדין בפגייה?",
   "parent": "הורה לפג",
   "highRiskPregnancy": "בהריון בסיכון",
-  "teamMember": "צוות מקצועי",
+  "teamMember": "רוצה להצטרף לצוות",
   "donator": "מעוניין לתרום",
   "other": "אחר",
   "yes": "כן",
@@ -58,5 +58,17 @@
   "facebookGroupInvite": "בנתיים, אתם מוזמנים להצטרף לקבוצת הפייסבוק שלנו",
   "haveYouHadPrematureBabyBefore": "האם ילדת פג בעבר?",
   "joinWhatsappForAfterPrematureBirth": "מוזמנת לקבוצה לתמיכה בהריון לאחר פגות",
-  "joinWhatsappForPregnantWomenAtRisk": "מוזמנת לקובצה לתמיכה בנשים בהריון בסיכון"
+  "joinWhatsappForPregnantWomenAtRisk": "מוזמנת לקובצה לתמיכה בנשים בהריון בסיכון",
+  "wantToJoinTheTeamMessage": "נעים להכיר :) נשמח לכל שיתוף פעולה או עזרה. יעזור לנו אם תוכלו למלא את טופס ההתנדבות הבא:",
+  "wantToDonateMessage": "תודה רבה! כל תרומה תעזור לנו לקדם את מטרות הארגון - תמיכה בהורים לפגים בעבר, בהווה ובעתיד. כיצד ברצונך לתרום?",
+  "creditCardOneTime": "כרטיס אשראי - תרומה חד פעמית",
+  "creditCardMonthly": "כרטיס - הו״ק",
+  "bit": "אוהבים רק ביט?",
+  "donationsFromAbroad": "לתרומות מחו“ל המוכרות לצרכי מס בארה‘’ב, קנדה ואנגליה",
+  "otherDonationOptions": "לאפשרויות נוספות (העברה בנקאית, PEF מחו‘’ל)",
+  "wonderful": "נפלא!",
+  "amazing": "מדהים!",
+  "perfect": "מושלם!",
+  "veryAppreciated": "מוערך מאוד!",
+  "great": "נהדר!"
 }

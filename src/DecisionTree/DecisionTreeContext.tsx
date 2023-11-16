@@ -1,6 +1,6 @@
 import { ReactNode, createContext, useState } from "react";
 import "react-day-picker/dist/style.css";
-import { Frown, Info, Smile } from "react-feather";
+import { Frown, Info, Smile, UserPlus } from "react-feather";
 import { FormattedMessage } from "react-intl";
 import {
   BabiesWeightInput,
@@ -519,14 +519,98 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     ),
   };
 
+  const wantToJoinTheTeamLink: ChatDecisionTreeNode = {
+    id: 33,
+    branchKey: 0,
+    parent: userTypeStep,
+    children: [],
+    sender: "bot",
+    type: "text",
+    shouldLocalizeData: true,
+    content: (
+      <ExternalLinkMessage
+        url={"https://forms.monday.com/forms/94de7af1b9b226991b52456515eb655b"}
+        children={<FormattedMessage id="wantToJoinTheTeamMessage" />}
+        urlText={<FormattedMessage id="clickHere" />}
+        icon={<UserPlus className="text-blue-500" />}
+      />
+    ),
+  };
+
+  const howWouldYouLikeToDonateQuestion: ChatDecisionTreeNode = {
+    id: 33,
+    type: "text",
+    sender: "bot",
+    branchKey: 0,
+    parent: userTypeStep,
+    children: [],
+    content: "wantToDonateMessage",
+    shouldLocalizeData: true,
+  };
+
+  const donationOptions: ChatDecisionTreeNode = {
+    id: 34,
+    branchKey: 0,
+    parent: howWouldYouLikeToDonateQuestion,
+    children: [],
+    sender: "user",
+    type: "selectionBox",
+    boxes: [
+      "creditCardOneTime",
+      "creditCardMonthly",
+      "bit",
+      "donationsFromAbroad",
+      "otherDonationOptions",
+    ],
+    shouldLocalizeData: true,
+  };
+
+  const donationOptionLink: ChatDecisionTreeNode = {
+    id: 35,
+    branchKey: 0,
+    parent: donationOptions,
+    children: [],
+    sender: "bot",
+    type: "text",
+    shouldLocalizeData: true,
+    content: (step) => {
+      const donationMethodToLinkMap: Record<string, string> = {
+        creditCardOneTime: "https://pay.sumit.co.il/27bvg5/27d9pd/c/payment/",
+        creditCardMonthly: "https://pay.sumit.co.il/27bvg5/27d7k6/c/payment/",
+        bit: "https://www.jgive.com/new/he/ils/charity-organizations/848/projects",
+        donationsFromAbroad:
+          "https://www.jgive.com/new/en/usd/charity-organizations/848/projects",
+      };
+      const donationMethodToTextMap: Record<string, string> = {
+        creditCardOneTime: "wonderful",
+        creditCardMonthly: "amazing",
+        bit: "perfect",
+        donationsFromAbroad: "veryAppreciated",
+      };
+      const selectedDonationMethod = step.parent?.stepResult?.value;
+
+      return (
+        <ExternalLinkMessage
+          url={donationMethodToLinkMap[selectedDonationMethod!]}
+          children={
+            <FormattedMessage
+              id={donationMethodToTextMap[selectedDonationMethod!]}
+            />
+          }
+          urlText={<FormattedMessage id="clickHere" />}
+        />
+      );
+    },
+  };
+
   // Wire children:
   welcomeStep.children = [areYouStep];
   areYouStep.children = [userTypeStep];
   userTypeStep.children = [
     isBabyStillInHospitalStep,
     haveYouHadPrematureBabyBeforeQuestion,
-    null,
-    null,
+    wantToJoinTheTeamLink,
+    howWouldYouLikeToDonateQuestion,
     null,
   ];
   isBabyStillInHospitalStep.children = [isBabyStillInHospitalAnswerStep];
@@ -584,6 +668,14 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
   haveYouHadPrematureBabyBeforeOptions.children = [
     hadPrematureBabyBeforeYesAnswer,
     hadPrematureBabyBeforeNoAnswer,
+  ];
+  howWouldYouLikeToDonateQuestion.children = [donationOptions];
+  donationOptions.children = [
+    donationOptionLink,
+    donationOptionLink,
+    donationOptionLink,
+    donationOptionLink,
+    null,
   ];
 
   const setNextStep = (step: ChatDecisionTreeNode, childIndex: number = 0) => {

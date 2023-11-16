@@ -20,7 +20,7 @@ export function ChatHeader() {
   return (
     <header className="sticky top-0 p-6 bg-lahav flex flex-row items-center w-full gap-3 rounded-t-md">
       <LahavAvatar />
-      <div className="flex-1 text-white text-2xl text-ellipsis overflow-auto">
+      <div className="flex-1 select-none text-white text-2xl text-ellipsis overflow-auto">
         {intl.formatMessage({ id: "lahavBot" })}
       </div>
       <div className="w-3 h-3  bg-green-500 rounded-full absolute bottom-5 border-2 border-white start-12" />
