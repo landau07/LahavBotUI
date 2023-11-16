@@ -50,6 +50,8 @@
   "isInHospitalOver14Days": "Were you in the hospital for more than 14 days?",
   "whatWouldYouLike": "What would you like to do?",
   "motherHospitalizedBeforeBirth": "Was the mother hospitalized before birth?",
+  "motherWasHospitalizedBeforeBirth": "You can start the maternity leave before the date of birth, in order to receive a cumulative hospitalization of mother + baby of more than 14 days. Then submit documents for extending maternity leave, as explained here",
+  "motherWasNotHospitalizedBeforeBirth": "According to the details you entered, there is no entitlement to the extension of maternity leave. For additional information",
   "isOver14DaysInNicuYesResult": "If you are entitled to maternity benefits, you will be entitled to an extension of maternity leave for each day you were in the NICU. The form must be submitted to the National Insurance (not online. Need to print, fill out, scan and you can submit it on their website), and the letter of release from the NICU. All the details are here:",
   "thankYouAllInfoIsHere": "Thank you! All details are here:",
   "hereAllTheDetailsYouNeed": "here are all the details you need to know:",

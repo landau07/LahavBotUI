@@ -1,6 +1,6 @@
 import { ReactNode, createContext, useState } from "react";
 import "react-day-picker/dist/style.css";
-import { Info } from "react-feather";
+import { Frown, Info, Smile } from "react-feather";
 import { FormattedMessage } from "react-intl";
 import {
   BabiesWeightInput,
@@ -16,6 +16,7 @@ import {
   DropdownMessageProps,
 } from "../Components/DropdownMessage";
 import { ExternalLinkMessage } from "../Components/ExternalLinkMessage";
+import { HospitalWhatsApp } from "../Components/HospitalWhatsApp";
 import { hospitalLinks } from "../data/hospitalLinks";
 import { useConversationLogger } from "../hooks/useConversationLogger";
 import facebookIcon from "../icons/facebookIcon.jpeg";
@@ -23,7 +24,6 @@ import milkBottleIcon from "../icons/milkBottleIcon.png";
 import { takeUntil } from "../utils/arrayUtils";
 import { dateToString } from "../utils/dateUtils";
 import { ChatDecisionTreeNode, DecisionTreeContextType } from "./types";
-import { HospitalWhatsApp } from "../Components/HospitalWhatsApp";
 
 export const DecisionTreeContext =
   createContext<DecisionTreeContextType | null>(null);
@@ -369,7 +369,7 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     shouldLocalizeData: true,
     content: (
       <ExternalLinkMessage
-        url={"https://pagim.net/בנק-חלב-אם/"}
+        url={"https://pagim.net/בנק-חלב-אם"}
         children={<FormattedMessage id="thankYouAllInfoIsHere" />}
         urlText={<FormattedMessage id="clickHere" />}
         icon={milkBottleIcon}
@@ -424,6 +424,42 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     shouldLocalizeData: true,
   };
 
+  const motherWasHospitalizedBeforeBirthAnswer: ChatDecisionTreeNode = {
+    id: 28,
+    branchKey: 0,
+    parent: motherHospitalizedBeforeBirthAnswer,
+    children: [],
+    sender: "bot",
+    type: "text",
+    shouldLocalizeData: true,
+    content: (
+      <ExternalLinkMessage
+        url={"https://pagim.net/הארכת-חופשת-לידה-של-אם-לפג"}
+        children={<FormattedMessage id="motherWasHospitalizedBeforeBirth" />}
+        urlText={<FormattedMessage id="clickHere" />}
+        icon={<Smile className="text-blue-500" />}
+      />
+    ),
+  };
+
+  const motherWasNotHospitalizedBeforeBirthAnswer: ChatDecisionTreeNode = {
+    id: 29,
+    branchKey: 0,
+    parent: motherHospitalizedBeforeBirthAnswer,
+    children: [],
+    sender: "bot",
+    type: "text",
+    shouldLocalizeData: true,
+    content: (
+      <ExternalLinkMessage
+        url={"https://pagim.net/הארכת-חופשת-לידה-של-אם-לפג"}
+        children={<FormattedMessage id="motherWasNotHospitalizedBeforeBirth" />}
+        urlText={<FormattedMessage id="clickHere" />}
+        icon={<Frown className="text-blue-500" />}
+      />
+    ),
+  };
+
   // Wire children:
   welcomeStep.children = [areYouStep];
   areYouStep.children = [userTypeStep];
@@ -469,6 +505,11 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
   motherHospitalizedBeforeBirthQuestion.children = [
     motherHospitalizedBeforeBirthAnswer,
   ];
+  motherHospitalizedBeforeBirthAnswer.children = [
+    motherWasHospitalizedBeforeBirthAnswer,
+    motherWasNotHospitalizedBeforeBirthAnswer,
+  ];
+  motherWasHospitalizedBeforeBirthAnswer.children = [joinOurFacebookStep];
   breastMilkBankAnswer.children = [null, wantToDonateMilkLinkInfo];
   generalInfoLink.children = [joinOurFacebookStep];
   joinOurFacebookStep.children = [inviteToHospitalWhatsApp];
