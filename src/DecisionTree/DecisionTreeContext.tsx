@@ -21,6 +21,7 @@ import { hospitalLinks } from "../data/hospitalLinks";
 import { useConversationLogger } from "../hooks/useConversationLogger";
 import facebookIcon from "../icons/facebookIcon.jpeg";
 import milkBottleIcon from "../icons/milkBottleIcon.png";
+import whatsAppIcon from "../icons/whatsappIcon.png";
 import { takeUntil } from "../utils/arrayUtils";
 import { dateToString } from "../utils/dateUtils";
 import { ChatDecisionTreeNode, DecisionTreeContextType } from "./types";
@@ -460,10 +461,74 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     ),
   };
 
+  const haveYouHadPrematureBabyBeforeQuestion: ChatDecisionTreeNode = {
+    id: 30,
+    type: "text",
+    sender: "bot",
+    branchKey: 0,
+    parent: userTypeStep,
+    children: [],
+    content: "haveYouHadPrematureBabyBefore",
+    shouldLocalizeData: true,
+  };
+
+  const haveYouHadPrematureBabyBeforeOptions: ChatDecisionTreeNode = {
+    id: 31,
+    branchKey: 0,
+    parent: haveYouHadPrematureBabyBeforeQuestion,
+    children: [],
+    sender: "user",
+    type: "selectionBox",
+    boxes: ["yes", "no"],
+    shouldLocalizeData: true,
+  };
+
+  const hadPrematureBabyBeforeYesAnswer: ChatDecisionTreeNode = {
+    id: 32,
+    branchKey: 0,
+    parent: assistanceTopicsAnswerStep,
+    children: [],
+    sender: "bot",
+    type: "text",
+    shouldLocalizeData: true,
+    content: (
+      <ExternalLinkMessage
+        url={"https://chat.whatsapp.com/DUZhJIMp69x69Z4EdUuZzz"}
+        children={<FormattedMessage id="joinWhatsappForAfterPrematureBirth" />}
+        urlText={<FormattedMessage id="clickHere" />}
+        icon={whatsAppIcon}
+      />
+    ),
+  };
+
+  const hadPrematureBabyBeforeNoAnswer: ChatDecisionTreeNode = {
+    id: 32,
+    branchKey: 0,
+    parent: assistanceTopicsAnswerStep,
+    children: [],
+    sender: "bot",
+    type: "text",
+    shouldLocalizeData: true,
+    content: (
+      <ExternalLinkMessage
+        url={"https://chat.whatsapp.com/GGeRf9NQoLpALVbzatFDOL"}
+        children={<FormattedMessage id="joinWhatsappForPregnantWomenAtRisk" />}
+        urlText={<FormattedMessage id="clickHere" />}
+        icon={whatsAppIcon}
+      />
+    ),
+  };
+
   // Wire children:
   welcomeStep.children = [areYouStep];
   areYouStep.children = [userTypeStep];
-  userTypeStep.children = [isBabyStillInHospitalStep, null, null, null, null];
+  userTypeStep.children = [
+    isBabyStillInHospitalStep,
+    haveYouHadPrematureBabyBeforeQuestion,
+    null,
+    null,
+    null,
+  ];
   isBabyStillInHospitalStep.children = [isBabyStillInHospitalAnswerStep];
   isBabyStillInHospitalAnswerStep.children = [
     whichHospitalStep,
@@ -513,6 +578,13 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
   breastMilkBankAnswer.children = [null, wantToDonateMilkLinkInfo];
   generalInfoLink.children = [joinOurFacebookStep];
   joinOurFacebookStep.children = [inviteToHospitalWhatsApp];
+  haveYouHadPrematureBabyBeforeQuestion.children = [
+    haveYouHadPrematureBabyBeforeOptions,
+  ];
+  haveYouHadPrematureBabyBeforeOptions.children = [
+    hadPrematureBabyBeforeYesAnswer,
+    hadPrematureBabyBeforeNoAnswer,
+  ];
 
   const setNextStep = (step: ChatDecisionTreeNode, childIndex: number = 0) => {
     let nextStep: ChatDecisionTreeNode | null = step.children[childIndex];
