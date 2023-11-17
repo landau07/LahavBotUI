@@ -15,6 +15,7 @@ export type ChatDecisionTreeNode<TInnerComponentProps = unknown> = {
     localized?: string;
   };
   shouldLocalizeData: boolean;
+  shouldWaitForUserInputAfterStep?: boolean;
 } & (
   | {
       type: "text";
@@ -46,4 +47,5 @@ export type DecisionTreeContextType = {
     stepId: number
   ) => ChatDecisionTreeNode["stepResult"] | undefined;
   pushNewStep: (...newStep: ChatDecisionTreeNode[]) => void;
+  lastStep: ChatDecisionTreeNode;
 };

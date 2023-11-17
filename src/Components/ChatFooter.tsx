@@ -1,16 +1,22 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { isDesktop } from "react-device-detect";
 import { Send } from "react-feather";
 import { useIntl } from "react-intl";
+import {
+  howCanWeHelpYouQuestion,
+  inviteToHospitalWhatsApp,
+  joinOurFacebookStep,
+  openTextFeedbackStep,
+} from "../DecisionTree/StepsDefinitions";
 import { ChatDecisionTreeNode } from "../DecisionTree/types";
 import { useDecisionTree } from "../DecisionTree/useDecisionTree";
 import { useConversationLogger } from "../hooks";
 import { textBarEnabled } from "../signals";
-import { isDesktop } from "react-device-detect";
 
 export function ChatFooter() {
   const [message, setMessage] = useState<string>("");
   const intl = useIntl();
-  const { pushNewStep, chatSteps } = useDecisionTree();
+  const { pushNewStep, chatSteps, lastStep } = useDecisionTree();
   const { logConversation } = useConversationLogger();
   const ref = useRef<HTMLTextAreaElement>(null);
 
@@ -38,15 +44,32 @@ export function ChatFooter() {
       id: new Date().getTime(),
       type: "text",
       sender: "bot",
-      content: "thanksIWillSendTheDetails",
+      content:
+        lastStep.id === openTextFeedbackStep.id
+          ? "thanksIWillSendTheDetails"
+          : lastStep.id === howCanWeHelpYouQuestion.id
+          ? "thanksForContactingUs"
+          : "",
       branchKey: 0,
       children: [],
       parent: userMessage,
       shouldLocalizeData: true,
     };
 
+    if (lastStep.id === howCanWeHelpYouQuestion.id) {
+      botAnswer.children = [
+        {
+          ...joinOurFacebookStep,
+          children: [{ ...inviteToHospitalWhatsApp, children: [] }],
+        },
+      ];
+    }
+
     const newSteps = [userMessage];
-    if (chatSteps[chatSteps.length - 1].id === 38) {
+    if (
+      lastStep.id === openTextFeedbackStep.id ||
+      lastStep.id === howCanWeHelpYouQuestion.id
+    ) {
       newSteps.push(botAnswer);
       logConversation(chatSteps.concat(newSteps));
     }
@@ -74,7 +97,7 @@ export function ChatFooter() {
     if (textBarEnabled.peek() && isDesktop) {
       ref.current?.focus();
     }
-  });
+  }, [textBarEnabled.value]);
 
   return (
     <footer className="py-4 px-6 sticky bottom-0 border-t-2 bg-slate-100 dark:bg-[#00000036] border-gray-200 dark:border-gray-500 rounded-b-md">

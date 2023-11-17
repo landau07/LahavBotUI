@@ -74,5 +74,7 @@
   "forAnyOtherAssistance": "For any other assistance, select another options from the above selection boxes",
   "whatDoYouThinkAboutMe": "Thats it. What do you think about me?",
   "openFeedbackText": "If you want, let us know what you liked or what can be improved, otherwise just hit the Send button:",
-  "thanksIWillSendTheDetails": "Thank you. I will pass the feedback. Goodbye!"
+  "thanksIWillSendTheDetails": "Thank you. I will pass the feedback. Goodbye!",
+  "howCanWeHelpYou": "How can we help you?",
+  "thanksForContactingUs": "Thank you for contacting us, our representative will get back to you within 48 hours."
 }
