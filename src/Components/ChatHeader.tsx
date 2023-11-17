@@ -3,7 +3,10 @@ import { useIntl } from "react-intl";
 import lahavLogo from "../icons/lahavIcon.jpeg";
 import { isDarkMode, toggleLocale } from "../signals";
 import { cn } from "../utils/classnames";
-import { mouseDownTransitionDownClassNames } from "../utils/sharedClassNames";
+import {
+  mouseDownTransitionDownClassNames,
+  mouseHoverScaleUpClassNames,
+} from "../utils/sharedClassNames";
 
 export function LahavAvatar({ addClassName }: { addClassName?: string }) {
   return (
@@ -27,7 +30,7 @@ export function ChatHeader() {
       <button
         onClick={toggleLocale}
         aria-label="Language"
-        className="hover:scale-110 transition-transform duration-100"
+        className={mouseHoverScaleUpClassNames}
       >
         <Globe
           className={`text-slate-200 ${mouseDownTransitionDownClassNames}`}
@@ -36,7 +39,7 @@ export function ChatHeader() {
       <button
         onClick={() => (isDarkMode.value = !isDarkMode.value)}
         aria-label={isDarkMode.value ? "Dark mode" : "Light mode"}
-        className="transform hover:scale-110 transition-transform duration-100"
+        className={mouseHoverScaleUpClassNames}
       >
         {isDarkMode.value ? (
           <Moon

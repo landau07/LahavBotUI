@@ -1,34 +1,100 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { Send } from "react-feather";
 import { useIntl } from "react-intl";
+import { ChatDecisionTreeNode } from "../DecisionTree/types";
+import { useDecisionTree } from "../DecisionTree/useDecisionTree";
+import { useConversationLogger } from "../hooks";
+import { textBarEnabled } from "../signals";
+import { isDesktop } from "react-device-detect";
 
 export function ChatFooter() {
   const [message, setMessage] = useState<string>("");
   const intl = useIntl();
+  const { pushNewStep, chatSteps } = useDecisionTree();
+  const { logConversation } = useConversationLogger();
+  const ref = useRef<HTMLTextAreaElement>(null);
 
-  const handleMessageChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(e.target.value);
   };
 
   const handleSendMessage = () => {
-    // Handle sending the message here, e.g., by calling an API or a function to send the message.
-    // You can use the 'message' state to get the message content.
-    // Reset the message input after sending if needed.
+    const userMessage: ChatDecisionTreeNode = {
+      id: new Date().getTime(),
+      type: "text",
+      sender: "user",
+      content: message,
+      timestamp: new Date(),
+      branchKey: 0,
+      children: [],
+      parent: chatSteps[chatSteps.length - 1],
+      shouldLocalizeData: false,
+      stepResult: {
+        value: message,
+        localized: message,
+      },
+    };
+    const botAnswer: ChatDecisionTreeNode = {
+      id: new Date().getTime(),
+      type: "text",
+      sender: "bot",
+      content: "thanksIWillSendTheDetails",
+      branchKey: 0,
+      children: [],
+      parent: userMessage,
+      shouldLocalizeData: true,
+    };
+
+    const newSteps = [userMessage];
+    if (chatSteps[chatSteps.length - 1].id === 38) {
+      newSteps.push(botAnswer);
+      logConversation(chatSteps.concat(newSteps));
+    }
+    pushNewStep(...newSteps);
     setMessage("");
+    if (ref.current) {
+      ref.current.style.height = "2.5em";
+    }
   };
+
+  const handleTextareaResize = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    const numberOfLines = event.target.value.split("\n").length || 1;
+    event.target.style.height = `${numberOfLines * 2.5}em`;
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      // Prevent the default behavior of Enter to avoid creating a new line
+      e.preventDefault();
+      handleSendMessage();
+    }
+  };
+
+  useEffect(() => {
+    if (textBarEnabled.peek() && isDesktop) {
+      ref.current?.focus();
+    }
+  });
 
   return (
     <footer className="py-4 px-6 sticky bottom-0 border-t-2 bg-slate-100 dark:bg-[#00000036] border-gray-200 dark:border-gray-500 rounded-b-md">
       <div className="flex">
         <div className="relative w-full flex">
-          <input
-            type="text"
-            className="w-full bg-rgb-176-193-212 p-2 rounded-lg pr-4 h-10 resize-none outline-none focus:outline-none focus:ring-2 focus:ring-blue-600"
+          <textarea
+            ref={ref}
+            disabled={!textBarEnabled.peek()}
+            className="w-full overflow-y-hidden bg-rgb-176-193-212 p-2 rounded-lg pr-4 h-10 resize-none outline-none focus:outline-none focus:ring-2 focus:ring-blue-600"
             placeholder={intl.formatMessage({ id: "typeMessage" })}
             value={message}
             onChange={handleMessageChange}
+            onKeyDown={handleKeyDown}
+            onInput={handleTextareaResize}
           />
-          <button className="p-2" onClick={handleSendMessage}>
+          <button
+            disabled={!textBarEnabled.peek()}
+            className="p-2"
+            onClick={handleSendMessage}
+          >
             <Send className="text-gray-400 rtl:scale-x-[-1]" size={20} />
           </button>
         </div>

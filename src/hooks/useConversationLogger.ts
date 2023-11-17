@@ -1,8 +1,8 @@
 import { ChatDecisionTreeNode } from "../DecisionTree/types";
 
-export function useConversationLogger(chatSteps: ChatDecisionTreeNode[]) {
+export function useConversationLogger() {
   return {
-    logConversation: () => {
+    logConversation: (chatSteps: ChatDecisionTreeNode[]) => {
       const stepDetails = chatSteps.map((step) => {
         let log = "";
         if (step.type == "confirmComponent" && step.stepLogQuestion) {

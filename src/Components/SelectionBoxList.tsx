@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { isMobile } from "react-device-detect";
+import { isDesktop } from "react-device-detect";
 import { FormattedMessage } from "react-intl";
 import { cn } from "../utils/classnames";
 import { mouseDownTransitionDownClassNames } from "../utils/sharedClassNames";
@@ -19,7 +19,7 @@ export function SelectionBoxList({
   const firstBoxRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    if (!isMobile) {
+    if (isDesktop) {
       firstBoxRef.current?.focus();
     }
   }, []);

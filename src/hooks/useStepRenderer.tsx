@@ -24,7 +24,7 @@ export function useStepRenderer() {
           <ChatMessage
             sender={step.sender}
             children={
-              typeof step.content === "string" ? (
+              typeof step.content === "string" && step.shouldLocalizeData ? (
                 <FormattedMessage id={step.content} />
               ) : typeof step.content === "function" ? (
                 step.content(step)

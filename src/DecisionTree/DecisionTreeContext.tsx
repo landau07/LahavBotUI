@@ -1,6 +1,6 @@
 import { ReactNode, createContext, useState } from "react";
 import "react-day-picker/dist/style.css";
-import { Frown, Info, Smile, UserPlus } from "react-feather";
+import { Frown, Info, Smile, UserPlus, Users } from "react-feather";
 import { FormattedMessage } from "react-intl";
 import {
   BabiesWeightInput,
@@ -16,6 +16,7 @@ import {
   DropdownMessageProps,
 } from "../Components/DropdownMessage";
 import { ExternalLinkMessage } from "../Components/ExternalLinkMessage";
+import { FeedbackMessage } from "../Components/FeedbackMessage";
 import { HospitalWhatsApp } from "../Components/HospitalWhatsApp";
 import { hospitalLinks } from "../data/hospitalLinks";
 import { useConversationLogger } from "../hooks/useConversationLogger";
@@ -43,7 +44,7 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
   const [chatSteps, setChatSteps] = useState<ChatDecisionTreeNode[]>([
     welcomeStep,
   ]);
-  const { logConversation } = useConversationLogger(chatSteps);
+  const { logConversation } = useConversationLogger();
 
   const areYouStep: ChatDecisionTreeNode = {
     id: 0.5,
@@ -67,7 +68,7 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     content: "pathNotReadyYet",
     shouldLocalizeData: true,
     divProps: {
-      onClick: logConversation,
+      onClick: () => logConversation(chatSteps),
       className:
         "transform hover:scale-105 transition-transform duration-50 cursor-pointer",
     },
@@ -603,6 +604,47 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     },
   };
 
+  const joinUsFinalStep: ChatDecisionTreeNode = {
+    id: 36,
+    branchKey: 0,
+    parent: inviteToHospitalWhatsApp,
+    children: [],
+    sender: "bot",
+    type: "text",
+    shouldLocalizeData: true,
+    content: (
+      <ExternalLinkMessage
+        url={"https://pagim.net/הצטרפות-לעמותת-להב/"}
+        children={<FormattedMessage id="joinUsMessage" />}
+        urlText={<FormattedMessage id="clickHere" />}
+        icon={<Users className="text-blue-500" />}
+      />
+    ),
+  };
+
+  const feedbackStep: ChatDecisionTreeNode = {
+    id: 37,
+    branchKey: 0,
+    parent: joinUsFinalStep,
+    children: [],
+    sender: "bot",
+    type: "text",
+    shouldLocalizeData: true,
+    preventAutoRenderBotChild: true,
+    content: <FeedbackMessage />,
+  };
+
+  const openTextFeedbackStep: ChatDecisionTreeNode = {
+    id: 38,
+    branchKey: 0,
+    parent: feedbackStep,
+    children: [],
+    sender: "bot",
+    type: "text",
+    shouldLocalizeData: true,
+    content: "openFeedbackText",
+  };
+
   // Wire children:
   welcomeStep.children = [areYouStep];
   areYouStep.children = [userTypeStep];
@@ -651,6 +693,7 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     isOver14DaysInNicuYesResult,
     motherHospitalizedBeforeBirthQuestion,
   ];
+  isOver14DaysInNicuYesResult.children = [joinOurFacebookStep];
   motherHospitalizedBeforeBirthQuestion.children = [
     motherHospitalizedBeforeBirthAnswer,
   ];
@@ -660,6 +703,7 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
   ];
   motherWasHospitalizedBeforeBirthAnswer.children = [joinOurFacebookStep];
   breastMilkBankAnswer.children = [null, wantToDonateMilkLinkInfo];
+  wantToDonateMilkLinkInfo.children = [joinOurFacebookStep];
   generalInfoLink.children = [joinOurFacebookStep];
   joinOurFacebookStep.children = [inviteToHospitalWhatsApp];
   haveYouHadPrematureBabyBeforeQuestion.children = [
@@ -677,6 +721,9 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     donationOptionLink,
     null,
   ];
+  inviteToHospitalWhatsApp.children = [joinUsFinalStep];
+  joinUsFinalStep.children = [feedbackStep];
+  feedbackStep.children = [openTextFeedbackStep];
 
   const setNextStep = (step: ChatDecisionTreeNode, childIndex: number = 0) => {
     let nextStep: ChatDecisionTreeNode | null = step.children[childIndex];
@@ -697,6 +744,10 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     );
   };
 
+  const pushNewSteps = (...newSteps: ChatDecisionTreeNode[]) => {
+    setChatSteps((prev) => prev.concat(...newSteps));
+  };
+
   const getStepResult = (stepId: number) => {
     const step = chatSteps.find((s) => s.id === stepId);
     return step?.stepResult;
@@ -706,6 +757,7 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     chatSteps,
     setNextStep,
     getStepResult,
+    pushNewStep: pushNewSteps,
   };
 
   return (

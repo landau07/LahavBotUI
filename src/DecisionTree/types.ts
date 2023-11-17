@@ -20,6 +20,7 @@ export type ChatDecisionTreeNode<TInnerComponentProps = unknown> = {
       type: "text";
       content: string | ReactNode | React.FC<ChatDecisionTreeNode>; // string is Message id for localization.
       divProps?: React.HTMLProps<HTMLDivElement>;
+      preventAutoRenderBotChild?: boolean; // If true, will not render bot following bod message's child of this step.
     }
   | {
       type: "selectionBox";
@@ -44,4 +45,5 @@ export type DecisionTreeContextType = {
   getStepResult: (
     stepId: number
   ) => ChatDecisionTreeNode["stepResult"] | undefined;
+  pushNewStep: (...newStep: ChatDecisionTreeNode[]) => void;
 };

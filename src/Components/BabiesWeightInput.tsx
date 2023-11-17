@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { isMobile } from "react-device-detect";
+import { isDesktop } from "react-device-detect";
 import { FormattedMessage } from "react-intl";
 import { usePrevious } from "../hooks/usePrevious";
 import {
@@ -37,7 +37,7 @@ export function BabiesWeightInput({
   }, [babiesWeight, previousWeightSummaryString, setData, weightSummaryString]);
 
   useEffect(() => {
-    if (!isMobile) {
+    if (isDesktop) {
       firstInputRef.current?.focus();
     }
   }, []);

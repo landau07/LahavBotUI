@@ -26,3 +26,4 @@ export const toggleLocale = () => {
   locale.value = locale.value === "he" ? "en" : "he";
   localStorage.setItem(LOCALE, locale.value);
 };
+export const textBarEnabled = signal<boolean>(false);
