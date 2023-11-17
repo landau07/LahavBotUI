@@ -76,5 +76,10 @@
   "openFeedbackText": "If you want, let us know what you liked or what can be improved, otherwise just hit the Send button:",
   "thanksIWillSendTheDetails": "Thank you. I will pass the feedback. Goodbye!",
   "howCanWeHelpYou": "How can we help you?",
-  "thanksForContactingUs": "Thank you for contacting us, our representative will get back to you within 48 hours."
+  "thanksForContactingUs": "Thank you for contacting us, our representative will get back to you within 48 hours.",
+  "whatAreYouInterestedAbout": "What are you interested in hearing about?",
+  "breastMilkDonation": "Breast milk donation",
+  "projectOctopus": "Project Octopus for every baby",
+  "projectOctopusInfo": "The project 'Octopuses for premature babies' was established with the goal that no baby would be alone in the incubator. Volunteers knit octopuses that undergo sorting, washing and packaging and are delivered to the different hospitals.",
+  "openBotInNewTab": "Open me in new tab"
 }

@@ -22,11 +22,17 @@ export function ChatHeader() {
   const intl = useIntl();
   return (
     <header className="sticky top-0 p-6 bg-lahav flex flex-row items-center w-full gap-3 rounded-t-md">
-      <LahavAvatar />
+      <a
+        href="https://lahav-bot.netlify.app/"
+        title={intl.formatMessage({ id: "openBotInNewTab" })}
+        target="_blank"
+      >
+        <LahavAvatar />
+      </a>
+      <div className="w-3 h-3  bg-green-500 rounded-full absolute bottom-5 border-2 border-white start-12" />
       <div className="flex-1 select-none text-white text-2xl text-ellipsis overflow-auto">
         {intl.formatMessage({ id: "lahavBot" })}
       </div>
-      <div className="w-3 h-3  bg-green-500 rounded-full absolute bottom-5 border-2 border-white start-12" />
       <button
         onClick={toggleLocale}
         aria-label="Language"

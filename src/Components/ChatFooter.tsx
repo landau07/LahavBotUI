@@ -3,6 +3,7 @@ import { isDesktop } from "react-device-detect";
 import { Send } from "react-feather";
 import { useIntl } from "react-intl";
 import {
+  assistanceTopicsAnswerStep,
   howCanWeHelpYouQuestion,
   inviteToHospitalWhatsApp,
   joinOurFacebookStep,
@@ -57,12 +58,16 @@ export function ChatFooter() {
     };
 
     if (lastStep.id === howCanWeHelpYouQuestion.id) {
-      botAnswer.children = [
-        {
-          ...joinOurFacebookStep,
-          children: [{ ...inviteToHospitalWhatsApp, children: [] }],
-        },
-      ];
+      // For whatAreYouInterestedAboutOptions flow we end with the Thank you message,
+      // So we won't add any children
+      if (lastStep.parent!.id !== assistanceTopicsAnswerStep.id) {
+        botAnswer.children = [
+          {
+            ...joinOurFacebookStep,
+            children: [{ ...inviteToHospitalWhatsApp, children: [] }],
+          },
+        ];
+      }
     }
 
     const newSteps = [userMessage];

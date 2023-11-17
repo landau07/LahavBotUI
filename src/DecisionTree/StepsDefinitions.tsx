@@ -19,6 +19,7 @@ import { HospitalWhatsApp } from "../Components/HospitalWhatsApp";
 import { hospitalLinks } from "../data/hospitalLinks";
 import facebookIcon from "../icons/facebookIcon.jpeg";
 import milkBottleIcon from "../icons/milkBottleIcon.png";
+import octopusIcon from "../icons/octopusIcon.png";
 import whatsAppIcon from "../icons/whatsappIcon.png";
 import { dateToString } from "../utils/dateUtils";
 import { ChatDecisionTreeNode } from "./types";
@@ -639,6 +640,46 @@ export const howCanWeHelpYouQuestion: ChatDecisionTreeNode = {
   shouldWaitForUserInputAfterStep: true,
 };
 
+export const whatAreYouInterestedAboutQuestion: ChatDecisionTreeNode = {
+  id: 40,
+  branchKey: 0,
+  parent: userTypeStep,
+  children: [],
+  sender: "bot",
+  type: "text",
+  shouldLocalizeData: true,
+  content: "whatAreYouInterestedAbout",
+};
+
+export const whatAreYouInterestedAboutOptions: ChatDecisionTreeNode = {
+  id: 41,
+  branchKey: 0,
+  parent: whatAreYouInterestedAboutQuestion,
+  children: [],
+  sender: "user",
+  type: "selectionBox",
+  boxes: ["breastMilkDonation", "projectOctopus", "contactUs"],
+  shouldLocalizeData: true,
+};
+
+export const projectOctopusLink: ChatDecisionTreeNode = {
+  id: 42,
+  branchKey: 0,
+  parent: whatAreYouInterestedAboutOptions,
+  children: [],
+  sender: "bot",
+  type: "text",
+  shouldLocalizeData: true,
+  content: (
+    <ExternalLinkMessage
+      url={"https://pagim.net/octopus"}
+      children={<FormattedMessage id="projectOctopusInfo" />}
+      urlText={<FormattedMessage id="clickHere" />}
+      icon={octopusIcon}
+    />
+  ),
+};
+
 // Wire children:
 welcomeStep.children = [areYouStep];
 areYouStep.children = [userTypeStep];
@@ -647,7 +688,7 @@ userTypeStep.children = [
   haveYouHadPrematureBabyBeforeQuestion,
   wantToJoinTheTeamLink,
   howWouldYouLikeToDonateQuestion,
-  null,
+  whatAreYouInterestedAboutQuestion,
 ];
 isBabyStillInHospitalStep.children = [isBabyStillInHospitalAnswerStep];
 isBabyStillInHospitalAnswerStep.children = [
@@ -718,3 +759,9 @@ donationOptions.children = [
 inviteToHospitalWhatsApp.children = [joinUsFinalStep];
 joinUsFinalStep.children = [feedbackStep];
 feedbackStep.children = [openTextFeedbackStep];
+whatAreYouInterestedAboutQuestion.children = [whatAreYouInterestedAboutOptions];
+whatAreYouInterestedAboutOptions.children = [
+  { ...wantToDonateMilkLinkInfo, children: [] },
+  projectOctopusLink,
+  howCanWeHelpYouQuestion,
+];
