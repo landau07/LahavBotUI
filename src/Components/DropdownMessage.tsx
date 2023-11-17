@@ -1,4 +1,5 @@
 import { useLayoutEffect, useState } from "react";
+import { isDesktop, isMobile } from "react-device-detect";
 import { FormattedMessage, useIntl } from "react-intl";
 import Select from "react-select";
 import { usePrevious } from "../hooks/usePrevious";
@@ -39,10 +40,11 @@ export function DropdownMessage({
       {!isAfterConfirmState && (
         <Select
           classNamePrefix="my-react-select"
-          className="p2 mt-2 my-react-select-container"
+          className="p2 mt-2 w-56 my-react-select-container"
           options={selectOptions}
           isSearchable
-          autoFocus
+          autoFocus={isDesktop}
+          menuPlacement={isMobile ? "top" : "bottom"}
           value={{
             value: selection,
             label: intl.formatMessage({ id: selection }),

@@ -30,7 +30,7 @@ function BotMessage({
     step.sender !== step.parent?.sender ||
     step.parent.type === "confirmComponent";
   return (
-    <div className="flex">
+    <div className="flex select-none">
       {showNameAndAvatar && <LahavAvatar addClassName="mt-4 me-3" />}
       <div
         className={cn(
