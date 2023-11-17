@@ -1,5 +1,6 @@
 import { useLayoutEffect, useState } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
+import Select from "react-select";
 import { usePrevious } from "../hooks/usePrevious";
 import { messageTextClassNames } from "../utils/sharedClassNames";
 import { ConfirmComponentProps } from "./ConfirmComponentWrapper";
@@ -15,7 +16,13 @@ export function DropdownMessage({
   isAfterConfirmState,
   setData,
 }: DropdownMessageProps) {
-  const [selection, setSelection] = useState(options[0]);
+  const intl = useIntl();
+  const selectOptions = options.map((value) => ({
+    label: intl.formatMessage({ id: value }),
+    value,
+  }));
+  selectOptions.sort((a, b) => a.label.localeCompare(b.label));
+  const [selection, setSelection] = useState(selectOptions[0].value);
   const previousSelection = usePrevious(selection);
 
   useLayoutEffect(() => {
@@ -30,21 +37,19 @@ export function DropdownMessage({
         <FormattedMessage id={text} />
       </div>
       {!isAfterConfirmState && (
-        <select
-          className="dropdown border rounded-md p-2 mt-2 whitespace-nowrap overflow-hidden text-ellipsis"
-          value={selection}
-          onChange={(e) => setSelection(e.target.value)}
+        <Select
+          classNamePrefix="my-react-select"
+          className="p2 mt-2 my-react-select-container"
+          options={selectOptions}
+          isSearchable
           autoFocus
-        >
-          <option value="" disabled>
-            <FormattedMessage id="selectOption" />
-          </option>
-          {options.map((option, index) => (
-            <option key={index} value={option}>
-              <FormattedMessage id={option} />
-            </option>
-          ))}
-        </select>
+          value={{
+            value: selection,
+            label: intl.formatMessage({ id: selection }),
+          }}
+          onChange={(option) => setSelection(option?.value || "")}
+          isRtl={document.dir === "rtl"}
+        />
       )}
     </>
   );

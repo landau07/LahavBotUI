@@ -17,7 +17,8 @@
     "react-device-detect": "^2.2.3",
     "react-dom": "^18.2.0",
     "react-feather": "^2.0.10",
-    "react-intl": "^6.5.2"
+    "react-intl": "^6.5.2",
+    "react-select": "^5.8.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
