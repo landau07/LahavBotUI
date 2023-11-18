@@ -1,7 +1,11 @@
 import { ButtonHTMLAttributes } from "react";
 import { FormattedMessage } from "react-intl";
+import { colorTheme } from "../signals";
 import { cn } from "../utils/classnames";
-import { mouseDownTransitionDownClassNames } from "../utils/sharedClassNames";
+import {
+  lahavBgColor as lahavBgColorLightMode,
+  mouseDownTransitionDownClassNames,
+} from "../utils/sharedClassNames";
 
 type ConfirmButtonProps = {
   onClick: () => void;
@@ -23,7 +27,13 @@ export function ConfirmButton({
       <button
         onClick={disabled ? undefined : onClick}
         className={cn(
-          `text-white py-2 px-4 rounded-md bg-lahav hover:bg-fuchsia-900 active:bg-fuchsia-950 focus:bg-fuchsia-900`,
+          `text-white py-2 px-4 rounded-md`,
+          lahavBgColorLightMode(colorTheme.value),
+          colorTheme.value === "pink" &&
+            "hover:bg-fuchsia-900 active:bg-fuchsia-950 focus:bg-fuchsia-900",
+          colorTheme.value === "blue" &&
+            "hover:bg-sky-700 active:bg-sky-800 focus:bg-sky-700 " +
+              "dark:bg-sky-600 dark:hover:bg-sky-700 dark:active:bg-sky-800 dark:focus:bg-sky-700",
           disabled ? "" : mouseDownTransitionDownClassNames,
           disabled &&
             "pointer-events-auto border-gray-600 border bg-gray-500 hover:bg-gray-500 focus:bg-gray-500 active:bg-gray-500"

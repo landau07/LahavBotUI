@@ -2,7 +2,9 @@ import { format } from "date-fns";
 import { HTMLProps, ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 import { useCurrentStep } from "../DecisionTree/useCurrentStep";
+import { colorTheme } from "../signals";
 import { cn } from "../utils/classnames";
+import { lahavBgColor } from "../utils/sharedClassNames";
 import { LahavAvatar } from "./ChatHeader";
 
 type ChatMessageProps = {
@@ -64,7 +66,12 @@ function UserMessage({
   return (
     <div className="flex flex-row-reverse">
       <div className="flex flex-col">
-        <div className="text-white p-4 rounded-s-xl rounded-b-xl bg-lahav">
+        <div
+          className={cn(
+            "text-white p-4 rounded-s-xl rounded-b-xl",
+            lahavBgColor(colorTheme.value)
+          )}
+        >
           {children}
         </div>
         <div className="text-xs font-normal ms-1 mt-1 text-slate-600">

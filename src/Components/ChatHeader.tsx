@@ -1,9 +1,17 @@
 import { Globe, Moon, Sun } from "react-feather";
 import { useIntl } from "react-intl";
+import femaleIcon from "../icons/femaleIcon.png";
 import lahavLogo from "../icons/lahavIcon.jpeg";
-import { isDarkMode, toggleLocale } from "../signals";
+import maleIcon from "../icons/maleIcon.png";
+import {
+  colorTheme,
+  isDarkMode,
+  toggleColorTheme,
+  toggleLocale,
+} from "../signals";
 import { cn } from "../utils/classnames";
 import {
+  lahavBgColor,
   mouseDownTransitionDownClassNames,
   mouseHoverScaleUpClassNames,
 } from "../utils/sharedClassNames";
@@ -21,7 +29,12 @@ export function LahavAvatar({ addClassName }: { addClassName?: string }) {
 export function ChatHeader() {
   const intl = useIntl();
   return (
-    <header className="sticky top-0 p-6 bg-lahav flex flex-row items-center w-full gap-3 rounded-t-md">
+    <header
+      className={cn(
+        "sticky top-0 p-6 flex flex-row items-center w-full gap-3 rounded-t-md",
+        lahavBgColor(colorTheme.value)
+      )}
+    >
       <a
         href="https://lahav-bot.netlify.app/"
         title={intl.formatMessage({ id: "openBotInNewTab" })}
@@ -33,6 +46,17 @@ export function ChatHeader() {
       <div className="flex-1 select-none text-white text-2xl text-ellipsis overflow-auto">
         {intl.formatMessage({ id: "lahavBot" })}
       </div>
+      <button
+        onClick={toggleColorTheme}
+        aria-label="Color theme"
+        className={mouseHoverScaleUpClassNames}
+      >
+        <img
+          src={colorTheme.value === "pink" ? femaleIcon : maleIcon}
+          style={{ filter: "invert(1)" }}
+          className={`text-slate-200 h-6 me-1 ${mouseDownTransitionDownClassNames}`}
+        />
+      </button>
       <button
         onClick={toggleLocale}
         aria-label="Language"

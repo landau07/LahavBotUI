@@ -110,7 +110,7 @@ export function ChatFooter() {
         <div className="relative w-full flex">
           <textarea
             ref={ref}
-            disabled={!textBarEnabled.peek()}
+            disabled={!textBarEnabled.value}
             className="w-full overflow-y-hidden bg-rgb-176-193-212 p-2 rounded-lg pr-4 h-10 resize-none outline-none focus:outline-none focus:ring-2 focus:ring-blue-600"
             placeholder={intl.formatMessage({ id: "typeMessage" })}
             value={message}
@@ -119,9 +119,10 @@ export function ChatFooter() {
             onInput={handleTextareaResize}
           />
           <button
-            disabled={!textBarEnabled.peek()}
+            disabled={!textBarEnabled.value}
             className="p-2"
             onClick={handleSendMessage}
+            aria-label="Send message"
           >
             <Send className="text-gray-400 rtl:scale-x-[-1]" size={20} />
           </button>

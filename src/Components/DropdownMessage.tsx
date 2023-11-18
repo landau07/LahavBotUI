@@ -34,12 +34,17 @@ export function DropdownMessage({
 
   return (
     <>
-      <div className={messageTextClassNames}>
+      <label
+        htmlFor="dropdown-message-select"
+        className={messageTextClassNames}
+      >
         <FormattedMessage id={text} />
-      </div>
+      </label>
       {!isAfterConfirmState && (
         <Select
+          id="dropdown-message-select"
           classNamePrefix="my-react-select"
+          aria-label="Choose hospital"
           className="p2 mt-2 w-56 my-react-select-container"
           options={selectOptions}
           isSearchable

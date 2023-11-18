@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-const lahavColor = "#b05097";
+const lahavColorPink = "#b05097";
 
 export default {
   content: ["./index.html", "./src/**/*.{js,jsx,ts,tsx}"],
@@ -13,7 +13,7 @@ export default {
     },
     extend: {
       colors: {
-        lahav: { DEFAULT: lahavColor, dark: "#d879bf" },
+        lahavPink: { DEFAULT: lahavColorPink, dark: "#d879bf" },
       },
       fontFamily: {
         helvetica: ["Helvetica", "Arial", " sans-serif"],

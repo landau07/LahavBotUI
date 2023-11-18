@@ -1,5 +1,7 @@
 import { ReactNode } from "react";
 import { ExternalLink } from "react-feather";
+import { cn } from "../utils/classnames";
+import { linkColor } from "../utils/sharedClassNames";
 
 export type ExternalLinkMessageProps = {
   url: string;
@@ -22,7 +24,10 @@ export function ExternalLinkMessage({
       <a
         href={url}
         target="_blank"
-        className="flex gap-1 text-blue-500 items-center mt-1 hover:underline"
+        className={cn(
+          "flex gap-1 items-center mt-1 hover:underline",
+          linkColor
+        )}
       >
         {icon && typeof icon == "string" && (
           <img className="h-7 me-1" src={icon} />

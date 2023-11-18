@@ -22,6 +22,7 @@ import milkBottleIcon from "../icons/milkBottleIcon.png";
 import octopusIcon from "../icons/octopusIcon.png";
 import whatsAppIcon from "../icons/whatsappIcon.png";
 import { dateToString } from "../utils/dateUtils";
+import { linkColor } from "../utils/sharedClassNames";
 import { ChatDecisionTreeNode } from "./types";
 
 export const welcomeStep: ChatDecisionTreeNode = {
@@ -339,7 +340,7 @@ export const isOver14DaysInNicuYesResult: ChatDecisionTreeNode = {
       url={"https://pagim.net/הארכת-חופשת-לידה-של-אם-לפג"}
       children={<FormattedMessage id="isOver14DaysInNicuYesResult" />}
       urlText={<FormattedMessage id="clickHere" />}
-      icon={<Info className="text-blue-500" />}
+      icon={<Info className={linkColor} />}
     />
   ),
 };
@@ -375,7 +376,7 @@ export const generalInfoLink: ChatDecisionTreeNode = {
       url={"https://pagim.net/הורים-לפגים"}
       children={<FormattedMessage id="hereAllTheDetailsYouNeed" />}
       urlText={<FormattedMessage id="clickHere" />}
-      icon={<Info className="text-blue-500" />}
+      icon={<Info className={linkColor} />}
     />
   ),
 };
@@ -422,7 +423,7 @@ export const motherWasHospitalizedBeforeBirthAnswer: ChatDecisionTreeNode = {
       url={"https://pagim.net/הארכת-חופשת-לידה-של-אם-לפג"}
       children={<FormattedMessage id="motherWasHospitalizedBeforeBirth" />}
       urlText={<FormattedMessage id="clickHere" />}
-      icon={<Smile className="text-blue-500" />}
+      icon={<Smile className={linkColor} />}
     />
   ),
 };
@@ -440,7 +441,7 @@ export const motherWasNotHospitalizedBeforeBirthAnswer: ChatDecisionTreeNode = {
       url={"https://pagim.net/הארכת-חופשת-לידה-של-אם-לפג"}
       children={<FormattedMessage id="motherWasNotHospitalizedBeforeBirth" />}
       urlText={<FormattedMessage id="clickHere" />}
-      icon={<Frown className="text-blue-500" />}
+      icon={<Frown className={linkColor} />}
     />
   ),
 };
@@ -516,7 +517,7 @@ export const wantToJoinTheTeamLink: ChatDecisionTreeNode = {
       url={"https://forms.monday.com/forms/94de7af1b9b226991b52456515eb655b"}
       children={<FormattedMessage id="wantToJoinTheTeamMessage" />}
       urlText={<FormattedMessage id="clickHere" />}
-      icon={<UserPlus className="text-blue-500" />}
+      icon={<UserPlus className={linkColor} />}
     />
   ),
 };
@@ -600,7 +601,7 @@ export const joinUsFinalStep: ChatDecisionTreeNode = {
       url={"https://pagim.net/הצטרפות-לעמותת-להב/"}
       children={<FormattedMessage id="joinUsMessage" />}
       urlText={<FormattedMessage id="clickHere" />}
-      icon={<Users className="text-blue-500" />}
+      icon={<Users className={linkColor} />}
     />
   ),
 };

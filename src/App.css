@@ -42,7 +42,11 @@ body {
     @apply text-neutral-600 dark:text-neutral-200 bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-700 dark:hover:bg-neutral-800;
   }
   .my-react-select-container .my-react-select__option--is-focused {
-    @apply bg-neutral-200 dark:bg-neutral-800 border-sky-500 border-2 rounded-lg;
+    @apply bg-neutral-200 dark:bg-neutral-800 border-fuchsia-700 border-2 rounded-lg;
+  }
+
+  .blue .my-react-select-container .my-react-select__option--is-focused {
+    @apply border-sky-500;
   }
 
   .my-react-select-container .my-react-select__indicator-separator {

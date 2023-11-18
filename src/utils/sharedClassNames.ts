@@ -9,3 +9,10 @@ export const mouseDownTransitionDownClassNames =
 
 export const mouseHoverScaleUpClassNames =
   "hover:scale-110 transition-transform duration-100";
+
+export const lahavBgColor = (colorTheme: "pink" | "blue") => {
+  return colorTheme === "pink" ? "bg-lahavPink" : "bg-sky-600";
+};
+
+export const linkColor =
+  "text-blue-500 hover:text-blue-600 dark:text-skylight-500 dark:hover:text-skylight-600";
