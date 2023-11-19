@@ -31,7 +31,11 @@ body {
   }
 
   .my-react-select-container .my-react-select__control--is-focused {
-    @apply border-neutral-500 hover:border-neutral-500 dark:border-neutral-400 dark:hover:border-neutral-400 shadow-none;
+    @apply border-fuchsia-700 hover:border-fuchsia-700 dark:border-fuchsia-700 dark:hover:border-fuchsia-700 shadow-none;
+  }
+
+  .blue .my-react-select-container .my-react-select__control--is-focused {
+    @apply border-sky-500 hover:border-sky-500 dark:border-sky-500 dark:hover:border-sky-500 shadow-none;
   }
 
   .my-react-select-container .my-react-select__menu {

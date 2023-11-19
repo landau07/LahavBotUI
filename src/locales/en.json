@@ -99,5 +99,20 @@
   "breastMilkDonation": "Breast milk donation",
   "projectOctopus": "Project Octopus for every baby",
   "projectOctopusInfo": "The project 'Octopuses for premature babies' was established with the goal that no baby would be alone in the incubator. Volunteers knit octopuses that undergo sorting, washing and packaging and are delivered to the different hospitals.",
-  "openBotInNewTab": "Open me in new tab"
+  "openBotInNewTab": "Open me in new tab",
+  "eligibilityForRsvVaccine": "Eligibility for rsv vaccine",
+  "notEntitledForRsvMessage": "According to the provided details, the baby is not entitled for a RSV vaccination.",
+  "entitledForRsvDueToWeek33": "The baby is entitled for a RSV Vaccine because he was born before week 33 (born at week {week}) and because in the following November he will be at age {age} (permitted up to 1 year old).",
+  "entitledForRsvDueToWeek33Plural": "The babies are entitled for a RSV Vaccine because they were born before week 33 (born at week {week}) and because in the following November they will be at age of {age} (permitted up to 1 year old).",
+  "entitledForRsvDueToWeek35": "The baby is entitled for a RSV Vaccine because he was born before week 35 (born at week {week}) and because in the following November he will be at age {age} (permitted up to 6 months old).",
+  "entitledForRsvDueToWeek35Plural": "The babies are entitled for a RSV Vaccine because they were born before week 35 (born at week {week}) and because in the following November they will be at age of {age} (permitted up to 6 months old).",
+  "entitledForRsvDueToWeight": "The baby is entitled for a RSV Vaccine because he was born in weight {weight} which is (permitted for less then 1 kg, regardless of the week of birth), and because in the following November he will be at age {age} (permitted up to 1 year old).",
+  "entitledForRsvDueToWeightPlural": "The babies that are entitled for a RSV Vaccine are those who weight under 1 kg ({weight}). This is also because in the following November they will be at age {age} (permitted up to 1 year old), and regardless of the week of birth.",
+  "checkTheLinkForSpecialCircumstances": "Visit the following link to check if you are entitled based on special circumstances:",
+  "year": "Year",
+  "years": "Years",
+  "month": "Month",
+  "months": "Months",
+  "and": "and",
+  "forAdditionalDetailsClickHere": "For additional details click here:"
 }

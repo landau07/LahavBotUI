@@ -40,9 +40,16 @@ export type ChatDecisionTreeNode<TInnerComponentProps = unknown> = {
     }
 );
 
+export type SetNextStepOptions = {
+  childIndex?: number;
+};
+
 export type DecisionTreeContextType = {
   chatSteps: ChatDecisionTreeNode[];
-  setNextStep: (step: ChatDecisionTreeNode, childIndex?: number) => void;
+  setNextStep: (
+    step: ChatDecisionTreeNode,
+    options?: SetNextStepOptions
+  ) => void;
   getStepResult: (
     stepId: number
   ) => ChatDecisionTreeNode["stepResult"] | undefined;

@@ -2,7 +2,11 @@ import { ReactNode, createContext, useState } from "react";
 import "react-day-picker/dist/style.css";
 import { takeUntil } from "../utils/arrayUtils";
 import { notImplementedYetStepTemplate, welcomeStep } from "./StepsDefinitions";
-import { ChatDecisionTreeNode, DecisionTreeContextType } from "./types";
+import {
+  ChatDecisionTreeNode,
+  DecisionTreeContextType,
+  SetNextStepOptions,
+} from "./types";
 
 export const DecisionTreeContext =
   createContext<DecisionTreeContextType | null>(null);
@@ -12,7 +16,10 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     welcomeStep,
   ]);
 
-  const setNextStep = (step: ChatDecisionTreeNode, childIndex: number = 0) => {
+  const setNextStep = (
+    step: ChatDecisionTreeNode,
+    { childIndex = 0 }: SetNextStepOptions = {}
+  ) => {
     let nextStep: ChatDecisionTreeNode | null = step.children[childIndex];
     if (nextStep) {
       Object.assign<ChatDecisionTreeNode, Partial<ChatDecisionTreeNode>>(

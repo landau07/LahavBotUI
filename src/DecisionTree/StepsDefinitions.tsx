@@ -16,6 +16,7 @@ import {
 import { ExternalLinkMessage } from "../Components/ExternalLinkMessage";
 import { FeedbackMessage } from "../Components/FeedbackMessage";
 import { HospitalWhatsApp } from "../Components/HospitalWhatsApp";
+import { RsvCalculationResult } from "../Components/RsvCalculationResult";
 import { hospitalLinks } from "../data/hospitalLinks";
 import facebookIcon from "../icons/facebookIcon.jpeg";
 import milkBottleIcon from "../icons/milkBottleIcon.png";
@@ -681,6 +682,52 @@ export const projectOctopusLink: ChatDecisionTreeNode = {
   ),
 };
 
+export const rsvCalculationResult: ChatDecisionTreeNode = {
+  id: 43,
+  branchKey: 0,
+  parent: rightsTopicsStep,
+  type: "text",
+  sender: "bot",
+  shouldLocalizeData: true,
+  content: <RsvCalculationResult />,
+  preventAutoRenderBotChild: true,
+  children: [],
+};
+
+export const rsvMoreDetailsLink: ChatDecisionTreeNode = {
+  id: 44,
+  branchKey: 0,
+  parent: rsvCalculationResult,
+  children: [],
+  sender: "bot",
+  type: "text",
+  shouldLocalizeData: true,
+  content: (step) => (
+    <ExternalLinkMessage
+      url={"https://pagim.net/rsv"}
+      children={
+        step.parent!.stepResult?.value == "NotEligible" && (
+          <div className="flex gap-3 p-2 pe-4 ">
+            <Info className="text-blue-500" />
+            <FormattedMessage id="checkTheLinkForSpecialCircumstances" />
+          </div>
+        )
+      }
+      urlText={
+        <div className="ms-10">
+          <FormattedMessage
+            id={
+              step.parent!.stepResult?.value == "Eligible"
+                ? "forAdditionalDetailsClickHere"
+                : "clickHere"
+            }
+          />
+        </div>
+      }
+    />
+  ),
+};
+
 // Wire children:
 welcomeStep.children = [areYouStep];
 areYouStep.children = [userTypeStep];
@@ -718,11 +765,12 @@ assistanceTopicsAnswerStep.children = [
 ];
 rightsQuestionsStep.children = [rightsTopicsStep];
 rightsTopicsStep.children = [
-  null,
+  rsvCalculationResult,
   whatWouldYouLikeQuestion,
   isInHospitalOver14DaysQuestion,
   null,
 ];
+rsvCalculationResult.children = [rsvMoreDetailsLink];
 whatWouldYouLikeQuestion.children = [breastMilkBankAnswer];
 isInHospitalOver14DaysQuestion.children = [isInHospitalOver14DaysAnswer];
 isInHospitalOver14DaysAnswer.children = [

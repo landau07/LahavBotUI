@@ -30,7 +30,7 @@ export function ExternalLinkMessage({
         )}
       >
         {icon && typeof icon == "string" && (
-          <img className="h-7 me-1" src={icon} />
+          <img className="h-7 me-1" src={icon} role="presentation" />
         )}
         {IconComponent}
         <span>{urlText}</span>

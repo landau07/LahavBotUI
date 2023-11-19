@@ -49,7 +49,7 @@ export function useStepRenderer() {
                   ? intl.formatMessage({ id: step.boxes[boxIndex] })
                   : step.boxes[boxIndex],
               };
-              setNextStep(step, boxIndex);
+              setNextStep(step, { childIndex: boxIndex });
             }}
             shouldLocalizeData={step.shouldLocalizeData}
           />
