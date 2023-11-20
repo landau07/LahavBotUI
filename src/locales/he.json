@@ -115,5 +115,9 @@
   "month": "חודש",
   "months": "חודשים",
   "and": "ו",
-  "forAdditionalDetailsClickHere": "למידע נוסף לחצו כאן"
+  "forAdditionalDetailsClickHere": "למידע נוסף לחצו כאן",
+  "breastMilkEligibility": "זכאות לקבלת חלב אם",
+  "breastMilkEligibilityResult": "הזכאות לחלב אם ניתנת לתינוקות שנולדו לפני שבוע 32 (נולד ב {week}), או במשקל של פחות מ-1.5 ק''ג (המשקל הוא {weight})",
+  "contactUsForOnSpecialCircumstances": "ייתכן שאת עדיין זכאית לתרומת חלב אם בהתבסס על מצב רפואי מיוחד או נסיבות מיוחדות. צרו איתנו קשר לפרטים נוספים.",
+  "wasThisHelpful": "האם המידע עזר לך?"
 }

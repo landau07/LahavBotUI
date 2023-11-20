@@ -83,6 +83,7 @@ export function ChatFooter() {
     if (ref.current) {
       ref.current.style.height = "2.5em";
     }
+    textBarEnabled.value = false;
   };
 
   const handleTextareaResize = (event: ChangeEvent<HTMLTextAreaElement>) => {

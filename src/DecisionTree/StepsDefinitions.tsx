@@ -5,6 +5,7 @@ import {
   BabiesWeightInputProps,
 } from "../Components/BabiesWeightInput";
 import { BirthWeekAndDaySelector } from "../Components/BirthWeekAndDaySelector";
+import { BreastMilkEligibilityResult } from "../Components/BreastMilkEligibilityResult";
 import {
   DatePickerMessage,
   DatePickerMessageProps,
@@ -728,6 +729,40 @@ export const rsvMoreDetailsLink: ChatDecisionTreeNode = {
   ),
 };
 
+export const needBreastMilkResult: ChatDecisionTreeNode = {
+  id: 45,
+  branchKey: 0,
+  parent: breastMilkBankAnswer,
+  type: "text",
+  sender: "bot",
+  shouldLocalizeData: true,
+  content: <BreastMilkEligibilityResult />,
+  preventAutoRenderBotChild: true,
+  children: [],
+};
+
+export const wasThisHelpfulQuestion: ChatDecisionTreeNode = {
+  id: 46,
+  type: "text",
+  sender: "bot",
+  branchKey: 0,
+  parent: needBreastMilkResult,
+  children: [],
+  content: "wasThisHelpful",
+  shouldLocalizeData: true,
+};
+
+export const wasThisHelpfulOptions: ChatDecisionTreeNode = {
+  id: 47,
+  branchKey: 0,
+  parent: wasThisHelpfulQuestion,
+  children: [],
+  sender: "user",
+  type: "selectionBox",
+  boxes: ["yes", "no"],
+  shouldLocalizeData: true,
+};
+
 // Wire children:
 welcomeStep.children = [areYouStep];
 areYouStep.children = [userTypeStep];
@@ -786,7 +821,11 @@ motherHospitalizedBeforeBirthAnswer.children = [
   motherWasNotHospitalizedBeforeBirthAnswer,
 ];
 motherWasHospitalizedBeforeBirthAnswer.children = [joinOurFacebookStep];
-breastMilkBankAnswer.children = [null, wantToDonateMilkLinkInfo];
+breastMilkBankAnswer.children = [
+  needBreastMilkResult,
+  wantToDonateMilkLinkInfo,
+];
+motherWasNotHospitalizedBeforeBirthAnswer.children = [wasThisHelpfulQuestion];
 wantToDonateMilkLinkInfo.children = [joinOurFacebookStep];
 generalInfoLink.children = [joinOurFacebookStep];
 joinOurFacebookStep.children = [inviteToHospitalWhatsApp];
@@ -812,5 +851,11 @@ whatAreYouInterestedAboutQuestion.children = [whatAreYouInterestedAboutOptions];
 whatAreYouInterestedAboutOptions.children = [
   { ...wantToDonateMilkLinkInfo, children: [] },
   projectOctopusLink,
-  howCanWeHelpYouQuestion,
+  { ...howCanWeHelpYouQuestion, parent: whatAreYouInterestedAboutOptions },
+];
+needBreastMilkResult.children = [wasThisHelpfulQuestion];
+wasThisHelpfulQuestion.children = [wasThisHelpfulOptions];
+wasThisHelpfulOptions.children = [
+  joinOurFacebookStep,
+  { ...howCanWeHelpYouQuestion, parent: wasThisHelpfulOptions },
 ];

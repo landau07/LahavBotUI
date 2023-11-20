@@ -114,5 +114,9 @@
   "month": "Month",
   "months": "Months",
   "and": "and",
-  "forAdditionalDetailsClickHere": "For additional details click here:"
+  "forAdditionalDetailsClickHere": "For additional details click here:",
+  "breastMilkEligibility": "Breast milk eligibility",
+  "breastMilkEligibilityResult": "Breast milk eligibility is given to babies that were born before week 32 (born at {week}), or weight less than 1.5 kg (weight is {weight})",
+  "contactUsForOnSpecialCircumstances": "You might still be eligible for breast milk donation based on special medical situation or special circumstances. Please contact us for more details.",
+  "wasThisHelpful": "Was this information helpful for you?"
 }
