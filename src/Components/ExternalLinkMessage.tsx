@@ -32,7 +32,7 @@ export function ExternalLinkMessage({
         {icon && typeof icon == "string" && (
           <img className="h-7 me-1" src={icon} role="presentation" />
         )}
-        {IconComponent}
+        {icon ? IconComponent : null}
         <span>{urlText}</span>
         <ExternalLink className="h-4 rtl:scale-x-[-1]" />
       </a>

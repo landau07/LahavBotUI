@@ -23,6 +23,7 @@ import facebookIcon from "../icons/facebookIcon.jpeg";
 import milkBottleIcon from "../icons/milkBottleIcon.png";
 import octopusIcon from "../icons/octopusIcon.png";
 import whatsAppIcon from "../icons/whatsappIcon.png";
+import { cn } from "../utils/classnames";
 import { dateToString } from "../utils/dateUtils";
 import { linkColor } from "../utils/sharedClassNames";
 import { ChatDecisionTreeNode } from "./types";
@@ -715,10 +716,14 @@ export const rsvMoreDetailsLink: ChatDecisionTreeNode = {
         )
       }
       urlText={
-        <div className="ms-10">
+        <div
+          className={cn(
+            step.parent!.stepResult?.value == "NotEligible" && "ms-10"
+          )}
+        >
           <FormattedMessage
             id={
-              step.parent!.stepResult?.value == "Eligible"
+              step.parent!.stepResult?.value === "Eligible"
                 ? "forAdditionalDetailsClickHere"
                 : "clickHere"
             }
@@ -806,6 +811,7 @@ rightsTopicsStep.children = [
   null,
 ];
 rsvCalculationResult.children = [rsvMoreDetailsLink];
+rsvMoreDetailsLink.children = [wasThisHelpfulQuestion];
 whatWouldYouLikeQuestion.children = [breastMilkBankAnswer];
 isInHospitalOver14DaysQuestion.children = [isInHospitalOver14DaysAnswer];
 isInHospitalOver14DaysAnswer.children = [
