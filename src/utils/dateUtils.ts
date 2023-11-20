@@ -10,7 +10,10 @@ export const dateToString = (date: Date) => {
   return format(date, FNS_FORMAT, { locale: fnsLocale });
 };
 
-export const stringToDate = (dateString: string) => {
+export const stringToDate = (dateString: string | undefined) => {
+  if (!dateString) {
+    return null;
+  }
   const fnsLocale = locale.value === "he" ? he : enUS;
   return parse(dateString, FNS_FORMAT, new Date(), { locale: fnsLocale });
 };
@@ -24,7 +27,7 @@ export const calculateAgeAtDate = (
   // Calculate the difference in years
   const years = differenceInYears(targetDate, birthday);
 
-  return { years, months: (months % 12) };
+  return { years, months: months % 12 };
 };
 
 // Example output: "1 year and 3 months"

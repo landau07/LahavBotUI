@@ -13,7 +13,7 @@ export function useStepRenderer() {
     switch (step.type) {
       case "text":
         if (typeof step.content === "string") {
-          step.stepResult = {
+          step.result = {
             value: step.content,
             localized: step.shouldLocalizeData
               ? intl.formatMessage({ id: step.content })
@@ -43,7 +43,7 @@ export function useStepRenderer() {
             boxes={step.boxes}
             key={`${step.branchKey}_${index}`}
             onBoxClicked={(boxIndex: number) => {
-              step.stepResult = {
+              step.result = {
                 value: step.boxes[boxIndex],
                 localized: step.shouldLocalizeData
                   ? intl.formatMessage({ id: step.boxes[boxIndex] })
@@ -59,7 +59,7 @@ export function useStepRenderer() {
           <ConfirmComponentWrapper
             key={`${step.branchKey}_${index}`}
             onConfirmButtonClicked={(data) => {
-              step.stepResult = {
+              step.result = {
                 value: data,
                 localized: step.shouldLocalizeData
                   ? intl.formatMessage({ id: data })

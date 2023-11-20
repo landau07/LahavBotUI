@@ -44,7 +44,7 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
 
   const getStepResult = (stepId: number) => {
     const step = chatSteps.find((s) => s.id === stepId);
-    return step?.stepResult;
+    return step?.result;
   };
 
   const contextValue: DecisionTreeContextType = {

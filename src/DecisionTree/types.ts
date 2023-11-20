@@ -10,7 +10,7 @@ export type ChatDecisionTreeNode<TInnerComponentProps = unknown> = {
   children: (ChatDecisionTreeNode<any> | null)[];
   branchKey: number; // used to avoid storing state when going back in the flow
   sender: "user" | "bot";
-  stepResult?: {
+  result?: {
     value: string;
     localized?: string;
   };
@@ -50,9 +50,7 @@ export type DecisionTreeContextType = {
     step: ChatDecisionTreeNode,
     options?: SetNextStepOptions
   ) => void;
-  getStepResult: (
-    stepId: number
-  ) => ChatDecisionTreeNode["stepResult"] | undefined;
+  getStepResult: (stepId: number) => ChatDecisionTreeNode["result"] | undefined;
   pushNewStep: (...newStep: ChatDecisionTreeNode[]) => void;
   lastStep: ChatDecisionTreeNode;
 };

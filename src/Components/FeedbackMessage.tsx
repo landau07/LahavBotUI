@@ -16,7 +16,7 @@ export function FeedbackMessage() {
   const [feedback, setFeedback] = useState<"Good" | "Bad" | null>(null);
 
   const onFeedbackClick = (feedback: "Good" | "Bad") => {
-    step.stepResult = {
+    step.result = {
       value: feedback,
       localized: feedback,
     };

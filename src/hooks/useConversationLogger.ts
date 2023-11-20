@@ -8,10 +8,10 @@ export function useConversationLogger() {
         if (step.type == "confirmComponent" && step.stepLogQuestion) {
           log += step.stepLogQuestion + " -> ";
         }
-        if (step.stepResult) {
+        if (step.result) {
           log += step.shouldLocalizeData
-            ? step.stepResult.localized
-            : step.stepResult.value ?? "";
+            ? step.result.localized
+            : step.result.value ?? "";
         }
 
         return log;

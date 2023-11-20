@@ -26,7 +26,7 @@ export function BreastMilkEligibilityResult() {
       : "NotEligible";
 
   useEffect(() => {
-    step.stepResult = {
+    step.result = {
       value: result,
       localized: result,
     };
@@ -37,32 +37,30 @@ export function BreastMilkEligibilityResult() {
   }, [intl, lastStep, result, setNextStep, step]);
 
   return (
-    <>
-      <div className="flex flex-col gap-3">
-        <h3 className="text-xl underline ">
-          <FormattedMessage id="breastMilkEligibility" />
-        </h3>
-        <div className="flex gap-2">
-          {result === "Eligible" ? (
-            <Check className="text-green-600" />
-          ) : (
-            <X className="text-red-600" />
-          )}
-          <FormattedMessage
-            id="breastMilkEligibilityResult"
-            values={{
-              week,
-              weight: babiesWeight.join(", "),
-            }}
-          />
-        </div>
-        {result === "NotEligible" && (
-          <div className="flex gap-3 p-2 pe-4 mt-2 bg-sky-400 bg-opacity-20 rounded-lg">
-            <Info className="text-blue-400 w-10" />
-            <FormattedMessage id="contactUsForOnSpecialCircumstances" />
-          </div>
+    <div className="flex flex-col gap-3">
+      <h3 className="text-xl underline ">
+        <FormattedMessage id="breastMilkEligibility" />
+      </h3>
+      <div className="flex gap-2">
+        {result === "Eligible" ? (
+          <Check className="text-green-600" />
+        ) : (
+          <X className="text-red-600" />
         )}
+        <FormattedMessage
+          id="breastMilkEligibilityResult"
+          values={{
+            week,
+            weight: babiesWeight.join(", "),
+          }}
+        />
       </div>
-    </>
+      {result === "NotEligible" && (
+        <div className="flex gap-3 p-2 pe-4 mt-2 bg-sky-400 bg-opacity-20 rounded-lg">
+          <Info className="text-blue-400 w-10" />
+          <FormattedMessage id="contactUsForOnSpecialCircumstances" />
+        </div>
+      )}
+    </div>
   );
 }

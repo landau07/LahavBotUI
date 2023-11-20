@@ -17,6 +17,7 @@ import {
 import { ExternalLinkMessage } from "../Components/ExternalLinkMessage";
 import { FeedbackMessage } from "../Components/FeedbackMessage";
 import { HospitalWhatsApp } from "../Components/HospitalWhatsApp";
+import { PrematureAllowanceResult } from "../Components/PrematureAllowanceResult";
 import { RsvCalculationResult } from "../Components/RsvCalculationResult";
 import { TypingAnimationHOC } from "../Components/TypingAnimationHOC";
 import { hospitalLinks } from "../data/hospitalLinks";
@@ -25,7 +26,7 @@ import milkBottleIcon from "../icons/milkBottleIcon.png";
 import octopusIcon from "../icons/octopusIcon.png";
 import whatsAppIcon from "../icons/whatsappIcon.png";
 import { cn } from "../utils/classnames";
-import { dateToString } from "../utils/dateUtils";
+import { dateToString, stringToDate } from "../utils/dateUtils";
 import { linkColor } from "../utils/sharedClassNames";
 import { ChatDecisionTreeNode } from "./types";
 
@@ -124,9 +125,16 @@ export const birthDateStep: ChatDecisionTreeNode<DatePickerMessageProps> = {
   sender: "bot",
   type: "confirmComponent",
   component: DatePickerMessage,
-  componentProps: () => ({
-    textId: "whatWasTheBirthDate",
-  }),
+  componentProps: (step) => {
+    const toDate =
+      step.parent!.id === releaseFromNICUDateStep.id
+        ? stringToDate(step.parent!.result?.value)!
+        : new Date();
+    return {
+      textId: "whatWasTheBirthDate",
+      toDate,
+    };
+  },
   stepLogQuestion: "whatWasTheBirthDate",
   defaultValue: dateToString(new Date()),
   shouldLocalizeData: false,
@@ -179,7 +187,7 @@ export const babiesWeightStep: ChatDecisionTreeNode<BabiesWeightInputProps> = {
   defaultValue: "",
   shouldLocalizeData: false,
   componentProps: (step) => ({
-    numOfBabies: parseInt(step.parent!.stepResult!.value!) as 1 | 2 | 3 | 4 | 5,
+    numOfBabies: parseInt(step.parent!.result!.value!) as 1 | 2 | 3 | 4 | 5,
   }),
 };
 
@@ -262,6 +270,7 @@ export const releaseFromNICUDateStep: ChatDecisionTreeNode<DatePickerMessageProp
     stepLogQuestion: "releaseDateFromHospital",
     componentProps: () => ({
       textId: "releaseDateFromHospital",
+      toDate: new Date(),
     }),
   };
 
@@ -576,7 +585,7 @@ export const donationOptionLink: ChatDecisionTreeNode = {
       bit: "perfect",
       donationsFromAbroad: "veryAppreciated",
     };
-    const selectedDonationMethod = step.parent?.stepResult?.value;
+    const selectedDonationMethod = step.parent?.result?.value;
 
     return (
       <ExternalLinkMessage
@@ -713,7 +722,7 @@ export const rsvMoreDetailsLink: ChatDecisionTreeNode = {
     <ExternalLinkMessage
       url={"https://pagim.net/rsv"}
       children={
-        step.parent!.stepResult?.value == "NotEligible" && (
+        step.parent!.result?.value == "NotEligible" && (
           <div className="flex gap-3 p-2 pe-4 ">
             <Info className="text-blue-500" />
             <FormattedMessage id="checkTheLinkForSpecialCircumstances" />
@@ -722,13 +731,11 @@ export const rsvMoreDetailsLink: ChatDecisionTreeNode = {
       }
       urlText={
         <div
-          className={cn(
-            step.parent!.stepResult?.value == "NotEligible" && "ms-10"
-          )}
+          className={cn(step.parent!.result?.value == "NotEligible" && "ms-10")}
         >
           <FormattedMessage
             id={
-              step.parent!.stepResult?.value === "Eligible"
+              step.parent!.result?.value === "Eligible"
                 ? "forAdditionalDetailsClickHere"
                 : "clickHere"
             }
@@ -777,6 +784,51 @@ export const wasThisHelpfulOptions: ChatDecisionTreeNode = {
   shouldLocalizeData: true,
 };
 
+export const prematurityAllowanceResultStep: ChatDecisionTreeNode = {
+  id: 48,
+  branchKey: 0,
+  parent: rightsTopicsStep,
+  type: "text",
+  sender: "bot",
+  shouldLocalizeData: true,
+  content: (
+    <TypingAnimationHOC>
+      <PrematureAllowanceResult />
+    </TypingAnimationHOC>
+  ),
+  preventAutoRenderBotChild: true,
+  children: [],
+};
+
+export const prematurityAllowanceEligibleLink: ChatDecisionTreeNode = {
+  id: 49,
+  branchKey: 0,
+  parent: prematurityAllowanceResultStep,
+  children: [],
+  sender: "bot",
+  type: "text",
+  shouldLocalizeData: true,
+  content: (
+    <ExternalLinkMessage
+      url={"https://pagim.net/עיקרי-הכללים-לקביעת-זכאות-לקצבה-מביטו"}
+      children={<FormattedMessage id="submittingPrematurityAllowanceLink" />}
+      urlText={<FormattedMessage id="clickHere" />}
+      icon={<Smile className={linkColor} />}
+    />
+  ),
+};
+
+export const sendUsMessageQuestion: ChatDecisionTreeNode = {
+  id: 50,
+  branchKey: 0,
+  parent: prematurityAllowanceEligibleLink,
+  children: [],
+  sender: "user",
+  type: "selectionBox",
+  boxes: ["yes", "no"],
+  shouldLocalizeData: true,
+};
+
 // Wire children:
 welcomeStep.children = [areYouStep];
 areYouStep.children = [userTypeStep];
@@ -792,11 +844,14 @@ isBabyStillInHospitalAnswerStep.children = [
   whichHospitalStep,
   whichNICUWereYouStep,
 ];
-whichHospitalStep.children = [birthDateStep];
+birthDateStep.children = [bornWeekAndDayStep];
+whichHospitalStep.children = [{ ...birthDateStep, parent: whichHospitalStep }];
 whichNICUWereYouStep.children = [inviteToHospitalAlumniWhatsApp];
 inviteToHospitalAlumniWhatsApp.children = [releaseFromNICUDateStep];
-releaseFromNICUDateStep.children = [birthDateStep];
-birthDateStep.children = [bornWeekAndDayStep];
+
+releaseFromNICUDateStep.children = [
+  { ...birthDateStep, parent: releaseFromNICUDateStep },
+];
 bornWeekAndDayStep.children = [howManyNewbornsStep];
 howManyNewbornsStep.children = [numOfNewbornsAnswerStep];
 numOfNewbornsAnswerStep.children = [
@@ -817,7 +872,7 @@ rightsTopicsStep.children = [
   rsvCalculationResult,
   whatWouldYouLikeQuestion,
   isInHospitalOver14DaysQuestion,
-  null,
+  prematurityAllowanceResultStep,
 ];
 rsvCalculationResult.children = [rsvMoreDetailsLink];
 rsvMoreDetailsLink.children = [wasThisHelpfulQuestion];
@@ -842,6 +897,12 @@ breastMilkBankAnswer.children = [
 ];
 motherWasNotHospitalizedBeforeBirthAnswer.children = [wasThisHelpfulQuestion];
 wantToDonateMilkLinkInfo.children = [joinOurFacebookStep];
+prematurityAllowanceResultStep.children = [
+  prematurityAllowanceEligibleLink,
+  sendUsMessageQuestion,
+];
+prematurityAllowanceEligibleLink.children = [wasThisHelpfulQuestion];
+sendUsMessageQuestion.children = [howCanWeHelpYouQuestion, joinOurFacebookStep];
 generalInfoLink.children = [joinOurFacebookStep];
 joinOurFacebookStep.children = [inviteToHospitalWhatsApp];
 haveYouHadPrematureBabyBeforeQuestion.children = [

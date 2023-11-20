@@ -36,7 +36,7 @@ export function ChatFooter() {
       children: [],
       parent: chatSteps[chatSteps.length - 1],
       shouldLocalizeData: false,
-      stepResult: {
+      result: {
         value: message,
         localized: message,
       },

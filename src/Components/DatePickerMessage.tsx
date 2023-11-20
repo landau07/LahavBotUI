@@ -10,15 +10,18 @@ import { dateToString } from "../utils/dateUtils";
 import { messageTextClassNames } from "../utils/sharedClassNames";
 import { ConfirmComponentProps } from "./ConfirmComponentWrapper";
 
-export type DatePickerMessageProps = { textId: string } & ConfirmComponentProps;
+export type DatePickerMessageProps = {
+  textId: string;
+  toDate?: Date;
+} & ConfirmComponentProps;
 
 export function DatePickerMessage({
   setData,
   textId,
   isAfterConfirmState,
+  toDate,
 }: DatePickerMessageProps) {
-  const today = new Date();
-  const [selectedDay, setSelectedDay] = useState<Date | undefined>(today);
+  const [selectedDay, setSelectedDay] = useState<Date | undefined>(toDate);
   const fnsLocale = locale.value === "he" ? he : enUS;
   const selectedDayString = dateToString(selectedDay!);
 
@@ -46,7 +49,7 @@ export function DatePickerMessage({
             locale={fnsLocale}
             onSelect={(day) => setSelectedDay(day)}
             style={{ margin: 6 }}
-            toDate={new Date()}
+            toDate={toDate}
             footer={
               <p className="flex flex-row-reverse mt-4 me-2">
                 {selectedDayString}

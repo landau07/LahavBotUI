@@ -23,7 +23,7 @@ export function RsvCalculationResult() {
   const weekAndDayString = getStepResult(bornWeekAndDayStep.id)?.value;
   const week: number = parseInt(weekAndDayString?.split(" + ")[0] ?? "-1");
 
-  const birthDate = stringToDate(getStepResult(birthDateStep.id)!.value);
+  const birthDate = stringToDate(getStepResult(birthDateStep.id)!.value)!;
   const ageInNovember = calculateAgeAtDate(birthDate, getNextNovemberFirst());
 
   const babiesWeight = getStepResult(babiesWeightStep.id)!
@@ -33,7 +33,7 @@ export function RsvCalculationResult() {
   const reason = eligibilityReasonForRsv(week, ageInNovember, babiesWeight);
 
   useEffect(() => {
-    step.stepResult = {
+    step.result = {
       value: reason.startsWith("notEntitledForRsvMessage")
         ? "NotEligible"
         : "Eligible",
