@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Check, Info, X } from "react-feather";
 import { FormattedMessage, useIntl } from "react-intl";
 import {
@@ -7,13 +7,8 @@ import {
 } from "../DecisionTree/StepsDefinitions";
 import { useCurrentStep } from "../DecisionTree/useCurrentStep";
 import { useDecisionTree } from "../DecisionTree/useDecisionTree";
-import useTimeout from "../hooks/useTimeout";
-import { cn } from "../utils/classnames";
-import { TypingMessageContent } from "./TypingMessageContent";
 
 export function BreastMilkEligibilityResult() {
-  const [isTyping, setIsTyping] = useState(true);
-  useTimeout(() => setIsTyping(false), 1500);
   const intl = useIntl();
   const step = useCurrentStep();
 
@@ -26,7 +21,9 @@ export function BreastMilkEligibilityResult() {
     .map((weightStr) => parseFloat(weightStr));
 
   const result =
-    week < 32 || babiesWeight.some((w) => w <= 1.5) ? "Eligible" : "NotEligible";
+    week < 32 || babiesWeight.some((w) => w <= 1.5)
+      ? "Eligible"
+      : "NotEligible";
 
   useEffect(() => {
     step.stepResult = {
@@ -34,19 +31,14 @@ export function BreastMilkEligibilityResult() {
       localized: result,
     };
     // We want to render next step with the updated stepResult
-    if (lastStep === step && !isTyping) {
+    if (lastStep === step) {
       setNextStep(step);
     }
-  }, [intl, isTyping, lastStep, result, setNextStep, step]);
-
-  if (isTyping) {
-    return <TypingMessageContent />;
-  }
+  }, [intl, lastStep, result, setNextStep, step]);
 
   return (
     <>
-      {isTyping && <TypingMessageContent />}
-      <div className={cn("flex flex-col gap-3", isTyping && "hidden")}>
+      <div className="flex flex-col gap-3">
         <h3 className="text-xl underline ">
           <FormattedMessage id="breastMilkEligibility" />
         </h3>

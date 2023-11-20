@@ -1,5 +1,5 @@
 import { addMonths, set } from "date-fns";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Check, X } from "react-feather";
 import { FormattedMessage, useIntl } from "react-intl";
 import {
@@ -9,18 +9,13 @@ import {
 } from "../DecisionTree/StepsDefinitions";
 import { useCurrentStep } from "../DecisionTree/useCurrentStep";
 import { useDecisionTree } from "../DecisionTree/useDecisionTree";
-import useTimeout from "../hooks/useTimeout";
-import { cn } from "../utils/classnames";
 import {
   calculateAgeAtDate,
   formatAge,
   stringToDate,
 } from "../utils/dateUtils";
-import { TypingMessageContent } from "./TypingMessageContent";
 
 export function RsvCalculationResult() {
-  const [isTyping, setIsTyping] = useState(true);
-  useTimeout(() => setIsTyping(false), 1500);
   const intl = useIntl();
   const step = useCurrentStep();
 
@@ -45,14 +40,11 @@ export function RsvCalculationResult() {
       localized: intl.formatMessage({ id: reason }),
     };
     // We want to render next step with the updated stepResult
-    if (lastStep === step && !isTyping) {
+    if (lastStep === step) {
       setNextStep(step);
     }
-  }, [intl, isTyping, lastStep, reason, setNextStep, step]);
+  }, [intl, lastStep, reason, setNextStep, step]);
 
-  if (isTyping) {
-    return <TypingMessageContent />;
-  }
   const msg = intl.formatMessage(
     {
       id: reason,
@@ -65,8 +57,7 @@ export function RsvCalculationResult() {
   );
   return (
     <>
-      {isTyping && <TypingMessageContent />}
-      <div className={cn("flex flex-col gap-3", isTyping && "hidden")}>
+      <div className="flex flex-col gap-3">
         <h3 className="text-xl underline ">
           <FormattedMessage id="eligibilityForRsvVaccine" />
         </h3>

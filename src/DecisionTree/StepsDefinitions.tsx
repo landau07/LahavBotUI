@@ -18,6 +18,7 @@ import { ExternalLinkMessage } from "../Components/ExternalLinkMessage";
 import { FeedbackMessage } from "../Components/FeedbackMessage";
 import { HospitalWhatsApp } from "../Components/HospitalWhatsApp";
 import { RsvCalculationResult } from "../Components/RsvCalculationResult";
+import { TypingAnimationHOC } from "../Components/TypingAnimationHOC";
 import { hospitalLinks } from "../data/hospitalLinks";
 import facebookIcon from "../icons/facebookIcon.jpeg";
 import milkBottleIcon from "../icons/milkBottleIcon.png";
@@ -691,7 +692,11 @@ export const rsvCalculationResult: ChatDecisionTreeNode = {
   type: "text",
   sender: "bot",
   shouldLocalizeData: true,
-  content: <RsvCalculationResult />,
+  content: (
+    <TypingAnimationHOC>
+      <RsvCalculationResult />
+    </TypingAnimationHOC>
+  ),
   preventAutoRenderBotChild: true,
   children: [],
 };
@@ -741,7 +746,11 @@ export const needBreastMilkResult: ChatDecisionTreeNode = {
   type: "text",
   sender: "bot",
   shouldLocalizeData: true,
-  content: <BreastMilkEligibilityResult />,
+  content: (
+    <TypingAnimationHOC>
+      <BreastMilkEligibilityResult />
+    </TypingAnimationHOC>
+  ),
   preventAutoRenderBotChild: true,
   children: [],
 };
