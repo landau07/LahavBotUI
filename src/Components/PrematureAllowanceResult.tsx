@@ -85,7 +85,7 @@ export function PrematureAllowanceResult() {
             values={{
               numMonths: numOfDaysBabyInHospital >= 45 ? 9 : 6,
               fromMonth: 3,
-              toMonth: numOfDaysBabyInHospital >= 45 ? 9 : 6,
+              toMonth: numOfDaysBabyInHospital >= 45 ? 12 : 9,
             }}
           />
         </div>

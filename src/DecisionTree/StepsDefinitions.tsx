@@ -652,7 +652,7 @@ export const howCanWeHelpYouQuestion: ChatDecisionTreeNode = {
   shouldLocalizeData: true,
   content: (
     <ExternalLinkMessage
-      url={"https://pagim.net/octopus"}
+      url={"https://bit.ly/טופס_פנייה"}
       children={<FormattedMessage id="howCanWeHelpYou" />}
       urlText={<FormattedMessage id="orFillThisForm" />}
     />
