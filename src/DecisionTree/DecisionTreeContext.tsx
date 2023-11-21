@@ -7,6 +7,7 @@ import {
   DecisionTreeContextType,
   SetNextStepOptions,
 } from "./types";
+import { textBarEnabled } from "../signals";
 
 export const DecisionTreeContext =
   createContext<DecisionTreeContextType | null>(null);
@@ -32,7 +33,7 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     } else {
       nextStep = notImplementedYetStepTemplate;
     }
-
+    textBarEnabled.value = false; // reset the textBar when going back in time. 
     setChatSteps((prev) =>
       takeUntil(prev, (s) => s === step).concat(nextStep!)
     );
