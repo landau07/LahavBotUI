@@ -938,6 +938,6 @@ whatAreYouInterestedAboutOptions.children = [
 needBreastMilkResult.children = [wasThisHelpfulQuestion];
 wasThisHelpfulQuestion.children = [wasThisHelpfulOptions];
 wasThisHelpfulOptions.children = [
-  joinOurFacebookStep,
+  { ...joinOurFacebookStep, parent: wasThisHelpfulOptions },
   { ...howCanWeHelpYouQuestion, parent: wasThisHelpfulOptions },
 ];
