@@ -119,10 +119,14 @@
   "breastMilkEligibility": "זכאות לקבלת חלב אם",
   "breastMilkEligibilityResult": "הזכאות לחלב אם ניתנת לתינוקות שנולדו לפני שבוע 32 (נולד ב {week}), או במשקל של פחות מ-1.5 ק''ג (המשקל הוא {weight})",
   "contactUsForOnSpecialCircumstances": "ייתכן שאת עדיין זכאית לתרומת חלב אם בהתבסס על מצב רפואי מיוחד או נסיבות מיוחדות. צרו איתנו קשר לפרטים נוספים.",
-  "wasThisHelpful": "האם המידע עזר לך?",
+  "wasThisHelpful": "האם המידע עזר לך או שתרצה להשאיר לנו הודעה?",
+  "yesThanks": "כן, תודה!",
+  "iWantToLeaveAMessage": "אני רוצה להשאיר הודעה",
   "prematurityAllowanceFromNationalInsurance": "זכאות לקצבת פגות מביטוח לאומי",
   "prematurityAllowanceResult": "לפי הפרטים שהזנת, אתה זכאי לדמי פג כיוון שהתקיים אחד או יותר מהתנאים הבאים: 1. התינוק נולד לפני שבוע 33 (נולד בשבוע {week}). 2. התינוק נולד במשקל של פחות מ-1.750 קג (המשקל הוא {weight}). 3. התינוק אושפז יותר מ-30 יום (היה {daysInHospital}).",
   "submittingPrematurityAllowanceLink": "למידע על הגשת הבקשה והזכאויות:",
-  "prematurityAllowanceResultEntitled": "זכאי לקצבת פגייה בסך 1,676 ₪ (נכון לינואר 2023) למשך {numMonths} חודשים, מגיל {fromMonth} חודשים ועד {toMonth} חודשים.",
-  "prematurityAllowanceResultNotEntitled": "לפי הפרטים שהזנת, אינך זכאי לקצבת פגות. האם תרצה להשאיר לנו הודעה?"
+  "prematurityAllowanceResultEntitled": "זכאי לקצבת פגים בסך 1,676 ₪ (נכון לינואר 2023) למשך {numMonths} חודשים, מגיל {fromMonth} חודשים ועד {toMonth} חודשים.",
+  "prematurityAllowanceResultNotEntitled": "לפי הפרטים שהזנת, אינך זכאי לקצבת פגים. האם תרצה להשאיר לנו הודעה?",
+  "orFillThisForm": "(או שתמלא את הטופס הזה)",
+  "dontForgetPhoneOrEmail": "(השאר מספר טלפון/אימייל)"
 }

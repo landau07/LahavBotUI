@@ -650,7 +650,13 @@ export const howCanWeHelpYouQuestion: ChatDecisionTreeNode = {
   sender: "bot",
   type: "text",
   shouldLocalizeData: true,
-  content: "howCanWeHelpYou",
+  content: (
+    <ExternalLinkMessage
+      url={"https://pagim.net/octopus"}
+      children={<FormattedMessage id="howCanWeHelpYou" />}
+      urlText={<FormattedMessage id="orFillThisForm" />}
+    />
+  ),
   shouldWaitForUserInputAfterStep: true,
 };
 
@@ -780,7 +786,7 @@ export const wasThisHelpfulOptions: ChatDecisionTreeNode = {
   children: [],
   sender: "user",
   type: "selectionBox",
-  boxes: ["yes", "no"],
+  boxes: ["yesThanks", "iWantToLeaveAMessage"],
   shouldLocalizeData: true,
 };
 

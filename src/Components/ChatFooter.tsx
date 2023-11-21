@@ -113,7 +113,10 @@ export function ChatFooter() {
             ref={ref}
             disabled={!textBarEnabled.value}
             className="w-full overflow-y-hidden bg-rgb-176-193-212 p-2 rounded-lg pr-4 h-10 resize-none outline-none focus:outline-none focus:ring-2 focus:ring-blue-600"
-            placeholder={intl.formatMessage({ id: "typeMessage" })}
+            placeholder={
+              intl.formatMessage({ id: "typeMessage" }) +
+              intl.formatMessage({ id: "dontForgetPhoneOrEmail" })
+            }
             value={message}
             onChange={handleMessageChange}
             onKeyDown={handleKeyDown}

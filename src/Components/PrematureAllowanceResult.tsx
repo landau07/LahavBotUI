@@ -60,7 +60,7 @@ export function PrematureAllowanceResult() {
       <div className="flex gap-2">
         {result === "Eligible" ? (
           <>
-            <Check className="text-green-600" />
+            <Check className="text-green-600 w-12" />
             <FormattedMessage
               id="prematurityAllowanceResult"
               values={{
@@ -72,7 +72,7 @@ export function PrematureAllowanceResult() {
           </>
         ) : (
           <>
-            <X className="text-red-600" />
+            <X className="text-red-600 w-5" />
             <FormattedMessage id="prematurityAllowanceResultNotEntitled" />
           </>
         )}
