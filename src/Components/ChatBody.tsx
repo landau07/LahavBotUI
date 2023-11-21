@@ -1,5 +1,4 @@
 import { useEffect, useRef } from "react";
-import { isDesktop } from "react-device-detect";
 import { CurrentStepContext } from "../DecisionTree/CurrentStepContext";
 import { useDecisionTree } from "../DecisionTree/useDecisionTree";
 import { useStepRenderer } from "../hooks/useStepRenderer";
@@ -14,7 +13,7 @@ export function ChatBody() {
     scrollToBottom();
 
     // When waiting for user input, enable the textarea
-    if (lastStep.shouldWaitForUserInputAfterStep && isDesktop) {
+    if (lastStep.shouldWaitForUserInputAfterStep) {
       textBarEnabled.value = true;
     }
   }, [chatSteps, lastStep.shouldWaitForUserInputAfterStep]);
