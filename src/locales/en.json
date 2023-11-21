@@ -119,7 +119,7 @@
   "breastMilkEligibilityResult": "Breast milk eligibility is given to babies that were born before week 32 (born at {week}), or weight less than 1.5 kg (weight is {weight})",
   "contactUsForOnSpecialCircumstances": "You might still be eligible for breast milk donation based on special medical situation or special circumstances. Please contact us for more details.",
   "wasThisHelpful": "Was this information helpful for you or do you want to leave as a message?",
-  "yesThanks": "Yes, thank you!",
+  "yesThanks": "It helped me, thanks!",
   "iWantToLeaveAMessage": "I want to leave a message",
   "prematurityAllowanceFromNationalInsurance": "Entitlement for Prematurity allowance from National Insurance",
   "prematurityAllowanceResult": "According to the details you entered, you are entitled to a prematurity allowance because one or more of the following condition has met: 1. The baby was born before week 33 (born at week {week}). 2. The baby was born in weight less than 1.750 kg (weight is {weight}). 3. The baby was hospitalized more then 30 days (was {daysInHospital}).",
