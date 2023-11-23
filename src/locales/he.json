@@ -1,7 +1,7 @@
 {
   "lahav": "לה״ב",
   "lahavBot": "לה״ב בוט",
-  "welcomeMessage": "היי! הגעת לבוט של לה״ב. נשמח לסייע ולהפנות אותך לאן שאתה צריך, אבל ראשית, אני צריך לדעת מספר פרטים בסיסיים.",
+  "welcomeMessage": "היי! הגעת לבוט של לה״ב. נשמח לסייע ולהפנות אותך לאן שאתה צריך :)",
   "areYou": "האם אתה:",
   "isStillInNICU": "האם התינוק עדין בפגייה?",
   "parent": "הורה לפג",
@@ -128,5 +128,7 @@
   "prematurityAllowanceResultEntitled": "זכאי לקצבת פגים בסך 1,676 ₪ (נכון לינואר 2023) למשך {numMonths} חודשים, מגיל {fromMonth} חודשים ועד {toMonth} חודשים.",
   "prematurityAllowanceResultNotEntitled": "לפי הפרטים שהזנת, אינך זכאי לקצבת פגים. האם תרצה להשאיר לנו הודעה?",
   "orFillThisForm": "(או שתמלא את הטופס הזה)",
-  "dontForgetPhoneOrEmail": "(השאר מספר טלפון/אימייל)"
+  "dontForgetPhoneOrEmail": "(השאר מספר טלפון/אימייל)",
+  "secretGame": "משחק סודי",
+  "needFewDetails": "אני צריך לדעת מספר פרטים בסיסיים על מנת שאוכל לספק מידע רלוונטי:"
 }

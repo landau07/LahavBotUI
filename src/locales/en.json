@@ -1,7 +1,7 @@
 {
   "lahav": "Lahav",
   "lahavBot": "Lahav bot",
-  "welcomeMessage": "Hello! You reached Lahav's bots. I will be happy to assist and direct you to the right place, but first I need to know some basic information.",
+  "welcomeMessage": "Hello! You reached Lahav's bots. I will be happy to assist and direct you to the right place :)",
   "areYou": "Are you:",
   "isStillInNICU": "Is the baby still in the NICU (Neonatal intensive care unit) in the hospital?",
   "parent": "Parent",
@@ -127,5 +127,7 @@
   "prematurityAllowanceResultEntitled": "Eligible for prematurity allowance of 1,676 NIS (as for January 2023) for {numMonths} months, from age {fromMonth} months until {toMonth} months.",
   "prematurityAllowanceResultNotEntitled": "According to the details you entered, you are not entitled to a prematurity allowance. Would you like to leave us a message?",
   "orFillThisForm": "(Or fill this form)",
-  "dontForgetPhoneOrEmail": "(Leave a phone number/Email)"
+  "dontForgetPhoneOrEmail": "(Leave a phone number/Email)",
+  "secretGame": "Secret game",
+  "needFewDetails": "I need to know some basic details in order to provide relevant information:"
 }

@@ -4,7 +4,7 @@ import { ChatHeader } from "./ChatHeader";
 
 export function ChatBotContainer() {
   return (
-    <div className="h-[100svh] flex flex-col tablet:px-[10%] laptop:px-[20%] desktop:px-[30%]">
+    <div className="chatBotContainer h-[100svh] flex flex-col tablet:px-[10%] laptop:px-[20%] desktop:px-[30%]">
       <ChatHeader />
       <ChatBody />
       <ChatFooter />

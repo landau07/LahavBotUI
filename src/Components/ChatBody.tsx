@@ -1,13 +1,33 @@
-import { useEffect, useRef } from "react";
+import { signal } from "@preact/signals-react";
+import { useCallback, useEffect, useRef } from "react";
 import { CurrentStepContext } from "../DecisionTree/CurrentStepContext";
 import { useDecisionTree } from "../DecisionTree/useDecisionTree";
+import { useEventListener } from "../hooks";
 import { useStepRenderer } from "../hooks/useStepRenderer";
 import { textBarEnabled } from "../signals";
+
+export const chatBodySize = signal<{ width: number; height: number }>({
+  height: 0,
+  width: 0,
+});
 
 export function ChatBody() {
   const { chatSteps, lastStep } = useDecisionTree();
   const { renderStep } = useStepRenderer();
   const containerRef = useRef<HTMLDivElement>(null);
+  const setChatBodySize = useCallback(() => {
+    if (containerRef.current) {
+      chatBodySize.value = {
+        width: containerRef.current.offsetWidth,
+        height: containerRef.current.offsetHeight,
+      };
+      scrollToBottom();
+    }
+  }, []);
+
+  useEventListener("resize", setChatBodySize);
+
+  useEffect(setChatBodySize, [setChatBodySize, containerRef.current]);
 
   useEffect(() => {
     scrollToBottom();

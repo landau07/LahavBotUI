@@ -6,6 +6,7 @@ import {
 } from "../Components/BabiesWeightInput";
 import { BirthWeekAndDaySelector } from "../Components/BirthWeekAndDaySelector";
 import { BreastMilkEligibilityResult } from "../Components/BreastMilkEligibilityResult";
+import { ForceDirectedGraph } from "../Components/D3Graph";
 import {
   DatePickerMessage,
   DatePickerMessageProps,
@@ -78,10 +79,21 @@ export const userTypeStep: ChatDecisionTreeNode = {
   shouldLocalizeData: true,
 };
 
+export const firstINeedFewDetails: ChatDecisionTreeNode = {
+  id: 1.5,
+  branchKey: 0,
+  parent: userTypeStep,
+  type: "text",
+  sender: "bot",
+  shouldLocalizeData: true,
+  content: "needFewDetails",
+  children: [],
+};
+
 export const isBabyStillInHospitalStep: ChatDecisionTreeNode = {
   id: 2,
   branchKey: 0,
-  parent: userTypeStep,
+  parent: firstINeedFewDetails,
   children: [],
   sender: "bot",
   type: "text",
@@ -678,7 +690,7 @@ export const whatAreYouInterestedAboutOptions: ChatDecisionTreeNode = {
   children: [],
   sender: "user",
   type: "selectionBox",
-  boxes: ["breastMilkDonation", "projectOctopus", "contactUs"],
+  boxes: ["breastMilkDonation", "projectOctopus", "contactUs", "secretGame"],
   shouldLocalizeData: true,
 };
 
@@ -835,16 +847,28 @@ export const sendUsMessageQuestion: ChatDecisionTreeNode = {
   shouldLocalizeData: true,
 };
 
+export const graph: ChatDecisionTreeNode = {
+  id: 51,
+  branchKey: 0,
+  parent: whatAreYouInterestedAboutOptions,
+  type: "text",
+  sender: "bot",
+  shouldLocalizeData: false,
+  content: <ForceDirectedGraph />,
+  children: [],
+};
+
 // Wire children:
 welcomeStep.children = [areYouStep];
 areYouStep.children = [userTypeStep];
 userTypeStep.children = [
-  isBabyStillInHospitalStep,
+  firstINeedFewDetails,
   haveYouHadPrematureBabyBeforeQuestion,
   wantToJoinTheTeamLink,
   howWouldYouLikeToDonateQuestion,
   whatAreYouInterestedAboutQuestion,
 ];
+firstINeedFewDetails.children = [isBabyStillInHospitalStep];
 isBabyStillInHospitalStep.children = [isBabyStillInHospitalAnswerStep];
 isBabyStillInHospitalAnswerStep.children = [
   whichHospitalStep,
@@ -934,6 +958,8 @@ whatAreYouInterestedAboutOptions.children = [
   { ...wantToDonateMilkLinkInfo, children: [] },
   projectOctopusLink,
   { ...howCanWeHelpYouQuestion, parent: whatAreYouInterestedAboutOptions },
+
+  graph,
 ];
 needBreastMilkResult.children = [wasThisHelpfulQuestion];
 wasThisHelpfulQuestion.children = [wasThisHelpfulOptions];
