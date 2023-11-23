@@ -8,6 +8,7 @@ import {
   inviteToHospitalWhatsApp,
   joinOurFacebookStep,
   openTextFeedbackStep,
+  whatAreYouInterestedAboutOptions,
 } from "../DecisionTree/StepsDefinitions";
 import { ChatDecisionTreeNode } from "../DecisionTree/types";
 import { useDecisionTree } from "../DecisionTree/useDecisionTree";
@@ -57,17 +58,20 @@ export function ChatFooter() {
       shouldLocalizeData: true,
     };
 
-    if (lastStep.id === howCanWeHelpYouQuestion.id) {
+    const shouldFollowBotThankYouMessageWithFacebookStep =
+      lastStep.id === howCanWeHelpYouQuestion.id &&
+      lastStep.parent!.id !== assistanceTopicsAnswerStep.id &&
+      lastStep.parent!.id !== whatAreYouInterestedAboutOptions.id;
+
+    if (shouldFollowBotThankYouMessageWithFacebookStep) {
       // For whatAreYouInterestedAboutOptions flow we end with the Thank you message,
       // So we won't add any children
-      if (lastStep.parent!.id !== assistanceTopicsAnswerStep.id) {
-        botAnswer.children = [
-          {
-            ...joinOurFacebookStep,
-            children: [{ ...inviteToHospitalWhatsApp, children: [] }],
-          },
-        ];
-      }
+      botAnswer.children = [
+        {
+          ...joinOurFacebookStep,
+          children: [{ ...inviteToHospitalWhatsApp, children: [] }],
+        },
+      ];
     }
 
     const newSteps = [userMessage];
