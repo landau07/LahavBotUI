@@ -8,14 +8,16 @@ import {
 } from "../utils/sharedClassNames";
 
 type ConfirmButtonProps = {
-  onClick: () => void;
+  onClick?: () => void;
   position?: "start" | "end";
+  buttonTextId?: string;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 export function ConfirmButton({
   onClick,
   position = "end",
   disabled,
+  buttonTextId = "confirm",
   ...rest
 }: ConfirmButtonProps) {
   return (
@@ -25,7 +27,7 @@ export function ConfirmButton({
       }`}
     >
       <button
-        onClick={disabled ? undefined : onClick}
+        onClick={!onClick || disabled ? undefined : onClick}
         className={cn(
           `text-white py-2 px-4 rounded-md`,
           lahavBgColorLightMode(colorTheme.value),
@@ -41,7 +43,7 @@ export function ConfirmButton({
         disabled={disabled}
         {...rest}
       >
-        <FormattedMessage id={"confirm"} />
+        <FormattedMessage id={buttonTextId} />
       </button>
     </div>
   );

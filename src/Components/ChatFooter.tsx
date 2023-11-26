@@ -7,7 +7,6 @@ import {
   howCanWeHelpYouQuestion,
   inviteToHospitalWhatsApp,
   joinOurFacebookStep,
-  openTextFeedbackStep,
   whatAreYouInterestedAboutOptions,
 } from "../DecisionTree/StepsDefinitions";
 import { ChatDecisionTreeNode } from "../DecisionTree/types";
@@ -47,9 +46,7 @@ export function ChatFooter() {
       type: "text",
       sender: "bot",
       content:
-        lastStep.id === openTextFeedbackStep.id
-          ? "thanksIWillSendTheDetails"
-          : lastStep.id === howCanWeHelpYouQuestion.id
+        lastStep.id === howCanWeHelpYouQuestion.id
           ? "thanksForContactingUs"
           : "",
       branchKey: 0,
@@ -75,10 +72,7 @@ export function ChatFooter() {
     }
 
     const newSteps = [userMessage];
-    if (
-      lastStep.id === openTextFeedbackStep.id ||
-      lastStep.id === howCanWeHelpYouQuestion.id
-    ) {
+    if (lastStep.id === howCanWeHelpYouQuestion.id) {
       newSteps.push(botAnswer);
       logConversation(chatSteps.concat(newSteps));
     }

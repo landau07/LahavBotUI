@@ -1,4 +1,5 @@
-import { Globe, Moon, Sun } from "react-feather";
+import { useState } from "react";
+import { Globe, Moon, Smile, Sun } from "react-feather";
 import { useIntl } from "react-intl";
 import femaleIcon from "../icons/femaleIcon.png";
 import lahavLogo from "../icons/lahavIcon.jpeg";
@@ -15,6 +16,8 @@ import {
   mouseDownTransitionDownClassNames,
   mouseHoverScaleUpClassNames,
 } from "../utils/sharedClassNames";
+import { FeedbackFormContent } from "./FeedbackFormContent";
+import { Modal } from "./Modal";
 
 export function LahavAvatar({ addClassName }: { addClassName?: string }) {
   return (
@@ -28,6 +31,8 @@ export function LahavAvatar({ addClassName }: { addClassName?: string }) {
 
 export function ChatHeader() {
   const intl = useIntl();
+  const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
+
   return (
     <header
       className={cn(
@@ -47,8 +52,19 @@ export function ChatHeader() {
         {intl.formatMessage({ id: "lahavBot" })}
       </div>
       <button
+        onClick={() => setIsFeedbackModalOpen(true)}
+        aria-label="Feedback"
+        title="Feedback"
+        className={mouseHoverScaleUpClassNames}
+      >
+        <Smile
+          className={`text-slate-200 ${mouseDownTransitionDownClassNames} active:rotate-180`}
+        />
+      </button>
+      <button
         onClick={toggleColorTheme}
         aria-label="Color theme"
+        title="Color theme"
         className={mouseHoverScaleUpClassNames}
       >
         <img
@@ -60,6 +76,7 @@ export function ChatHeader() {
       <button
         onClick={toggleLocale}
         aria-label="Language"
+        title="Language"
         className={mouseHoverScaleUpClassNames}
       >
         <Globe
@@ -69,6 +86,7 @@ export function ChatHeader() {
       <button
         onClick={() => (isDarkMode.value = !isDarkMode.value)}
         aria-label={isDarkMode.value ? "Dark mode" : "Light mode"}
+        title={isDarkMode.value ? "Dark mode" : "Light mode"}
         className={mouseHoverScaleUpClassNames}
       >
         {isDarkMode.value ? (
@@ -81,6 +99,12 @@ export function ChatHeader() {
           />
         )}
       </button>
+      <Modal
+        isOpen={isFeedbackModalOpen}
+        onClose={() => setIsFeedbackModalOpen(false)}
+      >
+        <FeedbackFormContent onClose={() => setIsFeedbackModalOpen(false)} />
+      </Modal>
     </header>
   );
 }

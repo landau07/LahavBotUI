@@ -16,7 +16,6 @@ import {
   DropdownMessageProps,
 } from "../Components/DropdownMessage";
 import { ExternalLinkMessage } from "../Components/ExternalLinkMessage";
-import { FeedbackMessage } from "../Components/FeedbackMessage";
 import { HospitalWhatsApp } from "../Components/HospitalWhatsApp";
 import { PrematureAllowanceResult } from "../Components/PrematureAllowanceResult";
 import { RsvCalculationResult } from "../Components/RsvCalculationResult";
@@ -631,29 +630,6 @@ export const joinUsFinalStep: ChatDecisionTreeNode = {
   ),
 };
 
-export const feedbackStep: ChatDecisionTreeNode = {
-  id: 37,
-  branchKey: 0,
-  parent: joinUsFinalStep,
-  children: [],
-  sender: "bot",
-  type: "text",
-  shouldLocalizeData: true,
-  preventAutoRenderBotChild: true,
-  content: <FeedbackMessage />,
-};
-
-export const openTextFeedbackStep: ChatDecisionTreeNode = {
-  id: 38,
-  branchKey: 0,
-  parent: feedbackStep,
-  children: [],
-  sender: "bot",
-  type: "text",
-  shouldLocalizeData: true,
-  content: "openFeedbackText",
-};
-
 export const howCanWeHelpYouQuestion: ChatDecisionTreeNode = {
   id: 39,
   branchKey: 0,
@@ -951,8 +927,6 @@ donationOptions.children = [
   null,
 ];
 inviteToHospitalWhatsApp.children = [joinUsFinalStep];
-joinUsFinalStep.children = [feedbackStep];
-feedbackStep.children = [openTextFeedbackStep];
 whatAreYouInterestedAboutQuestion.children = [whatAreYouInterestedAboutOptions];
 whatAreYouInterestedAboutOptions.children = [
   { ...wantToDonateMilkLinkInfo, children: [] },
