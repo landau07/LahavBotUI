@@ -1,5 +1,6 @@
 import { ReactNode, createContext, useState } from "react";
 import "react-day-picker/dist/style.css";
+import { textBarEnabled } from "../signals";
 import { takeUntil } from "../utils/arrayUtils";
 import { notImplementedYetStepTemplate, welcomeStep } from "./StepsDefinitions";
 import {
@@ -7,7 +8,6 @@ import {
   DecisionTreeContextType,
   SetNextStepOptions,
 } from "./types";
-import { textBarEnabled } from "../signals";
 
 export const DecisionTreeContext =
   createContext<DecisionTreeContextType | null>(null);
@@ -33,7 +33,7 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     } else {
       nextStep = notImplementedYetStepTemplate;
     }
-    textBarEnabled.value = false; // reset the textBar when going back in time. 
+    textBarEnabled.value = false; // reset the textBar when going back in time.
     setChatSteps((prev) =>
       takeUntil(prev, (s) => s === step).concat(nextStep!)
     );
@@ -43,7 +43,7 @@ export function DecisionTreeProvider({ children }: { children: ReactNode }) {
     setChatSteps((prev) => prev.concat(...newSteps));
   };
 
-  const getStepResult = (stepId: number) => {
+  const getStepResult = (stepId: string) => {
     const step = chatSteps.find((s) => s.id === stepId);
     return step?.result;
   };

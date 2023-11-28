@@ -31,7 +31,7 @@ import { linkColor } from "../utils/sharedClassNames";
 import { ChatDecisionTreeNode } from "./types";
 
 export const welcomeStep: ChatDecisionTreeNode = {
-  id: 0,
+  id: "welcomeStep",
   branchKey: 0,
   parent: null,
   children: [],
@@ -42,7 +42,7 @@ export const welcomeStep: ChatDecisionTreeNode = {
 };
 
 export const areYouStep: ChatDecisionTreeNode = {
-  id: 0.5,
+  id: "areYouStep",
   branchKey: 0,
   parent: welcomeStep,
   children: [],
@@ -54,7 +54,7 @@ export const areYouStep: ChatDecisionTreeNode = {
 };
 
 export const notImplementedYetStepTemplate: ChatDecisionTreeNode = {
-  id: -1,
+  id: "notImplementedYetStepTemplate",
   branchKey: 0,
   parent: null,
   children: [],
@@ -68,7 +68,7 @@ export const notImplementedYetStepTemplate: ChatDecisionTreeNode = {
 };
 
 export const userTypeStep: ChatDecisionTreeNode = {
-  id: 1,
+  id: "userTypeStep",
   branchKey: 0,
   parent: areYouStep,
   children: [],
@@ -79,7 +79,7 @@ export const userTypeStep: ChatDecisionTreeNode = {
 };
 
 export const firstINeedFewDetails: ChatDecisionTreeNode = {
-  id: 1.5,
+  id: "firstINeedFewDetails",
   branchKey: 0,
   parent: userTypeStep,
   type: "text",
@@ -90,7 +90,7 @@ export const firstINeedFewDetails: ChatDecisionTreeNode = {
 };
 
 export const isBabyStillInHospitalStep: ChatDecisionTreeNode = {
-  id: 2,
+  id: "isBabyStillInHospitalStep",
   branchKey: 0,
   parent: firstINeedFewDetails,
   children: [],
@@ -101,7 +101,7 @@ export const isBabyStillInHospitalStep: ChatDecisionTreeNode = {
 };
 
 export const isBabyStillInHospitalAnswerStep: ChatDecisionTreeNode = {
-  id: 3,
+  id: "isBabyStillInHospitalAnswerStep",
   branchKey: 0,
   parent: isBabyStillInHospitalStep,
   children: [],
@@ -112,7 +112,7 @@ export const isBabyStillInHospitalAnswerStep: ChatDecisionTreeNode = {
 };
 
 export const whichHospitalStep: ChatDecisionTreeNode<DropdownMessageProps> = {
-  id: 4,
+  id: "whichHospitalStep",
   branchKey: 0,
   parent: isBabyStillInHospitalAnswerStep,
   children: [],
@@ -129,7 +129,7 @@ export const whichHospitalStep: ChatDecisionTreeNode<DropdownMessageProps> = {
 };
 
 export const birthDateStep: ChatDecisionTreeNode<DatePickerMessageProps> = {
-  id: 5,
+  id: "birthDateStep",
   branchKey: 0,
   parent: whichHospitalStep,
   children: [],
@@ -152,7 +152,7 @@ export const birthDateStep: ChatDecisionTreeNode<DatePickerMessageProps> = {
 };
 
 export const bornWeekAndDayStep: ChatDecisionTreeNode = {
-  id: 6,
+  id: "bornWeekAndDayStep",
   branchKey: 0,
   parent: birthDateStep,
   children: [],
@@ -165,7 +165,7 @@ export const bornWeekAndDayStep: ChatDecisionTreeNode = {
 };
 
 export const howManyNewbornsStep: ChatDecisionTreeNode = {
-  id: 7,
+  id: "howManyNewbornsStep",
   branchKey: 0,
   parent: bornWeekAndDayStep,
   children: [],
@@ -176,7 +176,7 @@ export const howManyNewbornsStep: ChatDecisionTreeNode = {
 };
 
 export const numOfNewbornsAnswerStep: ChatDecisionTreeNode = {
-  id: 8,
+  id: "numOfNewbornsAnswerStep",
   branchKey: 0,
   parent: howManyNewbornsStep,
   children: [],
@@ -187,7 +187,7 @@ export const numOfNewbornsAnswerStep: ChatDecisionTreeNode = {
 };
 
 export const babiesWeightStep: ChatDecisionTreeNode<BabiesWeightInputProps> = {
-  id: 9,
+  id: "babiesWeightStep",
   branchKey: 0,
   parent: numOfNewbornsAnswerStep,
   children: [],
@@ -203,7 +203,7 @@ export const babiesWeightStep: ChatDecisionTreeNode<BabiesWeightInputProps> = {
 };
 
 export const onWhichTopicYouNeedAssistanceStep: ChatDecisionTreeNode = {
-  id: 10,
+  id: "onWhichTopicYouNeedAssistanceStep",
   branchKey: 0,
   parent: babiesWeightStep,
   children: [],
@@ -215,7 +215,7 @@ export const onWhichTopicYouNeedAssistanceStep: ChatDecisionTreeNode = {
 };
 
 export const assistanceTopicsAnswerStep: ChatDecisionTreeNode = {
-  id: 11,
+  id: "assistanceTopicsAnswerStep",
   branchKey: 0,
   parent: onWhichTopicYouNeedAssistanceStep,
   children: [],
@@ -226,7 +226,7 @@ export const assistanceTopicsAnswerStep: ChatDecisionTreeNode = {
 };
 
 export const rightsQuestionsStep: ChatDecisionTreeNode = {
-  id: 12,
+  id: "rightsQuestionsStep",
   branchKey: 0,
   parent: assistanceTopicsAnswerStep,
   children: [],
@@ -237,7 +237,7 @@ export const rightsQuestionsStep: ChatDecisionTreeNode = {
 };
 
 export const rightsTopicsStep: ChatDecisionTreeNode = {
-  id: 13,
+  id: "rightsTopicsStep",
   branchKey: 0,
   parent: rightsQuestionsStep,
   children: [],
@@ -255,7 +255,7 @@ export const rightsTopicsStep: ChatDecisionTreeNode = {
 export const whichNICUWereYouStep: ChatDecisionTreeNode<DropdownMessageProps> =
   {
     ...whichHospitalStep,
-    id: 14,
+    id: "whichNICUWereYouStep",
     componentProps: (s) => ({
       ...whichHospitalStep.componentProps!(s),
       text: "whichHospitalWereYou",
@@ -263,7 +263,7 @@ export const whichNICUWereYouStep: ChatDecisionTreeNode<DropdownMessageProps> =
   };
 
 export const inviteToHospitalAlumniWhatsApp: ChatDecisionTreeNode = {
-  id: 15,
+  id: "inviteToHospitalAlumniWhatsApp",
   branchKey: 0,
   parent: whichNICUWereYouStep,
   children: [],
@@ -276,7 +276,7 @@ export const inviteToHospitalAlumniWhatsApp: ChatDecisionTreeNode = {
 export const releaseFromNICUDateStep: ChatDecisionTreeNode<DatePickerMessageProps> =
   {
     ...birthDateStep,
-    id: 16,
+    id: "releaseFromNICUDateStep",
     parent: inviteToHospitalAlumniWhatsApp,
     stepLogQuestion: "releaseDateFromHospital",
     componentProps: () => ({
@@ -286,7 +286,7 @@ export const releaseFromNICUDateStep: ChatDecisionTreeNode<DatePickerMessageProp
   };
 
 export const whatWouldYouLikeQuestion: ChatDecisionTreeNode = {
-  id: 17,
+  id: "whatWouldYouLikeQuestion",
   type: "text",
   sender: "bot",
   branchKey: 0,
@@ -297,7 +297,7 @@ export const whatWouldYouLikeQuestion: ChatDecisionTreeNode = {
 };
 
 export const breastMilkBankAnswer: ChatDecisionTreeNode = {
-  id: 18,
+  id: "breastMilkBankAnswer",
   branchKey: 0,
   parent: whatWouldYouLikeQuestion,
   children: [],
@@ -308,7 +308,7 @@ export const breastMilkBankAnswer: ChatDecisionTreeNode = {
 };
 
 export const isInHospitalOver14DaysQuestion: ChatDecisionTreeNode = {
-  id: 19,
+  id: "isInHospitalOver14DaysQuestion",
   type: "text",
   sender: "bot",
   branchKey: 0,
@@ -319,7 +319,7 @@ export const isInHospitalOver14DaysQuestion: ChatDecisionTreeNode = {
 };
 
 export const isInHospitalOver14DaysAnswer: ChatDecisionTreeNode = {
-  id: 20,
+  id: "isInHospitalOver14DaysAnswer",
   branchKey: 0,
   parent: rightsTopicsStep,
   children: [],
@@ -330,7 +330,7 @@ export const isInHospitalOver14DaysAnswer: ChatDecisionTreeNode = {
 };
 
 export const motherHospitalizedBeforeBirthQuestion: ChatDecisionTreeNode = {
-  id: 21,
+  id: "motherHospitalizedBeforeBirthQuestion",
   type: "text",
   sender: "bot",
   branchKey: 0,
@@ -341,7 +341,7 @@ export const motherHospitalizedBeforeBirthQuestion: ChatDecisionTreeNode = {
 };
 
 export const motherHospitalizedBeforeBirthAnswer: ChatDecisionTreeNode = {
-  id: 22,
+  id: "motherHospitalizedBeforeBirthAnswer",
   branchKey: 0,
   parent: motherHospitalizedBeforeBirthQuestion,
   children: [],
@@ -352,7 +352,7 @@ export const motherHospitalizedBeforeBirthAnswer: ChatDecisionTreeNode = {
 };
 
 export const isOver14DaysInNicuYesResult: ChatDecisionTreeNode = {
-  id: 23,
+  id: "isOver14DaysInNicuYesResult",
   branchKey: 0,
   parent: isInHospitalOver14DaysAnswer,
   children: [],
@@ -370,7 +370,7 @@ export const isOver14DaysInNicuYesResult: ChatDecisionTreeNode = {
 };
 
 export const wantToDonateMilkLinkInfo: ChatDecisionTreeNode = {
-  id: 24,
+  id: "wantToDonateMilkLinkInfo",
   branchKey: 0,
   parent: isInHospitalOver14DaysAnswer,
   children: [],
@@ -388,7 +388,7 @@ export const wantToDonateMilkLinkInfo: ChatDecisionTreeNode = {
 };
 
 export const generalInfoLink: ChatDecisionTreeNode = {
-  id: 25,
+  id: "generalInfoLink",
   branchKey: 0,
   parent: assistanceTopicsAnswerStep,
   children: [],
@@ -406,7 +406,7 @@ export const generalInfoLink: ChatDecisionTreeNode = {
 };
 
 export const joinOurFacebookStep: ChatDecisionTreeNode = {
-  id: 26,
+  id: "joinOurFacebookStep",
   branchKey: 0,
   parent: generalInfoLink,
   children: [],
@@ -424,7 +424,7 @@ export const joinOurFacebookStep: ChatDecisionTreeNode = {
 };
 
 export const inviteToHospitalWhatsApp: ChatDecisionTreeNode = {
-  id: 27,
+  id: "inviteToHospitalWhatsApp",
   branchKey: 0,
   parent: joinOurFacebookStep,
   children: [],
@@ -435,7 +435,7 @@ export const inviteToHospitalWhatsApp: ChatDecisionTreeNode = {
 };
 
 export const motherWasHospitalizedBeforeBirthAnswer: ChatDecisionTreeNode = {
-  id: 28,
+  id: "motherWasHospitalizedBeforeBirthAnswer",
   branchKey: 0,
   parent: motherHospitalizedBeforeBirthAnswer,
   children: [],
@@ -453,7 +453,7 @@ export const motherWasHospitalizedBeforeBirthAnswer: ChatDecisionTreeNode = {
 };
 
 export const motherWasNotHospitalizedBeforeBirthAnswer: ChatDecisionTreeNode = {
-  id: 29,
+  id: "motherWasNotHospitalizedBeforeBirthAnswer",
   branchKey: 0,
   parent: motherHospitalizedBeforeBirthAnswer,
   children: [],
@@ -471,7 +471,7 @@ export const motherWasNotHospitalizedBeforeBirthAnswer: ChatDecisionTreeNode = {
 };
 
 export const haveYouHadPrematureBabyBeforeQuestion: ChatDecisionTreeNode = {
-  id: 30,
+  id: "haveYouHadPrematureBabyBeforeQuestion",
   type: "text",
   sender: "bot",
   branchKey: 0,
@@ -482,7 +482,7 @@ export const haveYouHadPrematureBabyBeforeQuestion: ChatDecisionTreeNode = {
 };
 
 export const haveYouHadPrematureBabyBeforeOptions: ChatDecisionTreeNode = {
-  id: 31,
+  id: "haveYouHadPrematureBabyBeforeOptions",
   branchKey: 0,
   parent: haveYouHadPrematureBabyBeforeQuestion,
   children: [],
@@ -493,7 +493,7 @@ export const haveYouHadPrematureBabyBeforeOptions: ChatDecisionTreeNode = {
 };
 
 export const hadPrematureBabyBeforeYesAnswer: ChatDecisionTreeNode = {
-  id: 32,
+  id: "hadPrematureBabyBeforeYesAnswer",
   branchKey: 0,
   parent: assistanceTopicsAnswerStep,
   children: [],
@@ -511,7 +511,7 @@ export const hadPrematureBabyBeforeYesAnswer: ChatDecisionTreeNode = {
 };
 
 export const hadPrematureBabyBeforeNoAnswer: ChatDecisionTreeNode = {
-  id: 32,
+  id: "hadPrematureBabyBeforeNoAnswer",
   branchKey: 0,
   parent: assistanceTopicsAnswerStep,
   children: [],
@@ -529,7 +529,7 @@ export const hadPrematureBabyBeforeNoAnswer: ChatDecisionTreeNode = {
 };
 
 export const wantToJoinTheTeamLink: ChatDecisionTreeNode = {
-  id: 33,
+  id: "wantToJoinTheTeamLink",
   branchKey: 0,
   parent: userTypeStep,
   children: [],
@@ -547,7 +547,7 @@ export const wantToJoinTheTeamLink: ChatDecisionTreeNode = {
 };
 
 export const howWouldYouLikeToDonateQuestion: ChatDecisionTreeNode = {
-  id: 33,
+  id: "howWouldYouLikeToDonateQuestion",
   type: "text",
   sender: "bot",
   branchKey: 0,
@@ -558,7 +558,7 @@ export const howWouldYouLikeToDonateQuestion: ChatDecisionTreeNode = {
 };
 
 export const donationOptions: ChatDecisionTreeNode = {
-  id: 34,
+  id: "donationOptions",
   branchKey: 0,
   parent: howWouldYouLikeToDonateQuestion,
   children: [],
@@ -575,7 +575,7 @@ export const donationOptions: ChatDecisionTreeNode = {
 };
 
 export const donationOptionLink: ChatDecisionTreeNode = {
-  id: 35,
+  id: "donationOptionLink",
   branchKey: 0,
   parent: donationOptions,
   children: [],
@@ -613,7 +613,7 @@ export const donationOptionLink: ChatDecisionTreeNode = {
 };
 
 export const joinUsFinalStep: ChatDecisionTreeNode = {
-  id: 36,
+  id: "joinUsFinalStep",
   branchKey: 0,
   parent: inviteToHospitalWhatsApp,
   children: [],
@@ -631,7 +631,7 @@ export const joinUsFinalStep: ChatDecisionTreeNode = {
 };
 
 export const howCanWeHelpYouQuestion: ChatDecisionTreeNode = {
-  id: 39,
+  id: "howCanWeHelpYouQuestion",
   branchKey: 0,
   parent: assistanceTopicsAnswerStep,
   children: [],
@@ -649,7 +649,7 @@ export const howCanWeHelpYouQuestion: ChatDecisionTreeNode = {
 };
 
 export const whatAreYouInterestedAboutQuestion: ChatDecisionTreeNode = {
-  id: 40,
+  id: "whatAreYouInterestedAboutQuestion",
   branchKey: 0,
   parent: userTypeStep,
   children: [],
@@ -660,7 +660,7 @@ export const whatAreYouInterestedAboutQuestion: ChatDecisionTreeNode = {
 };
 
 export const whatAreYouInterestedAboutOptions: ChatDecisionTreeNode = {
-  id: 41,
+  id: "whatAreYouInterestedAboutOptions",
   branchKey: 0,
   parent: whatAreYouInterestedAboutQuestion,
   children: [],
@@ -671,7 +671,7 @@ export const whatAreYouInterestedAboutOptions: ChatDecisionTreeNode = {
 };
 
 export const projectOctopusLink: ChatDecisionTreeNode = {
-  id: 42,
+  id: "projectOctopusLink",
   branchKey: 0,
   parent: whatAreYouInterestedAboutOptions,
   children: [],
@@ -689,7 +689,7 @@ export const projectOctopusLink: ChatDecisionTreeNode = {
 };
 
 export const rsvCalculationResult: ChatDecisionTreeNode = {
-  id: 43,
+  id: "rsvCalculationResult",
   branchKey: 0,
   parent: rightsTopicsStep,
   type: "text",
@@ -705,7 +705,7 @@ export const rsvCalculationResult: ChatDecisionTreeNode = {
 };
 
 export const rsvMoreDetailsLink: ChatDecisionTreeNode = {
-  id: 44,
+  id: "rsvMoreDetailsLink",
   branchKey: 0,
   parent: rsvCalculationResult,
   children: [],
@@ -741,7 +741,7 @@ export const rsvMoreDetailsLink: ChatDecisionTreeNode = {
 };
 
 export const needBreastMilkResult: ChatDecisionTreeNode = {
-  id: 45,
+  id: "needBreastMilkResult",
   branchKey: 0,
   parent: breastMilkBankAnswer,
   type: "text",
@@ -757,7 +757,7 @@ export const needBreastMilkResult: ChatDecisionTreeNode = {
 };
 
 export const wasThisHelpfulQuestion: ChatDecisionTreeNode = {
-  id: 46,
+  id: "wasThisHelpfulQuestion",
   type: "text",
   sender: "bot",
   branchKey: 0,
@@ -768,7 +768,7 @@ export const wasThisHelpfulQuestion: ChatDecisionTreeNode = {
 };
 
 export const wasThisHelpfulOptions: ChatDecisionTreeNode = {
-  id: 47,
+  id: "wasThisHelpfulOptions",
   branchKey: 0,
   parent: wasThisHelpfulQuestion,
   children: [],
@@ -779,7 +779,7 @@ export const wasThisHelpfulOptions: ChatDecisionTreeNode = {
 };
 
 export const prematurityAllowanceResultStep: ChatDecisionTreeNode = {
-  id: 48,
+  id: "prematurityAllowanceResultStep",
   branchKey: 0,
   parent: rightsTopicsStep,
   type: "text",
@@ -795,7 +795,7 @@ export const prematurityAllowanceResultStep: ChatDecisionTreeNode = {
 };
 
 export const prematurityAllowanceEligibleLink: ChatDecisionTreeNode = {
-  id: 49,
+  id: "prematurityAllowanceEligibleLink",
   branchKey: 0,
   parent: prematurityAllowanceResultStep,
   children: [],
@@ -813,7 +813,7 @@ export const prematurityAllowanceEligibleLink: ChatDecisionTreeNode = {
 };
 
 export const sendUsMessageQuestion: ChatDecisionTreeNode = {
-  id: 50,
+  id: "sendUsMessageQuestion",
   branchKey: 0,
   parent: prematurityAllowanceEligibleLink,
   children: [],
@@ -824,7 +824,7 @@ export const sendUsMessageQuestion: ChatDecisionTreeNode = {
 };
 
 export const graph: ChatDecisionTreeNode = {
-  id: 51,
+  id: "graph",
   branchKey: 0,
   parent: whatAreYouInterestedAboutOptions,
   type: "text",

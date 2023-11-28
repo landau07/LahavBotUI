@@ -1,6 +1,8 @@
+import * as amplitude from "@amplitude/analytics-browser";
 import { FormEvent, useState } from "react";
 import { Frown, Meh, Smile } from "react-feather";
 import { FormattedMessage, useIntl } from "react-intl";
+import { useMondayClient } from "../hooks/useMondayClient";
 import { cn } from "../utils/classnames";
 import {
   mouseDownTransitionDownClassNames,
@@ -17,10 +19,15 @@ export function FeedbackFormContent({ onClose }: FeedbackFormContentProps) {
   const [text, setText] = useState<string>("");
   const [isFeedbackProvided, setIsFeedbackProvided] = useState(false);
   const intl = useIntl();
+  const logToMonday = useMondayClient();
 
   function submitFeedback(e: FormEvent) {
     e.preventDefault();
-    console.log({ feedback, text });
+    amplitude.track("Feedback", { feedback, text });
+    logToMonday({
+      feedbackEmoji: feedback ?? "Not provided",
+      feedbackText: text,
+    });
     setIsFeedbackProvided(true);
   }
 

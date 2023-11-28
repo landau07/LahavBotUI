@@ -2,7 +2,7 @@ import { ComponentType, ReactNode } from "react";
 import { ConfirmComponentProps } from "../Components/ConfirmComponentWrapper";
 
 export type ChatDecisionTreeNode<TInnerComponentProps = unknown> = {
-  id: number;
+  id: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   parent: ChatDecisionTreeNode<any> | null;
   timestamp?: Date;
@@ -50,7 +50,7 @@ export type DecisionTreeContextType = {
     step: ChatDecisionTreeNode,
     options?: SetNextStepOptions
   ) => void;
-  getStepResult: (stepId: number) => ChatDecisionTreeNode["result"] | undefined;
+  getStepResult: (stepId: string) => ChatDecisionTreeNode["result"] | undefined;
   pushNewStep: (...newStep: ChatDecisionTreeNode[]) => void;
   lastStep: ChatDecisionTreeNode;
 };

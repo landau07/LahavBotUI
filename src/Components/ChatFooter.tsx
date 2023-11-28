@@ -11,14 +11,12 @@ import {
 } from "../DecisionTree/StepsDefinitions";
 import { ChatDecisionTreeNode } from "../DecisionTree/types";
 import { useDecisionTree } from "../DecisionTree/useDecisionTree";
-import { useConversationLogger } from "../hooks";
 import { textBarEnabled } from "../signals";
 
 export function ChatFooter() {
   const [message, setMessage] = useState<string>("");
   const intl = useIntl();
   const { pushNewStep, chatSteps, lastStep } = useDecisionTree();
-  const { logConversation } = useConversationLogger();
   const ref = useRef<HTMLTextAreaElement>(null);
 
   const handleMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -27,7 +25,7 @@ export function ChatFooter() {
 
   const handleSendMessage = () => {
     const userMessage: ChatDecisionTreeNode = {
-      id: new Date().getTime(),
+      id: new Date().getTime().toString(),
       type: "text",
       sender: "user",
       content: message,
@@ -42,7 +40,7 @@ export function ChatFooter() {
       },
     };
     const botAnswer: ChatDecisionTreeNode = {
-      id: new Date().getTime(),
+      id: new Date().getTime().toString(),
       type: "text",
       sender: "bot",
       content:
@@ -74,7 +72,6 @@ export function ChatFooter() {
     const newSteps = [userMessage];
     if (lastStep.id === howCanWeHelpYouQuestion.id) {
       newSteps.push(botAnswer);
-      logConversation(chatSteps.concat(newSteps));
     }
     pushNewStep(...newSteps);
     setMessage("");

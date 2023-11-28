@@ -1,4 +1,8 @@
 import { FormattedMessage, useIntl } from "react-intl";
+import {
+  whichHospitalStep,
+  whichNICUWereYouStep,
+} from "../DecisionTree/StepsDefinitions";
 import { useDecisionTree } from "../DecisionTree/useDecisionTree";
 import { hospitalLinks } from "../data/hospitalLinks";
 import whatsAppIcon from "../icons/whatsappIcon.png";
@@ -9,16 +13,12 @@ export function HospitalWhatsApp({
 }: {
   whatsAppGroupType: "currentlyInHospital" | "alumni";
 }) {
-  const WHICH_HOSPITAL_STEP_ID = 4;
-  const WHICH_HOSPITAL_WERE_YOU_STEP_ID = 14;
   const intl = useIntl();
   const hospitals = hospitalLinks();
   const { getStepResult } = useDecisionTree();
 
-  const hospitalStepResult = getStepResult(WHICH_HOSPITAL_STEP_ID);
-  const hospitalAlumniStepResult = getStepResult(
-    WHICH_HOSPITAL_WERE_YOU_STEP_ID
-  );
+  const hospitalStepResult = getStepResult(whichHospitalStep.id);
+  const hospitalAlumniStepResult = getStepResult(whichNICUWereYouStep.id);
 
   const hospitalDetails = hospitals.filter(
     (h) =>

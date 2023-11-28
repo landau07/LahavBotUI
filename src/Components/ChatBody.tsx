@@ -2,7 +2,7 @@ import { signal } from "@preact/signals-react";
 import { useCallback, useEffect, useRef } from "react";
 import { CurrentStepContext } from "../DecisionTree/CurrentStepContext";
 import { useDecisionTree } from "../DecisionTree/useDecisionTree";
-import { useEventListener } from "../hooks";
+import { useConversationLogger, useEventListener } from "../hooks";
 import { useStepRenderer } from "../hooks/useStepRenderer";
 import { textBarEnabled } from "../signals";
 
@@ -24,10 +24,26 @@ export function ChatBody() {
       scrollToBottom();
     }
   }, []);
+  const { logConversation } = useConversationLogger();
 
   useEventListener("resize", setChatBodySize);
 
   useEffect(setChatBodySize, [setChatBodySize, containerRef.current]);
+
+  // Log conversation for last steps
+  useEffect(() => {
+    if (
+      chatSteps[chatSteps.length - 1].children.length === 0 &&
+      !chatSteps[chatSteps.length - 1].shouldWaitForUserInputAfterStep
+    ) {
+      logConversation(chatSteps);
+    }
+  }, [
+    chatSteps,
+    lastStep.children.length,
+    logConversation,
+    lastStep.shouldWaitForUserInputAfterStep,
+  ]);
 
   useEffect(() => {
     scrollToBottom();

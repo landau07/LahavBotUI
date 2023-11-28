@@ -18,6 +18,7 @@ export function ExternalLinkMessage({
 }: ExternalLinkMessageProps) {
   const IconComponent: ReactNode =
     (icon && typeof icon == "object" && icon) ?? undefined;
+
   return (
     <div>
       <div>{children}</div>
