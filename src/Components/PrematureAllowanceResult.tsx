@@ -25,10 +25,10 @@ export function PrematureAllowanceResult() {
     getStepResult(releaseFromNICUDateStep.id)?.value
   );
 
-  const numOfDaysBabyInHospital = differenceInDays(
+  const numOfDaysBabyInHospital = Math.abs(differenceInDays(
     birthDate,
     releaseFromHospitalDate ?? new Date()
-  );
+  ));
 
   const babiesWeight = getStepResult(babiesWeightStep.id)!
     .value.split(" , ")
@@ -67,6 +67,7 @@ export function PrematureAllowanceResult() {
                 week,
                 weight: babiesWeight.join(", "),
                 daysInHospital: numOfDaysBabyInHospital,
+                br: <br />,
               }}
             />
           </>
@@ -80,14 +81,18 @@ export function PrematureAllowanceResult() {
       {result === "Eligible" && (
         <div className="flex gap-3 p-2 pe-4 mt-2 bg-sky-400 bg-opacity-20 rounded-lg">
           <Info className="text-blue-400 w-10" />
-          <FormattedMessage
-            id="prematurityAllowanceResultEntitled"
-            values={{
-              numMonths: numOfDaysBabyInHospital >= 45 ? 9 : 6,
-              fromMonth: 3,
-              toMonth: numOfDaysBabyInHospital >= 45 ? 12 : 9,
-            }}
-          />
+          {numOfDaysBabyInHospital < 90 ? (
+            <FormattedMessage
+              id="prematurityAllowanceResultEntitled"
+              values={{
+                numMonths: numOfDaysBabyInHospital >= 45 ? 9 : 6,
+                fromMonth: 3,
+                toMonth: numOfDaysBabyInHospital >= 45 ? 12 : 9,
+              }}
+            />
+          ) : (
+            <FormattedMessage id="prematurityAllowanceResultEntitledOver90" />
+          )}
         </div>
       )}
     </div>

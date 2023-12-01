@@ -103,6 +103,7 @@ export function ChatHeader() {
         href="https://lahav-bot.netlify.app/"
         title={intl.formatMessage({ id: "openBotInNewTab" })}
         target="_blank"
+        className="phone:hidden"
       >
         <ExternalLink
           className={`text-slate-200 h-4 rtl:scale-x-[-1] absolute end-0 top-1`}
