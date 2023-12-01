@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Globe, Moon, Smile, Sun } from "react-feather";
+import { ExternalLink, Globe, Moon, Smile, Sun } from "react-feather";
 import { useIntl } from "react-intl";
 import femaleIcon from "../icons/femaleIcon.png";
 import lahavLogo from "../icons/lahavIcon.jpeg";
@@ -47,7 +47,7 @@ export function ChatHeader() {
       >
         <LahavAvatar />
       </a>
-      <div className="w-3 h-3  bg-green-500 rounded-full absolute bottom-5 border-2 border-white start-12" />
+      <div className="w-3 h-3 bg-green-500 rounded-full absolute bottom-5 border-2 border-white start-12" />
       <div className="flex-1 select-none text-white text-lg phone:text-2xl text-ellipsis overflow-auto">
         {intl.formatMessage({ id: "lahavBot" })}
       </div>
@@ -99,6 +99,15 @@ export function ChatHeader() {
           />
         )}
       </button>
+      <a
+        href="https://lahav-bot.netlify.app/"
+        title={intl.formatMessage({ id: "openBotInNewTab" })}
+        target="_blank"
+      >
+        <ExternalLink
+          className={`text-slate-200 h-4 rtl:scale-x-[-1] absolute end-0 top-1`}
+        />
+      </a>
       <Modal
         isOpen={isFeedbackModalOpen}
         onClose={() => setIsFeedbackModalOpen(false)}

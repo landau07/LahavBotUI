@@ -10,7 +10,7 @@ type ChatMessageProps = {
   children: ReactNode;
   sender: "user" | "bot";
   timestamp?: Date;
-  showNameAndAvatar: boolean;
+  showNameAndAvatar?: boolean;
 } & HTMLProps<HTMLDivElement>;
 
 export function ChatMessage({ sender, ...rest }: ChatMessageProps) {
@@ -25,7 +25,7 @@ function BotMessage({
   children,
   timestamp,
   className: classNameFromProps = "",
-  showNameAndAvatar,
+  showNameAndAvatar = true,
   ...restDivProps
 }: Omit<ChatMessageProps, "sender">) {
   return (
