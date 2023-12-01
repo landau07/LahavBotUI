@@ -80,7 +80,7 @@
   "wantToJoinTheTeamMessage": "נעים להכיר :) נשמח לכל שיתוף פעולה או עזרה. יעזור לנו אם תוכלו למלא את טופס ההתנדבות הבא:",
   "wantToDonateMessage": "תודה רבה! כל תרומה תעזור לנו לקדם את מטרות הארגון - תמיכה בהורים לפגים בעבר, בהווה ובעתיד. כיצד ברצונך לתרום?",
   "creditCardOneTime": "כרטיס אשראי - תרומה חד פעמית",
-  "creditCardMonthly": "כרטיס - הו״ק",
+  "creditCardMonthly": "תרומת חודשית בכרטיס אשראי",
   "bit": "אוהבים רק ביט?",
   "donationsFromAbroad": "לתרומות מחו“ל המוכרות לצרכי מס בארה‘’ב, קנדה ואנגליה",
   "otherDonationOptions": "לאפשרויות נוספות (העברה בנקאית, PEF מחו‘’ל)",
@@ -88,6 +88,7 @@
   "amazing": "מדהים!",
   "perfect": "מושלם!",
   "veryAppreciated": "מוערך מאוד!",
+  "otherDonationOptionsDetails": "Donations via PEF - Lahav - For the Premature Babies in Israel - #80652 - 58-0434108 - D.N. HaNegev {br}{br} העברה בנקאית:{br}הבינלאומי הראשון{br}סניף 006{br}חשבון 691755.{br}{br} ציין שם מלא ואימייל לצורך שליחת הקבלה",
   "joinUsMessage": "מוזמנים להצטרף גם כחברי עמותה, כדי לתת לנו כוח להלחם ולשפר את איכות החיים של הפגים והוריהם.",
   "forAnyOtherAssitance": "לכל עזרה נוספת, בחר אופציה אחרת מבין האפשרויות למעלה",
   "whatDoYouThinkAboutMe": "מה דעתך עלי? כל עצה תעזור!",
@@ -129,9 +130,13 @@
   "prematurityAllowanceResultEntitled": "זכאי לקצבת פגים בסך 1,676 ₪ (נכון לינואר 2023) למשך {numMonths} חודשים, מגיל {fromMonth} חודשים ועד {toMonth} חודשים.",
   "prematurityAllowanceResultNotEntitled": "לפי הפרטים שהזנת, אינך זכאי לקצבת פגים. האם תרצה להשאיר לנו הודעה?",
   "orFillThisForm": "(או שתמלא את הטופס הזה)",
-  "dontForgetPhoneOrEmail": "(השאר מספר טלפון/אימייל)",
   "secretGame": "משחק סודי",
   "needFewDetails": "אני צריך לדעת מספר פרטים בסיסיים על מנת שאוכל לספק מידע רלוונטי:",
   "close": "סגור",
-  "send": "שלח"
+  "send": "שלח",
+  "whatIsYourName": "מה השם שלך?",
+  "whatIsYourEmail": "מה האימייל שלך?",
+  "doYouNeedFurtherAssistance": "צריכים עזרה נוספת?",
+  "haveAGreatDay": "שיהיה יום נפלא! להתראות!",
+  "chooseOptionOnChat": "בחר אפשרות בצ׳אט"
 }

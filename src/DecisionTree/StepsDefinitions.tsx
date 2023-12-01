@@ -834,6 +834,74 @@ export const graph: ChatDecisionTreeNode = {
   children: [],
 };
 
+export const otherDonationOptionsDetails: ChatDecisionTreeNode = {
+  id: "otherDonationOptionsDetails",
+  type: "text",
+  sender: "bot",
+  branchKey: 0,
+  parent: donationOptions,
+  children: [],
+  content: "otherDonationOptionsDetails",
+  shouldLocalizeData: true,
+};
+
+export const whatIsYourName: ChatDecisionTreeNode = {
+  id: "whatIsYourName",
+  type: "text",
+  sender: "bot",
+  branchKey: 0,
+  parent: otherDonationOptionsDetails,
+  children: [],
+  content: "whatIsYourName",
+  shouldLocalizeData: true,
+  shouldWaitForUserInputAfterStep: true,
+};
+
+export const whatIsYourEmail: ChatDecisionTreeNode = {
+  id: "whatIsYourEmail",
+  type: "text",
+  sender: "bot",
+  branchKey: 0,
+  parent: donationOptions,
+  children: [],
+  content: "whatIsYourEmail",
+  shouldLocalizeData: true,
+  shouldWaitForUserInputAfterStep: true,
+};
+
+export const doYouNeedFurtherAssistanceQuestion: ChatDecisionTreeNode = {
+  id: "doYouNeedFurtherAssistance",
+  type: "text",
+  sender: "bot",
+  branchKey: 0,
+  parent: donationOptions,
+  children: [],
+  content: "doYouNeedFurtherAssistance",
+  shouldLocalizeData: true,
+};
+
+export const doYouNeedFurtherAssistanceAnswers: ChatDecisionTreeNode = {
+  id: "doYouNeedFurtherAssistance",
+  sender: "user",
+  branchKey: 0,
+  parent: donationOptions,
+  children: [],
+  type: "selectionBox",
+  boxes: ["iWantToLeaveAMessage", "no"],
+  shouldLocalizeData: true,
+};
+
+export const haveAGreatDayMessage: ChatDecisionTreeNode = {
+  id: "haveAGreatDayMessage",
+  type: "text",
+  sender: "bot",
+  branchKey: 0,
+  parent: otherDonationOptionsDetails,
+  children: [],
+  content: "haveAGreatDay",
+  shouldLocalizeData: true,
+};
+
 // Wire children:
 welcomeStep.children = [areYouStep];
 areYouStep.children = [userTypeStep];
@@ -924,7 +992,7 @@ donationOptions.children = [
   donationOptionLink,
   donationOptionLink,
   donationOptionLink,
-  null,
+  otherDonationOptionsDetails,
 ];
 inviteToHospitalWhatsApp.children = [joinUsFinalStep];
 whatAreYouInterestedAboutQuestion.children = [whatAreYouInterestedAboutOptions];
@@ -940,4 +1008,14 @@ wasThisHelpfulQuestion.children = [wasThisHelpfulOptions];
 wasThisHelpfulOptions.children = [
   { ...joinOurFacebookStep, parent: wasThisHelpfulOptions },
   { ...howCanWeHelpYouQuestion, parent: wasThisHelpfulOptions },
+];
+donationOptionLink.children = [doYouNeedFurtherAssistanceQuestion];
+otherDonationOptionsDetails.children = [whatIsYourName];
+doYouNeedFurtherAssistanceQuestion.children = [
+  doYouNeedFurtherAssistanceAnswers,
+];
+
+doYouNeedFurtherAssistanceAnswers.children = [
+  howCanWeHelpYouQuestion,
+  haveAGreatDayMessage,
 ];

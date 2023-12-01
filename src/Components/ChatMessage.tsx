@@ -1,7 +1,6 @@
 import { format } from "date-fns";
 import { HTMLProps, ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
-import { useCurrentStep } from "../DecisionTree/useCurrentStep";
 import { colorTheme } from "../signals";
 import { cn } from "../utils/classnames";
 import { lahavBgColor } from "../utils/sharedClassNames";
@@ -11,6 +10,7 @@ type ChatMessageProps = {
   children: ReactNode;
   sender: "user" | "bot";
   timestamp?: Date;
+  showNameAndAvatar: boolean;
 } & HTMLProps<HTMLDivElement>;
 
 export function ChatMessage({ sender, ...rest }: ChatMessageProps) {
@@ -25,12 +25,9 @@ function BotMessage({
   children,
   timestamp,
   className: classNameFromProps = "",
+  showNameAndAvatar,
   ...restDivProps
 }: Omit<ChatMessageProps, "sender">) {
-  const step = useCurrentStep();
-  const showNameAndAvatar =
-    step.sender !== step.parent?.sender ||
-    step.parent.type === "confirmComponent";
   return (
     <div className="flex select-none">
       {showNameAndAvatar && <LahavAvatar addClassName="mt-4 me-3" />}

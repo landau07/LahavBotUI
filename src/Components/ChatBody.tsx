@@ -12,7 +12,8 @@ export const chatBodySize = signal<{ width: number; height: number }>({
 });
 
 export function ChatBody() {
-  const { chatSteps, lastStep } = useDecisionTree();
+  const { chatSteps } = useDecisionTree();
+  const lastStep = chatSteps[chatSteps.length - 1];
   const { renderStep } = useStepRenderer();
   const containerRef = useRef<HTMLDivElement>(null);
   const setChatBodySize = useCallback(() => {
@@ -33,8 +34,8 @@ export function ChatBody() {
   // Log conversation for last steps
   useEffect(() => {
     if (
-      chatSteps[chatSteps.length - 1].children.length === 0 &&
-      !chatSteps[chatSteps.length - 1].shouldWaitForUserInputAfterStep
+      lastStep.children.length === 0 &&
+      !lastStep.shouldWaitForUserInputAfterStep
     ) {
       logConversation(chatSteps);
     }
@@ -45,6 +46,13 @@ export function ChatBody() {
     lastStep.shouldWaitForUserInputAfterStep,
   ]);
 
+  const scrollToBottom = useCallback(() => {
+    // Do not scroll down on first message (for small screens)
+    if (containerRef.current && chatSteps.length > 3) {
+      containerRef.current.scrollTop = containerRef.current.scrollHeight;
+    }
+  }, [chatSteps]);
+
   useEffect(() => {
     scrollToBottom();
 
@@ -52,15 +60,9 @@ export function ChatBody() {
     if (lastStep.shouldWaitForUserInputAfterStep) {
       textBarEnabled.value = true;
     }
-  }, [chatSteps, lastStep.shouldWaitForUserInputAfterStep]);
+  }, [chatSteps, lastStep.shouldWaitForUserInputAfterStep, scrollToBottom]);
 
-  const scrollToBottom = () => {
-    if (containerRef.current) {
-      containerRef.current.scrollTop = containerRef.current.scrollHeight;
-    }
-  };
-
-  let curStep = chatSteps[chatSteps.length - 1];
+  let curStep = lastStep;
 
   while (
     curStep.sender === "bot" &&

@@ -4,19 +4,24 @@ import { Send } from "react-feather";
 import { useIntl } from "react-intl";
 import {
   assistanceTopicsAnswerStep,
+  doYouNeedFurtherAssistanceQuestion,
   howCanWeHelpYouQuestion,
   inviteToHospitalWhatsApp,
   joinOurFacebookStep,
   whatAreYouInterestedAboutOptions,
+  whatIsYourEmail,
+  whatIsYourName,
 } from "../DecisionTree/StepsDefinitions";
 import { ChatDecisionTreeNode } from "../DecisionTree/types";
 import { useDecisionTree } from "../DecisionTree/useDecisionTree";
 import { textBarEnabled } from "../signals";
+import { cn } from "../utils/classnames";
 
 export function ChatFooter() {
   const [message, setMessage] = useState<string>("");
   const intl = useIntl();
-  const { pushNewStep, chatSteps, lastStep } = useDecisionTree();
+  const { pushNewStep, chatSteps } = useDecisionTree();
+  const lastStep = chatSteps[chatSteps.length - 1];
   const ref = useRef<HTMLTextAreaElement>(null);
 
   const handleMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -32,7 +37,7 @@ export function ChatFooter() {
       timestamp: new Date(),
       branchKey: 0,
       children: [],
-      parent: chatSteps[chatSteps.length - 1],
+      parent: lastStep,
       shouldLocalizeData: false,
       result: {
         value: message,
@@ -46,6 +51,10 @@ export function ChatFooter() {
       content:
         lastStep.id === howCanWeHelpYouQuestion.id
           ? "thanksForContactingUs"
+          : lastStep.id === whatIsYourName.id
+          ? "whatIsYourEmail"
+          : lastStep.id === whatIsYourEmail.id
+          ? "doYouNeedFurtherAssistance"
           : "",
       branchKey: 0,
       children: [],
@@ -69,10 +78,15 @@ export function ChatFooter() {
       ];
     }
 
-    const newSteps = [userMessage];
+    const newSteps: ChatDecisionTreeNode[] = [userMessage];
     if (lastStep.id === howCanWeHelpYouQuestion.id) {
       newSteps.push(botAnswer);
+    } else if (lastStep.id === whatIsYourName.id) {
+      newSteps.push(whatIsYourEmail);
+    } else if (lastStep.id === whatIsYourEmail.id) {
+      newSteps.push(doYouNeedFurtherAssistanceQuestion);
     }
+
     pushNewStep(...newSteps);
     setMessage("");
     if (ref.current) {
@@ -107,10 +121,15 @@ export function ChatFooter() {
           <textarea
             ref={ref}
             disabled={!textBarEnabled.value}
-            className="w-full overflow-y-hidden bg-rgb-176-193-212 p-2 rounded-lg pr-4 h-10 resize-none outline-none focus:outline-none focus:ring-2 focus:ring-blue-600"
+            className={cn(
+              "w-full overflow-y-hidden bg-rgb-176-193-212 p-2 rounded-lg pr-4 h-10 resize-none outline-none",
+              "focus:outline-none focus:ring-2 focus:ring-blue-600",
+              !textBarEnabled.value && "cursor-not-allowed"
+            )}
             placeholder={
-              intl.formatMessage({ id: "typeMessage" }) +
-              intl.formatMessage({ id: "dontForgetPhoneOrEmail" })
+              textBarEnabled.value
+                ? intl.formatMessage({ id: "typeMessage" })
+                : intl.formatMessage({ id: "chooseOptionOnChat" })
             }
             value={message}
             onChange={handleMessageChange}
@@ -123,7 +142,14 @@ export function ChatFooter() {
             onClick={handleSendMessage}
             aria-label="Send message"
           >
-            <Send className="text-gray-400 rtl:scale-x-[-1]" size={20} />
+            <Send
+              className={cn(
+                textBarEnabled.value ? "text-gray-400" : "text-gray-600",
+                !textBarEnabled.value && "cursor-not-allowed",
+                "rtl:scale-x-[-1]"
+              )}
+              size={20}
+            />
           </button>
         </div>
       </div>

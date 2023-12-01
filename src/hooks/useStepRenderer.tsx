@@ -6,7 +6,7 @@ import { ChatDecisionTreeNode } from "../DecisionTree/types";
 import { useDecisionTree } from "../DecisionTree/useDecisionTree";
 
 export function useStepRenderer() {
-  const { setNextStep } = useDecisionTree();
+  const { setNextStep, chatSteps } = useDecisionTree();
   const intl = useIntl();
 
   function renderStep(step: ChatDecisionTreeNode, index: number) {
@@ -25,7 +25,10 @@ export function useStepRenderer() {
             sender={step.sender}
             children={
               typeof step.content === "string" && step.shouldLocalizeData ? (
-                <FormattedMessage id={step.content} />
+                <FormattedMessage
+                  id={step.content}
+                  values={step.formattedMessageValues ?? { br: <br /> }}
+                />
               ) : typeof step.content === "function" ? (
                 step.content(step)
               ) : (
@@ -34,6 +37,10 @@ export function useStepRenderer() {
             }
             key={index}
             timestamp={step.timestamp}
+            showNameAndAvatar={
+              step.sender !== chatSteps[index - 1]?.sender ||
+              chatSteps[index - 1]?.type === "confirmComponent"
+            }
             {...step.divProps}
           />
         );
