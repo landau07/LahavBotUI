@@ -30,6 +30,7 @@ export function SelectionBoxList({
       {boxes.map((box, i) => (
         <button
           className={cn(
+            "text-xs phone:text-base",
             "break-words text-sm rounded-md border active:bg-opacity-50 py-2 px-4 hover:bg-opacity-10",
             colorTheme.value === "pink" &&
               "text-lahavPink border-lahavPink dark:text-lahavPink-dark dark:border-lahavPink-dark hover:bg-lahavPink active:bg-fuchsia-900",

@@ -86,7 +86,7 @@ export function BirthWeekAndDaySelector({
               }}
             />
           </div>
-          <Plus className="mt-8" />
+          <Plus className="mt-6 phone:mt-8" />
           <div className="text-center">
             <label htmlFor="day">
               <FormattedMessage id={"day"} />

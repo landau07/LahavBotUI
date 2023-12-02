@@ -38,12 +38,12 @@ function BotMessage({
         )}
       >
         {showNameAndAvatar && (
-          <div className="text-lg font-bold text-zinc-700 dark:text-slate-200">
+          <div className="phone:text-lg font-bold text-zinc-700 dark:text-slate-200">
             <FormattedMessage id="lahav" />
           </div>
         )}
         <div
-          className={`p-4 rounded-e-xl rounded-b-xl bg-slate-200 dark:bg-[#272822] text-start ${classNameFromProps}`}
+          className={`p-4 rounded-e-xl text-sm phone:text-base rounded-b-xl bg-slate-200 dark:bg-[#272822] text-start ${classNameFromProps}`}
           {...restDivProps}
         >
           {children}
@@ -65,6 +65,7 @@ function UserMessage({
       <div className="flex flex-col">
         <div
           className={cn(
+            "text-sm phone:text-base",
             "text-white p-4 rounded-s-xl rounded-b-xl",
             lahavBgColor(colorTheme.value)
           )}

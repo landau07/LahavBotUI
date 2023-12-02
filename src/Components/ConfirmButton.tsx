@@ -29,6 +29,7 @@ export function ConfirmButton({
       <button
         onClick={!onClick || disabled ? undefined : onClick}
         className={cn(
+          "text-sm phone:text-base",
           `text-white py-2 px-4 rounded-md`,
           lahavBgColorLightMode(colorTheme.value),
           colorTheme.value === "pink" &&
