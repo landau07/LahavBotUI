@@ -1,4 +1,4 @@
-import { addMonths, set } from "date-fns";
+import { addYears, set } from "date-fns";
 import { useEffect } from "react";
 import { Check, X } from "react-feather";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -24,13 +24,19 @@ export function RsvCalculationResult() {
   const week: number = parseInt(weekAndDayString?.split(" + ")[0] ?? "-1");
 
   const birthDate = stringToDate(getStepResult(birthDateStep.id)!.value)!;
-  const ageInNovember = calculateAgeAtDate(birthDate, getNextNovemberFirst());
+  const { novemberDate, isNextYearNovember } = getNovemberFirst();
+  const ageInNovember = calculateAgeAtDate(birthDate, novemberDate);
 
   const babiesWeight = getStepResult(babiesWeightStep.id)!
     .value.split(" , ")
     .map((weightStr) => parseFloat(weightStr));
 
-  const reason = eligibilityReasonForRsv(week, ageInNovember, babiesWeight);
+  const reason = eligibilityReasonForRsv(
+    week,
+    ageInNovember,
+    babiesWeight,
+    isNextYearNovember
+  );
 
   useEffect(() => {
     step.result = {
@@ -77,7 +83,8 @@ export function RsvCalculationResult() {
 const eligibilityReasonForRsv = (
   week: number,
   ageInNovember: { years: number; months: number },
-  weights: number[]
+  weights: number[],
+  isNextYearNovember: boolean
 ) => {
   const isBornBeforeWeek33 = week < 33;
   const isAboveAge1AtNovember =
@@ -86,14 +93,22 @@ const eligibilityReasonForRsv = (
 
   if (weights.some((w) => w < 1) && !isAboveAge1AtNovember) {
     return weights.length === 1
-      ? "entitledForRsvDueToWeight"
-      : "entitledForRsvDueToWeightPlural";
+      ? isNextYearNovember
+        ? "entitledForRsvDueToWeight"
+        : "entitledForRsvDueToWeightLastNov"
+      : isNextYearNovember
+      ? "entitledForRsvDueToWeightPlural"
+      : "entitledForRsvDueToWeightPluralLastNov";
   }
 
   if (isBornBeforeWeek33 && !isAboveAge1AtNovember) {
     return weights.length === 1
-      ? "entitledForRsvDueToWeek33"
-      : "entitledForRsvDueToWeek33Plural";
+      ? isNextYearNovember
+        ? "entitledForRsvDueToWeek33"
+        : "entitledForRsvDueToWeek33LastNov"
+      : isNextYearNovember
+      ? "entitledForRsvDueToWeek33Plural"
+      : "entitledForRsvDueToWeek33PluralLastNov";
   }
 
   const isBornBeforeWeek35 = week < 35;
@@ -102,21 +117,40 @@ const eligibilityReasonForRsv = (
 
   if (isBornBeforeWeek35 && !isAbove6MonthsAtNovember) {
     return weights.length === 1
-      ? "entitledForRsvDueToWeek35"
-      : "entitledForRsvDueToWeek35Plural";
+      ? isNextYearNovember
+        ? "entitledForRsvDueToWeek35"
+        : "entitledForRsvDueToWeek35LastNov"
+      : isNextYearNovember
+      ? "entitledForRsvDueToWeek35Plural"
+      : "entitledForRsvDueToWeek35PluralLastNov";
   }
 
   return weights.length === 1
-    ? "notEntitledForRsvMessage"
-    : "notEntitledForRsvMessagePlural";
+    ? isNextYearNovember
+      ? "notEntitledForRsvMessage"
+      : "notEntitledForRsvMessageLastNov"
+    : isNextYearNovember
+    ? "notEntitledForRsvMessagePlural"
+    : "notEntitledForRsvMessagePluralLastNov";
 };
 
-const getNextNovemberFirst = () => {
-  const currentDate = new Date(); // or your desired starting date
+const getNovemberFirst = () => {
+  const currentDate = new Date();
 
   // Set the current date to the next November
-  const nextNovember = set(currentDate, { month: 10, date: 1 });
+  const november = set(currentDate, { month: 10, date: 1 });
 
-  // If the current date is already in or after November, add a year
-  return addMonths(nextNovember, currentDate.getMonth() >= 10 ? 12 : 0);
+  // If the current date is between November to Match -> use last November
+  // Else use next year November
+  const isBetweenMarchToNovember =
+    currentDate.getMonth() >= 10 || currentDate.getMonth() <= 2;
+
+  if (!isBetweenMarchToNovember) {
+    addYears(november, 1);
+  }
+
+  return {
+    isNextYearNovember: !isBetweenMarchToNovember,
+    novemberDate: november,
+  };
 };

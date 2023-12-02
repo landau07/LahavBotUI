@@ -19,6 +19,8 @@ import {
 import { FeedbackFormContent } from "./FeedbackFormContent";
 import { Modal } from "./Modal";
 
+const headerIconClassNames = `text-slate-200 ${mouseDownTransitionDownClassNames} h-5 phone:h-6`;
+
 export function LahavAvatar({ addClassName }: { addClassName?: string }) {
   return (
     <img
@@ -36,7 +38,7 @@ export function ChatHeader() {
   return (
     <header
       className={cn(
-        "sticky top-0 p-6 flex flex-row items-center w-full gap-3 rounded-t-md",
+        "sticky top-0 p-3 phone:p-6 flex flex-row items-center w-full gap-2 phone:gap-3 rounded-t-md",
         lahavBgColor(colorTheme.value)
       )}
     >
@@ -47,7 +49,7 @@ export function ChatHeader() {
       >
         <LahavAvatar />
       </a>
-      <div className="w-3 h-3 bg-green-500 rounded-full absolute bottom-5 border-2 border-white start-12" />
+      <div className="w-3 h-3 bg-green-500 rounded-full absolute  border-2 border-white start-11  bottom-4 phone:start-12 phone:bottom-5" />
       <div className="flex-1 select-none text-white text-lg phone:text-2xl text-ellipsis overflow-auto">
         {intl.formatMessage({ id: "lahavBot" })}
       </div>
@@ -57,9 +59,7 @@ export function ChatHeader() {
         title="Feedback"
         className={mouseHoverScaleUpClassNames}
       >
-        <Smile
-          className={`text-slate-200 ${mouseDownTransitionDownClassNames} active:rotate-180`}
-        />
+        <Smile className={cn(headerIconClassNames, "active:rotate-180")} />
       </button>
       <button
         onClick={toggleColorTheme}
@@ -70,7 +70,7 @@ export function ChatHeader() {
         <img
           src={colorTheme.value === "pink" ? femaleIcon : maleIcon}
           style={{ filter: "invert(1)" }}
-          className={`text-slate-200 h-6 me-1 ${mouseDownTransitionDownClassNames}`}
+          className={cn(headerIconClassNames, "me-1")}
         />
       </button>
       <button
@@ -79,9 +79,7 @@ export function ChatHeader() {
         title="Language"
         className={mouseHoverScaleUpClassNames}
       >
-        <Globe
-          className={`text-slate-200 ${mouseDownTransitionDownClassNames}`}
-        />
+        <Globe className={headerIconClassNames} />
       </button>
       <button
         onClick={() => (isDarkMode.value = !isDarkMode.value)}
@@ -90,13 +88,9 @@ export function ChatHeader() {
         className={mouseHoverScaleUpClassNames}
       >
         {isDarkMode.value ? (
-          <Moon
-            className={`text-slate-200 ${mouseDownTransitionDownClassNames}`}
-          />
+          <Moon className={headerIconClassNames} />
         ) : (
-          <Sun
-            className={`text-slate-200 ${mouseDownTransitionDownClassNames}`}
-          />
+          <Sun className={headerIconClassNames} />
         )}
       </button>
       <a
