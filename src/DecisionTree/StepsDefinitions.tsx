@@ -24,6 +24,7 @@ import { hospitalLinks } from "../data/hospitalLinks";
 import facebookIcon from "../icons/facebookIcon.jpeg";
 import milkBottleIcon from "../icons/milkBottleIcon.png";
 import octopusIcon from "../icons/octopusIcon.png";
+import paypalIcon from "../icons/paypalIcon.png";
 import whatsAppIcon from "../icons/whatsappIcon.png";
 import { cn } from "../utils/classnames";
 import { dateToString, stringToDate } from "../utils/dateUtils";
@@ -569,7 +570,9 @@ export const donationOptions: ChatDecisionTreeNode = {
     "creditCardMonthly",
     "bit",
     "donationsFromAbroad",
-    "otherDonationOptions",
+    "paypal",
+    "bankTransfer",
+    "pefTransferFromAbroad",
   ],
   shouldLocalizeData: true,
 };
@@ -589,24 +592,31 @@ export const donationOptionLink: ChatDecisionTreeNode = {
       bit: "https://www.jgive.com/new/he/ils/charity-organizations/848/projects",
       donationsFromAbroad:
         "https://www.jgive.com/new/en/usd/charity-organizations/848/projects",
+      paypal:
+        "https://www.paypal.com/paypalme/amutatlahav?country.x=IL&locale.x=he_IL",
     };
     const donationMethodToTextMap: Record<string, string> = {
       creditCardOneTime: "wonderful",
       creditCardMonthly: "amazing",
       bit: "perfect",
       donationsFromAbroad: "veryAppreciated",
+      paypal: "great",
     };
-    const selectedDonationMethod = step.parent?.result?.value;
+    const donationMethodToIconMap: Record<string, string> = {
+      paypal: paypalIcon,
+    };
+    const selectedDonationMethod = step.parent?.result?.value!;
 
     return (
       <ExternalLinkMessage
-        url={donationMethodToLinkMap[selectedDonationMethod!]}
+        url={donationMethodToLinkMap[selectedDonationMethod]}
         children={
           <FormattedMessage
-            id={donationMethodToTextMap[selectedDonationMethod!]}
+            id={donationMethodToTextMap[selectedDonationMethod]}
           />
         }
         urlText={<FormattedMessage id="clickHere" />}
+        icon={donationMethodToIconMap[selectedDonationMethod]}
       />
     );
   },
@@ -834,14 +844,25 @@ export const graph: ChatDecisionTreeNode = {
   children: [],
 };
 
-export const otherDonationOptionsDetails: ChatDecisionTreeNode = {
-  id: "otherDonationOptionsDetails",
+export const bankTransferOptionDetails: ChatDecisionTreeNode = {
+  id: "bankTransferOptionDetails",
   type: "text",
   sender: "bot",
   branchKey: 0,
   parent: donationOptions,
   children: [],
-  content: "otherDonationOptionsDetails",
+  content: "bankTransferDetails",
+  shouldLocalizeData: true,
+};
+
+export const pefTransferOptionDetails: ChatDecisionTreeNode = {
+  id: "pefTransferOptionDetails",
+  type: "text",
+  sender: "bot",
+  branchKey: 0,
+  parent: donationOptions,
+  children: [],
+  content: "pefTransferDetails",
   shouldLocalizeData: true,
 };
 
@@ -850,7 +871,7 @@ export const whatIsYourName: ChatDecisionTreeNode = {
   type: "text",
   sender: "bot",
   branchKey: 0,
-  parent: otherDonationOptionsDetails,
+  parent: bankTransferOptionDetails,
   children: [],
   content: "whatIsYourName",
   shouldLocalizeData: true,
@@ -896,7 +917,7 @@ export const haveAGreatDayMessage: ChatDecisionTreeNode = {
   type: "text",
   sender: "bot",
   branchKey: 0,
-  parent: otherDonationOptionsDetails,
+  parent: bankTransferOptionDetails,
   children: [],
   content: "haveAGreatDay",
   shouldLocalizeData: true,
@@ -992,7 +1013,9 @@ donationOptions.children = [
   donationOptionLink,
   donationOptionLink,
   donationOptionLink,
-  otherDonationOptionsDetails,
+  donationOptionLink,
+  bankTransferOptionDetails,
+  pefTransferOptionDetails,
 ];
 inviteToHospitalWhatsApp.children = [joinUsFinalStep];
 whatAreYouInterestedAboutQuestion.children = [whatAreYouInterestedAboutOptions];
@@ -1010,10 +1033,11 @@ wasThisHelpfulOptions.children = [
   { ...howCanWeHelpYouQuestion, parent: wasThisHelpfulOptions },
 ];
 donationOptionLink.children = [doYouNeedFurtherAssistanceQuestion];
-otherDonationOptionsDetails.children = [whatIsYourName];
+bankTransferOptionDetails.children = [whatIsYourName];
 doYouNeedFurtherAssistanceQuestion.children = [
   doYouNeedFurtherAssistanceAnswers,
 ];
+pefTransferOptionDetails.children = [doYouNeedFurtherAssistanceQuestion];
 
 doYouNeedFurtherAssistanceAnswers.children = [
   howCanWeHelpYouQuestion,
