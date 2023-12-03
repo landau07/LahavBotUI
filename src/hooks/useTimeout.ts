@@ -4,7 +4,7 @@ type Callback = () => void;
 
 export default function useTimeout(callback: Callback, delay: number) {
   const callbackRef = useRef<Callback>(callback);
-  const timeoutRef = useRef<number>();
+  const timeoutRef = useRef<NodeJS.Timeout>();
 
   useEffect(() => {
     callbackRef.current = callback;
