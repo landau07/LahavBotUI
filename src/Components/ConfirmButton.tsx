@@ -39,7 +39,7 @@ export function ConfirmButton({
               "dark:bg-sky-600 dark:hover:bg-sky-700 dark:active:bg-sky-800 dark:focus:bg-sky-700",
           disabled ? "" : mouseDownTransitionDownClassNames,
           disabled &&
-            "pointer-events-auto border-gray-600 border bg-gray-500 hover:bg-gray-500 focus:bg-gray-500 active:bg-gray-500"
+            "pointer-events-auto border-gray-600 border bg-gray-500 hover:bg-gray-500 focus:bg-gray-500 active:bg-gray-500 cursor-not-allowed"
         )}
         disabled={disabled}
         {...rest}

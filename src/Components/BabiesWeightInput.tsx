@@ -19,7 +19,7 @@ export function BabiesWeightInput({
   onEnterPressed,
 }: BabiesWeightInputProps) {
   const [babiesWeight, setBabiesWeight] = useState<number[]>(
-    Array(numOfBabies).fill(1)
+    Array(numOfBabies).fill(1000)
   );
 
   const weightSummaryString = babiesWeight.join(" , ");
@@ -28,7 +28,7 @@ export function BabiesWeightInput({
 
   useLayoutEffect(() => {
     if (previousWeightSummaryString !== weightSummaryString) {
-      if (babiesWeight.some((weight) => weight <= 0 || weight > 6)) {
+      if (babiesWeight.some((weight) => weight <= 0 || weight > 6000)) {
         setData("");
       } else {
         setData(weightSummaryString);
@@ -76,9 +76,9 @@ export function BabiesWeightInput({
                 type="number"
                 id={`baby-${i + 1}`}
                 name={`baby-${i + 1}`}
-                step={"0.1"}
+                step={"100"}
                 min={0}
-                max={6}
+                max={6000}
                 value={babiesWeight[i] > -1 ? babiesWeight[i] : ""}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
@@ -89,16 +89,14 @@ export function BabiesWeightInput({
                 }}
                 onChange={(e) => {
                   const weightString = e.target.value;
-                  const weight = parseFloat(weightString);
+                  const weight = parseInt(weightString);
                   if (weightString === "") {
                     setBabiesWeight((prev) =>
                       prev.map((w, index) => (index === i ? -1 : w))
                     );
-                  } else if (!isNaN(weight) && weight >= 0 && weight <= 6) {
+                  } else if (!isNaN(weight) && weight >= 0 && weight <= 6000) {
                     setBabiesWeight((prev) =>
-                      prev.map((w, index) =>
-                        index === i ? parseFloat(weight.toFixed(3)) : w
-                      )
+                      prev.map((w, index) => (index === i ? weight : w))
                     );
                   }
                 }}
