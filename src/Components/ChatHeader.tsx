@@ -1,3 +1,4 @@
+import * as amplitude from "@amplitude/analytics-browser";
 import { useState } from "react";
 import { ExternalLink, Globe, Moon, Smile, Sun } from "react-feather";
 import { useIntl } from "react-intl";
@@ -54,7 +55,10 @@ export function ChatHeader() {
         {intl.formatMessage({ id: "lahavBot" })}
       </div>
       <button
-        onClick={() => setIsFeedbackModalOpen(true)}
+        onClick={() => {
+          amplitude.track("Opening feedback");
+          setIsFeedbackModalOpen(true);
+        }}
         aria-label="Feedback"
         title="Feedback"
         className={mouseHoverScaleUpClassNames}
@@ -82,7 +86,11 @@ export function ChatHeader() {
         <Globe className={headerIconClassNames} />
       </button>
       <button
-        onClick={() => (isDarkMode.value = !isDarkMode.value)}
+        onClick={() => {
+          const newIsDarkMode = !isDarkMode.value;
+          amplitude.track("Changing dark mode", { newIsDarkMode });
+          isDarkMode.value = newIsDarkMode;
+        }}
         aria-label={isDarkMode.value ? "Dark mode" : "Light mode"}
         title={isDarkMode.value ? "Dark mode" : "Light mode"}
         className={mouseHoverScaleUpClassNames}
@@ -98,6 +106,7 @@ export function ChatHeader() {
         title={intl.formatMessage({ id: "openBotInNewTab" })}
         target="_blank"
         className="phone:hidden"
+        onClick={() => amplitude.track("Clicked on open in new tab")}
       >
         <ExternalLink
           className={`text-slate-200 h-4 rtl:scale-x-[-1] absolute end-0 top-1`}

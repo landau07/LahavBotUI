@@ -1,3 +1,4 @@
+import * as amplitude from "@amplitude/analytics-browser";
 import { effect, signal } from "@preact/signals-react";
 
 const IS_DARK_MODE = "isDarkMode";
@@ -27,7 +28,9 @@ const colorThemeFromLocalStorage =
 document.documentElement.classList.add(colorThemeFromLocalStorage);
 export const colorTheme = signal<"pink" | "blue">(colorThemeFromLocalStorage);
 export const toggleColorTheme = () => {
-  colorTheme.value = colorTheme.value === "pink" ? "blue" : "pink";
+  const newColor = colorTheme.value === "pink" ? "blue" : "pink";
+  amplitude.track("Changing color theme", { newColor });
+  colorTheme.value = newColor;
 };
 
 // On colorTheme changes:
@@ -49,7 +52,9 @@ const localeFromLocalStorage =
 document.documentElement.lang = localeFromLocalStorage;
 export const locale = signal<"he" | "en">(localeFromLocalStorage);
 export const toggleLocale = () => {
-  locale.value = locale.value === "he" ? "en" : "he";
+  const newLocale = locale.value === "he" ? "en" : "he";
+  amplitude.track("Changing locale", { newLocale });
+  locale.value = newLocale;
   document.documentElement.lang = locale.value;
   localStorage.setItem(LOCALE, locale.value);
 };

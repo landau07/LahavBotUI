@@ -605,18 +605,18 @@ export const donationOptionLink: ChatDecisionTreeNode = {
     const donationMethodToIconMap: Record<string, string> = {
       paypal: paypalIcon,
     };
-    const selectedDonationMethod = step.parent?.result?.value!;
+    const selectedDonationMethod = step.parent?.result?.value;
 
     return (
       <ExternalLinkMessage
-        url={donationMethodToLinkMap[selectedDonationMethod]}
+        url={donationMethodToLinkMap[selectedDonationMethod!]}
         children={
           <FormattedMessage
-            id={donationMethodToTextMap[selectedDonationMethod]}
+            id={donationMethodToTextMap[selectedDonationMethod!]}
           />
         }
         urlText={<FormattedMessage id="clickHere" />}
-        icon={donationMethodToIconMap[selectedDonationMethod]}
+        icon={donationMethodToIconMap[selectedDonationMethod!]}
       />
     );
   },
