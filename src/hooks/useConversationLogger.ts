@@ -1,5 +1,6 @@
 import * as amplitude from "@amplitude/analytics-browser";
 import { useIntl } from "react-intl";
+import { howCanWeHelpYouQuestion } from "../DecisionTree/StepsDefinitions";
 import { ChatDecisionTreeNode } from "../DecisionTree/types";
 import { useMondayClient } from "./useMondayClient";
 
@@ -23,10 +24,16 @@ export function useConversationLogger() {
       });
 
       const jointString = stepDetails.join("\n\n");
+      const hasUserMessage = !!chatSteps.find(
+        (step) => step.id === howCanWeHelpYouQuestion.id
+      );
 
-      console.log(jointString);
-      logToMonday({ stepResults: jointString });
-      amplitude.track("steps", { steps: jointString });
+      console.log(jointString, hasUserMessage);
+      logToMonday({
+        stepResults: jointString,
+        hasUserMessage,
+      });
+      amplitude.track("steps", { steps: jointString, hasUserMessage });
     },
   };
 }

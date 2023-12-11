@@ -1,7 +1,7 @@
 import * as amplitude from "@amplitude/analytics-browser";
 
 export function useMondayClient() {
-  const logToMonday = async (data: Record<string, string>) => {
+  const logToMonday = async (data: Record<string, string | boolean>) => {
     try {
       return await fetch(
         "https://webhooks.integrately.com/a/webhooks/3ff5df2db2524c24ac567529669b5c62",
@@ -16,7 +16,7 @@ export function useMondayClient() {
       );
     } catch (e) {
       console.log("Error while sending data to Monday", e);
-      amplitude.track("Error", e as Record<string, string>);
+      amplitude.track("Error", e as Record<string, string | boolean>);
     }
   };
 
