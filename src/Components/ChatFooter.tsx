@@ -1,9 +1,10 @@
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import { isDesktop } from "react-device-detect";
 import { Send } from "react-feather";
 import { useIntl } from "react-intl";
 import {
   assistanceTopicsAnswerStep,
+  bankTransferOptionDetails,
   doYouNeedFurtherAssistanceQuestion,
   howCanWeHelpYouQuestion,
   inviteToHospitalWhatsApp,
@@ -16,6 +17,9 @@ import { ChatDecisionTreeNode } from "../DecisionTree/types";
 import { useDecisionTree } from "../DecisionTree/useDecisionTree";
 import { textBarEnabled } from "../signals";
 import { cn } from "../utils/classnames";
+
+const USER_NAME = "user_name";
+const USER_EMAIL = "user_email";
 
 export function ChatFooter() {
   const [message, setMessage] = useState<string>("");
@@ -30,7 +34,7 @@ export function ChatFooter() {
 
   const handleSendMessage = () => {
     const userMessage: ChatDecisionTreeNode = {
-      id: new Date().getTime().toString(),
+      id: "userMessage",
       type: "text",
       sender: "user",
       content: message,
@@ -82,9 +86,17 @@ export function ChatFooter() {
     if (lastStep.id === howCanWeHelpYouQuestion.id) {
       newSteps.push(botAnswer);
     } else if (lastStep.id === whatIsYourName.id) {
-      newSteps.push(whatIsYourEmail);
-    } else if (lastStep.id === whatIsYourEmail.id) {
+      localStorage.setItem(USER_NAME, message);
+      newSteps.push({ ...whatIsYourEmail, parent: lastStep });
+    } else if (
+      lastStep.id === whatIsYourEmail.id &&
+      lastStep.parent?.parent?.id === bankTransferOptionDetails.id // This is the only flow that has different followup question
+    ) {
+      localStorage.setItem(USER_EMAIL, message);
       newSteps.push(doYouNeedFurtherAssistanceQuestion);
+    } else if (lastStep.id === whatIsYourEmail.id) {
+      localStorage.setItem(USER_EMAIL, message);
+      newSteps.push(howCanWeHelpYouQuestion);
     }
 
     pushNewStep(...newSteps);
@@ -104,15 +116,35 @@ export function ChatFooter() {
     if (e.key === "Enter" && !e.shiftKey) {
       // Prevent the default behavior of Enter to avoid creating a new line
       e.preventDefault();
-      handleSendMessage();
+      if (ref.current?.value) {
+        handleSendMessage();
+      }
     }
   };
+
+  const loadNameAndEmailFromLocalStorageIfNeeded = useCallback(() => {
+    if (lastStep.id === whatIsYourName.id) {
+      const nameFromLocalStorage = localStorage.getItem(USER_NAME);
+      if (nameFromLocalStorage) {
+        setMessage(nameFromLocalStorage);
+      }
+    }
+    if (lastStep.id === whatIsYourEmail.id) {
+      const emailFromLocalStorage = localStorage.getItem(USER_EMAIL);
+      if (emailFromLocalStorage) {
+        setMessage(emailFromLocalStorage);
+      }
+    }
+  }, [lastStep.id]);
 
   useEffect(() => {
     if (textBarEnabled.peek() && isDesktop) {
       ref.current?.focus();
+      loadNameAndEmailFromLocalStorageIfNeeded();
     }
-  }, [textBarEnabled.value]);
+  // We need to have textBarEnabled.value in the array
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [textBarEnabled.value, loadNameAndEmailFromLocalStorageIfNeeded]);
 
   return (
     <footer className="py-4 px-6 sticky bottom-0 border-t-2 bg-slate-100 dark:bg-[#00000036] border-gray-200 dark:border-gray-500 rounded-b-md">

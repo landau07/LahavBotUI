@@ -871,7 +871,7 @@ export const whatIsYourName: ChatDecisionTreeNode = {
   type: "text",
   sender: "bot",
   branchKey: 0,
-  parent: bankTransferOptionDetails,
+  parent: null,
   children: [],
   content: "whatIsYourName",
   shouldLocalizeData: true,
@@ -883,7 +883,7 @@ export const whatIsYourEmail: ChatDecisionTreeNode = {
   type: "text",
   sender: "bot",
   branchKey: 0,
-  parent: donationOptions,
+  parent: null,
   children: [],
   content: "whatIsYourEmail",
   shouldLocalizeData: true,
@@ -960,7 +960,7 @@ onWhichTopicYouNeedAssistanceStep.children = [assistanceTopicsAnswerStep];
 assistanceTopicsAnswerStep.children = [
   rightsQuestionsStep,
   generalInfoLink,
-  howCanWeHelpYouQuestion,
+  { ...whatIsYourName, parent: assistanceTopicsAnswerStep },
 ];
 rightsQuestionsStep.children = [rightsTopicsStep];
 rightsTopicsStep.children = [
@@ -997,7 +997,10 @@ prematurityAllowanceResultStep.children = [
   sendUsMessageQuestion,
 ];
 prematurityAllowanceEligibleLink.children = [wasThisHelpfulQuestion];
-sendUsMessageQuestion.children = [howCanWeHelpYouQuestion, joinOurFacebookStep];
+sendUsMessageQuestion.children = [
+  { ...whatIsYourName, parent: sendUsMessageQuestion },
+  joinOurFacebookStep,
+];
 generalInfoLink.children = [joinOurFacebookStep];
 joinOurFacebookStep.children = [inviteToHospitalWhatsApp];
 haveYouHadPrematureBabyBeforeQuestion.children = [
@@ -1014,7 +1017,7 @@ donationOptions.children = [
   donationOptionLink,
   donationOptionLink,
   donationOptionLink,
-  bankTransferOptionDetails,
+  { ...whatIsYourName, parent: bankTransferOptionDetails },
   pefTransferOptionDetails,
 ];
 inviteToHospitalWhatsApp.children = [joinUsFinalStep];
@@ -1022,24 +1025,25 @@ whatAreYouInterestedAboutQuestion.children = [whatAreYouInterestedAboutOptions];
 whatAreYouInterestedAboutOptions.children = [
   { ...wantToDonateMilkLinkInfo, children: [] },
   projectOctopusLink,
-  { ...howCanWeHelpYouQuestion, parent: whatAreYouInterestedAboutOptions },
-
+  { ...whatIsYourName, parent: whatAreYouInterestedAboutOptions },
   graph,
 ];
 needBreastMilkResult.children = [wasThisHelpfulQuestion];
 wasThisHelpfulQuestion.children = [wasThisHelpfulOptions];
 wasThisHelpfulOptions.children = [
   { ...joinOurFacebookStep, parent: wasThisHelpfulOptions },
-  { ...howCanWeHelpYouQuestion, parent: wasThisHelpfulOptions },
+  { ...whatIsYourName, parent: wasThisHelpfulOptions },
 ];
 donationOptionLink.children = [doYouNeedFurtherAssistanceQuestion];
-bankTransferOptionDetails.children = [whatIsYourName];
+bankTransferOptionDetails.children = [
+  { ...whatIsYourName, parent: bankTransferOptionDetails },
+];
 doYouNeedFurtherAssistanceQuestion.children = [
   doYouNeedFurtherAssistanceAnswers,
 ];
 pefTransferOptionDetails.children = [doYouNeedFurtherAssistanceQuestion];
 
 doYouNeedFurtherAssistanceAnswers.children = [
-  howCanWeHelpYouQuestion,
+  { ...whatIsYourName, parent: doYouNeedFurtherAssistanceAnswers },
   haveAGreatDayMessage,
 ];
