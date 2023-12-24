@@ -149,6 +149,7 @@
   "send": "Send",
   "whatIsYourName": "What is your name?",
   "whatIsYourEmail": "What is your email?",
+  "enterContactInfo": "Enter contact details (email, phone or both):",
   "doYouNeedFurtherAssistance": "Do you need any further assistance?",
   "haveAGreatDay": "Have a great day! Bye bye!",
   "chooseOptionOnChat": "Choose an option at the chat"

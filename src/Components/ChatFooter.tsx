@@ -6,6 +6,7 @@ import {
   assistanceTopicsAnswerStep,
   bankTransferOptionDetails,
   doYouNeedFurtherAssistanceQuestion,
+  enterContactInfo,
   howCanWeHelpYouQuestion,
   inviteToHospitalWhatsApp,
   joinOurFacebookStep,
@@ -20,6 +21,7 @@ import { cn } from "../utils/classnames";
 
 const USER_NAME = "user_name";
 const USER_EMAIL = "user_email";
+const USER_CONTACT_INFO = "user_contact_info";
 
 export function ChatFooter() {
   const [message, setMessage] = useState<string>("");
@@ -55,6 +57,9 @@ export function ChatFooter() {
       content:
         lastStep.id === howCanWeHelpYouQuestion.id
           ? "thanksForContactingUs"
+          : lastStep.id === whatIsYourName.id &&
+            lastStep?.parent?.id === bankTransferOptionDetails.id // This is the only flow that has different followup question
+          ? "whatIsYourEmail"
           : lastStep.id === whatIsYourName.id
           ? "whatIsYourEmail"
           : lastStep.id === whatIsYourEmail.id
@@ -85,17 +90,20 @@ export function ChatFooter() {
     const newSteps: ChatDecisionTreeNode[] = [userMessage];
     if (lastStep.id === howCanWeHelpYouQuestion.id) {
       newSteps.push(botAnswer);
-    } else if (lastStep.id === whatIsYourName.id) {
+    } else if (
+      lastStep.id === whatIsYourName.id &&
+      lastStep?.parent?.id === bankTransferOptionDetails.id // This is the only flow that has different followup question
+    ) {
       localStorage.setItem(USER_NAME, message);
       newSteps.push({ ...whatIsYourEmail, parent: lastStep });
-    } else if (
-      lastStep.id === whatIsYourEmail.id &&
-      lastStep.parent?.parent?.id === bankTransferOptionDetails.id // This is the only flow that has different followup question
-    ) {
-      localStorage.setItem(USER_EMAIL, message);
-      newSteps.push(doYouNeedFurtherAssistanceQuestion);
+    } else if (lastStep.id === whatIsYourName.id) {
+      localStorage.setItem(USER_NAME, message);
+      newSteps.push({ ...enterContactInfo, parent: lastStep });
     } else if (lastStep.id === whatIsYourEmail.id) {
       localStorage.setItem(USER_EMAIL, message);
+      newSteps.push(doYouNeedFurtherAssistanceQuestion);
+    } else if (lastStep.id === enterContactInfo.id) {
+      localStorage.setItem(USER_CONTACT_INFO, message);
       newSteps.push(howCanWeHelpYouQuestion);
     }
 
@@ -135,6 +143,13 @@ export function ChatFooter() {
         setMessage(emailFromLocalStorage);
       }
     }
+    if (lastStep.id === enterContactInfo.id) {
+      const contactInfoFromLocalStorage =
+        localStorage.getItem(USER_CONTACT_INFO);
+      if (contactInfoFromLocalStorage) {
+        setMessage(contactInfoFromLocalStorage);
+      }
+    }
   }, [lastStep.id]);
 
   useEffect(() => {
@@ -142,8 +157,8 @@ export function ChatFooter() {
       ref.current?.focus();
       loadNameAndEmailFromLocalStorageIfNeeded();
     }
-  // We need to have textBarEnabled.value in the array
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // We need to have textBarEnabled.value in the array
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [textBarEnabled.value, loadNameAndEmailFromLocalStorageIfNeeded]);
 
   return (

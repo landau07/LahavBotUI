@@ -890,6 +890,18 @@ export const whatIsYourEmail: ChatDecisionTreeNode = {
   shouldWaitForUserInputAfterStep: true,
 };
 
+export const enterContactInfo: ChatDecisionTreeNode = {
+  id: "enterContactInfo",
+  type: "text",
+  sender: "bot",
+  branchKey: 0,
+  parent: null,
+  children: [],
+  content: "enterContactInfo",
+  shouldLocalizeData: true,
+  shouldWaitForUserInputAfterStep: true,
+};
+
 export const doYouNeedFurtherAssistanceQuestion: ChatDecisionTreeNode = {
   id: "doYouNeedFurtherAssistance",
   type: "text",
