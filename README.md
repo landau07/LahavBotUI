@@ -1,29 +1,32 @@
 #  Lahav Assistance Bot
 
-React + TypeScript + Vite
+The project is about providing a chat bot functionality dedicated for Lahav - a non profit organization that helps to parents of premature babies.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The goal of this project is to minimize human interaction for frequently asked question and to receive quick response for such questions.
 
-Currently, two official plugins are available:
+Bot is deployed [here](https://lahav-bot.netlify.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[Lahav website](https://pagim.net/)
 
-## Expanding the ESLint configuration
+## Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Vite
 
-- Configure the top-level `parserOptions` property like this:
+React
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+React-intl
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Typescript
+
+Tailwind
+
+Signals
+
+## Contributing
+
+1. Clone the repo
+2. run `pnpm install`
+3. run `pnpm dev`
+
+
+![Lahav bot readme image](readme_image.png)
