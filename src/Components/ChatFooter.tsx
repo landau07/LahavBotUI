@@ -1,7 +1,7 @@
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import { isDesktop } from "react-device-detect";
 import { Send } from "react-feather";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import {
   assistanceTopicsAnswerStep,
   bankTransferOptionDetails,
@@ -25,14 +25,29 @@ const USER_CONTACT_INFO = "user_contact_info";
 
 export function ChatFooter() {
   const [message, setMessage] = useState<string>("");
+  const [validationError, setValidationError] = useState<string | null>(null);
   const intl = useIntl();
   const { pushNewStep, chatSteps } = useDecisionTree();
   const lastStep = chatSteps[chatSteps.length - 1];
   const ref = useRef<HTMLTextAreaElement>(null);
 
   const handleMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setMessage(e.target.value);
+    const newMessage = e.target.value;
+    setMessage(newMessage);
+
+    if (!newMessage && validationError) {
+      setValidationError(null); // empty string is now allowed to be sent anyway. This is just for cleaner UI
+    } else if (lastStep.validateUserInput) {
+      const newValidationError = lastStep.validateUserInput(newMessage);
+      if (validationError !== newValidationError) {
+        setValidationError(newValidationError);
+      }
+    }
   };
+
+  if ((!lastStep.validateUserInput || !message) && validationError) {
+    setValidationError(null);
+  }
 
   const handleSendMessage = () => {
     const userMessage: ChatDecisionTreeNode = {
@@ -124,7 +139,7 @@ export function ChatFooter() {
     if (e.key === "Enter" && !e.shiftKey) {
       // Prevent the default behavior of Enter to avoid creating a new line
       e.preventDefault();
-      if (ref.current?.value) {
+      if (ref.current?.value && !validationError) {
         handleSendMessage();
       }
     }
@@ -170,7 +185,9 @@ export function ChatFooter() {
             disabled={!textBarEnabled.value}
             className={cn(
               "w-full overflow-y-hidden bg-rgb-176-193-212 p-2 rounded-lg pr-4 h-10 resize-none outline-none",
-              "focus:outline-none focus:ring-2 focus:ring-blue-600",
+              !validationError &&
+                "focus:outline-none focus:ring-2 focus:ring-blue-600",
+              validationError && "focus:outline-none border-2 border-red-600",
               !textBarEnabled.value && "cursor-not-allowed"
             )}
             placeholder={
@@ -179,12 +196,13 @@ export function ChatFooter() {
                 : intl.formatMessage({ id: "chooseOptionOnChat" })
             }
             value={message}
+            maxLength={1000}
             onChange={handleMessageChange}
             onKeyDown={handleKeyDown}
             onInput={handleTextareaResize}
           />
           <button
-            disabled={!textBarEnabled.value}
+            disabled={!textBarEnabled.value || !!validationError || !message}
             className="p-2"
             onClick={handleSendMessage}
             aria-label="Send message"
@@ -200,6 +218,11 @@ export function ChatFooter() {
           </button>
         </div>
       </div>
+      {validationError && (
+        <p className="text-red-600">
+          <FormattedMessage id={validationError} />
+        </p>
+      )}
     </footer>
   );
 }

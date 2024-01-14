@@ -1,6 +1,6 @@
 import { ComponentType, ReactNode } from "react";
-import { ConfirmComponentProps } from "../Components/ConfirmComponentWrapper";
 import { PrimitiveType } from "react-intl";
+import { ConfirmComponentProps } from "../Components/ConfirmComponentWrapper";
 
 export type ChatDecisionTreeNode<TInnerComponentProps = unknown> = {
   id: string;
@@ -17,11 +17,18 @@ export type ChatDecisionTreeNode<TInnerComponentProps = unknown> = {
   };
   shouldLocalizeData: boolean;
   shouldWaitForUserInputAfterStep?: boolean;
+  /**
+   * Optional - Relevant if shouldWaitForUserInputAfterStep == true.
+   * For the expected user input, this is the validation function that returns the error message string or null if valid.
+   * @param text
+   * @returns null if valid. If invalid, return the validation error localization id.
+   */
+  validateUserInput?: (text: string) => string | null;
 } & (
   | {
       type: "text";
       content: string | ReactNode | React.FC<ChatDecisionTreeNode>; // string is Message id for localization.
-      formattedMessageValues?: Record<string, React.ReactNode | PrimitiveType>
+      formattedMessageValues?: Record<string, React.ReactNode | PrimitiveType>;
       divProps?: React.HTMLProps<HTMLDivElement>;
       preventAutoRenderBotChild?: boolean; // If true, will not render bot following bod message's child of this step.
     }

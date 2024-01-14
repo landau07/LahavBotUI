@@ -900,6 +900,19 @@ export const enterContactInfo: ChatDecisionTreeNode = {
   content: "enterContactInfo",
   shouldLocalizeData: true,
   shouldWaitForUserInputAfterStep: true,
+  validateUserInput: (text: string) => {
+    // Email regex pattern
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    // Phone number regex pattern (10 digits)
+    const phoneRegex = /^\d{10}$/;
+
+    if (!emailRegex.test(text) && !phoneRegex.test(text)) {
+      return "insertValidContactInfo";
+    }
+
+    return null; // Input is valid
+  },
 };
 
 export const doYouNeedFurtherAssistanceQuestion: ChatDecisionTreeNode = {

@@ -152,5 +152,6 @@
   "enterContactInfo": "הכנס פרטי התקשרות (אימייל, טלפון או שניהם):",
   "doYouNeedFurtherAssistance": "צריכים עזרה נוספת?",
   "haveAGreatDay": "שיהיה יום נפלא! להתראות!",
-  "chooseOptionOnChat": "בחר אפשרות בצ׳אט"
+  "chooseOptionOnChat": "בחר אפשרות בצ׳אט",
+  "insertValidContactInfo": "הכנס מספר טלפון או אימייל תקינים"
 }
