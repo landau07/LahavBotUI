@@ -108,7 +108,11 @@ export function ChatHeader() {
         target="_blank"
         onClick={() => amplitude.track("Clicked on open Whatsapp")}
       >
-        <img src={whatsAppWhiteIcon} className={`h-10 -ms-1`} alt="whatsapp" />
+        <img
+          src={whatsAppWhiteIcon}
+          className={`h-9 -ms-1 ${mouseHoverScaleUpClassNames}`}
+          alt="whatsapp"
+        />
       </a>
       <a
         href="https://lahav-bot.netlify.app/"

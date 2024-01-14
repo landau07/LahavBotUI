@@ -28,10 +28,16 @@ export function useConversationLogger() {
         (step) => step.id === howCanWeHelpYouQuestion.id
       );
 
+      const userMessages = chatSteps
+        .filter((step) => step.id === "userMessage")
+        .map((step) => step.result?.value)
+        .join(" - ");
+
       console.log(jointString, hasUserMessage);
       logToMonday({
         stepResults: jointString,
         hasUserMessage,
+        userMessages,
       });
       amplitude.track("steps", { steps: jointString, hasUserMessage });
     },
