@@ -5,6 +5,7 @@ import { useIntl } from "react-intl";
 import femaleIcon from "../icons/femaleIcon.png";
 import lahavLogo from "../icons/lahavIcon.jpeg";
 import maleIcon from "../icons/maleIcon.png";
+import whatsAppWhiteIcon from "../icons/whatsapp-white-icon.png";
 import {
   colorTheme,
   isDarkMode,
@@ -101,6 +102,14 @@ export function ChatHeader() {
           <Sun className={headerIconClassNames} />
         )}
       </button>
+      <a
+        href="https://wa.me/message/RVFQ3SJQG6WFL1"
+        title="Preffer to talk over Whatsapp?"
+        target="_blank"
+        onClick={() => amplitude.track("Clicked on open Whatsapp")}
+      >
+        <img src={whatsAppWhiteIcon} className={`h-10 -ms-1`} alt="whatsapp" />
+      </a>
       <a
         href="https://lahav-bot.netlify.app/"
         title={intl.formatMessage({ id: "openBotInNewTab" })}
