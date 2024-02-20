@@ -48,6 +48,7 @@ export function ChatHeader() {
         href="https://lahav-bot.netlify.app/"
         title={intl.formatMessage({ id: "openBotInNewTab" })}
         target="_blank"
+        rel="noopener noreferrer"
       >
         <LahavAvatar />
       </a>
@@ -106,6 +107,7 @@ export function ChatHeader() {
         href="https://wa.me/message/RVFQ3SJQG6WFL1"
         title="Preffer to talk over Whatsapp?"
         target="_blank"
+        rel="noopener noreferrer"
         onClick={() => amplitude.track("Clicked on open Whatsapp")}
       >
         <img
@@ -118,6 +120,7 @@ export function ChatHeader() {
         href="https://lahav-bot.netlify.app/"
         title={intl.formatMessage({ id: "openBotInNewTab" })}
         target="_blank"
+        rel="noopener noreferrer"
         className="phone:hidden"
         onClick={() => amplitude.track("Clicked on open in new tab")}
       >

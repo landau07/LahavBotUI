@@ -25,6 +25,7 @@ export function ExternalLinkMessage({
       <a
         href={url}
         target="_blank"
+        rel="noopener noreferrer"
         className={cn(
           "flex gap-1 items-center mt-1 hover:underline",
           linkColor
