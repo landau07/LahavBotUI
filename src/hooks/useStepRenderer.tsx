@@ -1,3 +1,4 @@
+import * as amplitude from "@amplitude/analytics-browser";
 import { FormattedMessage, useIntl } from "react-intl";
 import { ChatMessage } from "../Components/ChatMessage";
 import { ConfirmComponentWrapper } from "../Components/ConfirmComponentWrapper";
@@ -56,6 +57,10 @@ export function useStepRenderer() {
                   ? intl.formatMessage({ id: step.boxes[boxIndex] })
                   : step.boxes[boxIndex],
               };
+              amplitude.track("Step Answered", {
+                step_id: step.id,
+                selected_value: step.result.value,
+              });
               setNextStep(step, { childIndex: boxIndex });
             }}
             shouldLocalizeData={step.shouldLocalizeData}
@@ -79,6 +84,10 @@ export function useStepRenderer() {
                       id: step.stepLogQuestion,
                     })
                   : step.stepLogQuestion);
+              amplitude.track("Step Answered", {
+                step_id: step.id,
+                selected_value: step.result.value,
+              });
               setNextStep(step);
             }}
             ContentComponent={step.component}

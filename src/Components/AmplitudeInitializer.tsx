@@ -6,6 +6,7 @@ export function AmplitudeInitializer({ children }: { children: ReactNode }) {
     amplitude.init("758d138f413c9e714e68e527ad112c02", {
       defaultTracking: true,
     });
+    amplitude.track("Conversation Started");
   }, []);
 
   return <>{children}</>;
