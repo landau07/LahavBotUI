@@ -1,3 +1,4 @@
+import * as amplitude from "@amplitude/analytics-browser";
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import { isDesktop } from "react-device-detect";
 import { Send } from "react-feather";
@@ -50,6 +51,18 @@ export function ChatFooter() {
   }
 
   const handleSendMessage = () => {
+    // Log free-text answers (excluding PII steps) to identify gaps in the predefined flows
+    if (
+      lastStep.id !== whatIsYourName.id &&
+      lastStep.id !== whatIsYourEmail.id &&
+      lastStep.id !== enterContactInfo.id
+    ) {
+      amplitude.track("Free Text Answered", {
+        step_id: lastStep.id,
+        message,
+      });
+    }
+
     const userMessage: ChatDecisionTreeNode = {
       id: "userMessage",
       type: "text",

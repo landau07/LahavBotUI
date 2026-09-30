@@ -1,3 +1,4 @@
+import * as amplitude from "@amplitude/analytics-browser";
 import { signal } from "@preact/signals-react";
 import { useCallback, useEffect, useRef } from "react";
 import { CurrentStepContext } from "../DecisionTree/CurrentStepContext";
@@ -28,6 +29,13 @@ export function ChatBody() {
   const { logConversation } = useConversationLogger();
 
   useEventListener("resize", setChatBodySize);
+
+  // Log when a step requiring user action is shown, to spot drop-off points
+  useEffect(() => {
+    if (lastStep.type === "selectionBox" || lastStep.type === "confirmComponent") {
+      amplitude.track("Step Viewed", { step_id: lastStep.id });
+    }
+  }, [lastStep.id, lastStep.type]);
 
   useEffect(setChatBodySize, [setChatBodySize, containerRef.current]);
 
